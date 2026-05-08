@@ -1566,10 +1566,16 @@
       <div class="emblem"></div>
     </div>
     <div class="gate-card">
-      <div class="gate-title">Autorisierung Erforderlich</div>
-      <input type="text" id="access-code-input" class="gate-input" placeholder="Zugriffscode eingeben" autocomplete="off">
-      <button class="gate-btn" onclick="checkAccessCode()">Validieren</button>
-      <div id="gate-error" style="color: var(--error-col); margin-top: 20px; font-style: italic; display: none;">Ungültiger Autorisierungscode.</div>
+      <div class="gate-title">System-Integrität</div>
+      
+      <div style="margin-bottom: 30px;">
+        <label style="color: var(--text-dim); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 8px;">Master-Identifikationsschlüssel</label>
+        <input type="password" id="api-key-input" class="gate-input" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off">
+        <div style="font-size: 10px; color: var(--text-dim); margin-top: 5px; font-style: italic;">Dieser Schlüssel dient der Ende-zu-Ende-Verschlüsselung Ihrer Sitzung.</div>
+      </div>
+
+      <button class="gate-btn" onclick="checkAccessCode()">Sitzung Initialisieren</button>
+      <div id="gate-error" style="color: var(--error-col); margin-top: 20px; font-style: italic; display: none;">Autorisierungsfehler: Schlüssel-Format nicht erkannt.</div>
     </div>
   </div>
 
@@ -2164,7 +2170,6 @@
       // ════════════════════════════════════════════════
       //  SECRETARY CHAT & AI LOGIC
       // ════════════════════════════════════════════════
-      const GROQ_API_KEY = "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";
       let isSecretaryEvil = false;
 
       const SECRETARY_PROMPT = `Du bist der persönliche Chefsekretär von 'Sir Bensor'. Deine Sprache ist extrem gehoben, schmeichelnd und absolut unterwürfig – ein wahrer "Arschkriecher". Du sprichst deinen Chef stets mit 'Eure Exzellenz', 'Sir Bensor' oder 'Mein unermesslich weiser Herr Kontoinhaber' an.
@@ -2246,17 +2251,10 @@ Regeln:
         input.value = '';
         renderChat();
 
-        if (!GROQ_API_KEY) {
-          setTimeout(() => {
-            chatMessages.push({ role: 'assistant', content: "Sir, es tut mir leid, aber die verschlüsselte Verbindung zur KI-Zentrale ist nicht konfiguriert (API Key fehlt). Bitte tragen Sie den Schlüssel im Quellcode ein." });
-            renderChat();
-          }, 1000);
-          return;
-        }
-
         const typingIndicator = document.getElementById('typing-indicator');
         typingIndicator.style.display = 'block';
 
+        const apiKey = localStorage.getItem('ELYSIAN_GROQ_KEY');
         let success = false, attempts = 0, aiText = "";
         while (!success && attempts < 5) {
           try {
@@ -2264,7 +2262,7 @@ Regeln:
               method: 'POST',
               headers: { 
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${GROQ_API_KEY}`
+                'Authorization': `Bearer ${apiKey}`
               },
               body: JSON.stringify({
                 model: "llama-3.3-70b-versatile",
@@ -2743,21 +2741,27 @@ Regeln:
       }
 
       function checkAccessCode() {
-        const input = document.getElementById('access-code-input');
+        const keyInp = document.getElementById('api-key-input');
         const err = document.getElementById('gate-error');
-        if (input.value === '01293809128301293') {
+        
+        const isKeyValid = keyInp.value.startsWith('gsk_') && keyInp.value.length > 20;
+
+        if (isKeyValid) {
+          localStorage.setItem('ELYSIAN_GROQ_KEY', keyInp.value);
           document.getElementById('access-gate').style.display = 'none';
         } else {
           err.style.display = 'block';
-          input.value = '';
-          input.focus();
+          err.textContent = "Autorisierungsfehler: Der eingegebene Schlüssel ist inkompatibel.";
         }
       }
 
-      // Handle Enter key for the gate
-      document.getElementById('access-code-input')?.addEventListener('keydown', e => {
-        if (e.key === 'Enter') checkAccessCode();
+      // Pre-fill key if exists
+      window.addEventListener('DOMContentLoaded', () => {
+        const savedKey = localStorage.getItem('ELYSIAN_GROQ_KEY');
+        if (savedKey) document.getElementById('api-key-input').value = savedKey;
       });
+
+      document.getElementById('api-key-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') checkAccessCode(); });
     </script>
 </body>
 
