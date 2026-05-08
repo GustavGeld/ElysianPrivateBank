@@ -541,6 +541,56 @@
       cursor: default;
     }
 
+    /* ── DEV PANEL ───────────────────────────────── */
+    #dev-panel {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 9999;
+      background: rgba(6, 8, 13, 0.92);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      border-radius: 4px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    #dev-panel .dev-label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 2px;
+    }
+
+    .dev-btn {
+      background: rgba(201, 168, 76, 0.08);
+      border: 1px solid rgba(201, 168, 76, 0.25);
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .dev-btn:hover {
+      background: rgba(201, 168, 76, 0.18);
+      border-color: var(--gold);
+    }
+
+    .dev-btn.disabled-btn {
+      opacity: 0.35;
+      pointer-events: none;
+    }
 
     #screen-secretary .card {
       height: 750px;
@@ -1050,68 +1100,7 @@
       }
     }
 
-    /* ── ACCESS GATE ───────────────────────────── */
-    #access-gate {
-      position: fixed;
-      inset: 0;
-      background: var(--obsidian);
-      z-index: 200000;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 40px;
-    }
-
-    .gate-card {
-      background: rgba(10, 12, 18, 0.95);
-      border: 1px solid var(--gold-dark);
-      padding: 60px 40px;
-      text-align: center;
-      max-width: 500px;
-      width: 100%;
-      box-shadow: 0 30px 100px rgba(0,0,0,0.9);
-    }
-
-    .gate-title {
-      font-family: 'Playfair Display', serif;
-      color: var(--gold);
-      font-size: 24px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 40px;
-    }
-
-    .gate-input {
-      background: transparent;
-      border: none;
-      border-bottom: 1px solid var(--gold-dark);
-      color: var(--gold-light);
-      font-family: inherit;
-      font-size: 20px;
-      text-align: center;
-      width: 100%;
-      margin-bottom: 30px;
-      padding: 10px;
-      outline: none;
-      letter-spacing: 2px;
-    }
-
-    .gate-btn {
-      background: transparent;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      padding: 12px 40px;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .gate-btn:hover {
-      background: var(--gold);
-      color: #000;
-    }
+    /* ── NOTIFICATION ─────────────────────────── */
     .phone-notification {
       position: fixed;
       top: -120px;
@@ -1561,24 +1550,6 @@
   <div id="glitch-stripes" class="glitch-stripes"></div>
   <div id="glitch-bar-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 99999;"></div>
 
-  <div id="access-gate">
-    <div class="emblem-outer" style="margin-bottom: 30px;">
-      <div class="emblem"></div>
-    </div>
-    <div class="gate-card">
-      <div class="gate-title">System-Integrität</div>
-      
-      <div style="margin-bottom: 30px;">
-        <label style="color: var(--text-dim); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 8px;">Master-Identifikationsschlüssel</label>
-        <input type="password" id="api-key-input" class="gate-input" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off">
-        <div style="font-size: 10px; color: var(--text-dim); margin-top: 5px; font-style: italic;">Dieser Schlüssel dient der Ende-zu-Ende-Verschlüsselung Ihrer Sitzung.</div>
-      </div>
-
-      <button class="gate-btn" onclick="checkAccessCode()">Sitzung Initialisieren</button>
-      <div id="gate-error" style="color: var(--error-col); margin-top: 20px; font-style: italic; display: none;">Autorisierungsfehler: Schlüssel-Format nicht erkannt.</div>
-    </div>
-  </div>
-
   <!-- ══ MOBILE WARNING ══════════════════════════════════════ -->
   <div id="mobile-warning">
     <div class="emblem-outer">
@@ -1590,6 +1561,13 @@
     <p>Dieser exklusive Service steht nur auf stationären High-End-Systemen zur Verfügung.</p>
   </div>
 
+  <!-- ══ DEV PANEL ═══════════════════════════════════════════ -->
+  <div id="dev-panel">
+    <div class="dev-label">⚙ Dev</div>
+    <button class="dev-btn" onclick="devDashboard()">① Dashboard</button>
+    <button class="dev-btn" onclick="devSecretary()">② Post-Butler</button>
+    <button class="dev-btn" onclick="navTo('screen-suppa')">③ CMD Terminal</button>
+  </div>
 
   <div id="desktop-content" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
     <header class="header">
@@ -2166,10 +2144,22 @@
         if (b1) b1.remove(); if (b2) b2.remove();
       }
 
+      // ════════════════════════════════════════════════
+      //  DEV SHORTCUTS
+      // ════════════════════════════════════════════════
+      function devDashboard() {
+        navTo('screen-dashboard');
+      }
+
+      function devSecretary() {
+        activateSecretaryState();
+        navTo('screen-secretary');
+      }
 
       // ════════════════════════════════════════════════
       //  SECRETARY CHAT & AI LOGIC
       // ════════════════════════════════════════════════
+      const GROQ_API_KEY = "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";
       let isSecretaryEvil = false;
 
       const SECRETARY_PROMPT = `Du bist der persönliche Chefsekretär von 'Sir Bensor'. Deine Sprache ist extrem gehoben, schmeichelnd und absolut unterwürfig – ein wahrer "Arschkriecher". Du sprichst deinen Chef stets mit 'Eure Exzellenz', 'Sir Bensor' oder 'Mein unermesslich weiser Herr Kontoinhaber' an.
@@ -2251,10 +2241,17 @@ Regeln:
         input.value = '';
         renderChat();
 
+        if (!GROQ_API_KEY) {
+          setTimeout(() => {
+            chatMessages.push({ role: 'assistant', content: "Sir, es tut mir leid, aber die verschlüsselte Verbindung zur KI-Zentrale ist nicht konfiguriert (API Key fehlt). Bitte tragen Sie den Schlüssel im Quellcode ein." });
+            renderChat();
+          }, 1000);
+          return;
+        }
+
         const typingIndicator = document.getElementById('typing-indicator');
         typingIndicator.style.display = 'block';
 
-        const apiKey = localStorage.getItem('ELYSIAN_GROQ_KEY');
         let success = false, attempts = 0, aiText = "";
         while (!success && attempts < 5) {
           try {
@@ -2262,7 +2259,7 @@ Regeln:
               method: 'POST',
               headers: { 
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
+                'Authorization': `Bearer ${GROQ_API_KEY}`
               },
               body: JSON.stringify({
                 model: "llama-3.3-70b-versatile",
@@ -2740,28 +2737,6 @@ Regeln:
         }, 2000);
       }
 
-      function checkAccessCode() {
-        const keyInp = document.getElementById('api-key-input');
-        const err = document.getElementById('gate-error');
-        
-        const isKeyValid = keyInp.value.startsWith('gsk_') && keyInp.value.length > 20;
-
-        if (isKeyValid) {
-          localStorage.setItem('ELYSIAN_GROQ_KEY', keyInp.value);
-          document.getElementById('access-gate').style.display = 'none';
-        } else {
-          err.style.display = 'block';
-          err.textContent = "Autorisierungsfehler: Der eingegebene Schlüssel ist inkompatibel.";
-        }
-      }
-
-      // Pre-fill key if exists
-      window.addEventListener('DOMContentLoaded', () => {
-        const savedKey = localStorage.getItem('ELYSIAN_GROQ_KEY');
-        if (savedKey) document.getElementById('api-key-input').value = savedKey;
-      });
-
-      document.getElementById('api-key-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') checkAccessCode(); });
     </script>
 </body>
 
