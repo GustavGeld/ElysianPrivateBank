@@ -2491,15 +2491,7 @@
       </div>
     </div>
     
-    <!-- Phone Notification -->
-    <div id="notif-box" class="phone-notification" onclick="navTo('screen-gift')">
-      <div class="notif-icon">✦</div>
-      <div class="notif-body">
-        <div class="notif-title" id="notif-title">Elysian Private Bank</div>
-        <div class="notif-text" id="notif-text">Geschenk abholen!</div>
-      </div>
-      <div id="notif-action-area" class="hidden" style="font-size: 10px; opacity: 0.5;">Tippen zum Öffnen</div>
-    </div>
+
 
     <script>
       // ════════════════════════════════════════════════
@@ -3081,9 +3073,29 @@ Regeln:
       }
 
       function showCaptchaResultTransfer() {
-        document.getElementById('modal-captcha-box').classList.add('hidden'); const fr = document.getElementById('final-result'); const frBox = document.getElementById('fr-box'); const title = document.getElementById('fr-title'); const desc = document.getElementById('fr-desc'); fr.classList.remove('hidden');
-        if (capScoreTransfer === 6) { frBox.className = 'final-result-box fail'; title.textContent = 'Verifizierung fehlgeschlagen!'; desc.textContent = 'Begründung: Sie haben alle Aufgaben in Rekordzeit richtig gelöst. Sie sind definitiv ein Bot. Menschliche Nutzer sind viel schlechter.'; }
-        else { frBox.className = 'final-result-box success'; title.textContent = 'Erfolgreich verifiziert!'; desc.textContent = `Begründung: Sie hatten nur ${capScoreTransfer} von 6 richtig (oder waren zu langsam). Sie waren definitiv zu schlecht, um ein Bot zu sein. Zahlung angewiesen.`; activateSecretaryState(); }
+        document.getElementById('modal-captcha-box').classList.add('hidden');
+        const fr = document.getElementById('final-result');
+        const frBox = document.getElementById('fr-box');
+        const title = document.getElementById('fr-title');
+        const desc = document.getElementById('fr-desc');
+        const btn = document.querySelector('#final-result button');
+        fr.classList.remove('hidden');
+
+        if (capScoreTransfer === 6) {
+          frBox.className = 'final-result-box fail';
+          title.textContent = 'Verifizierung fehlgeschlagen!';
+          desc.innerHTML = 'Begründung: Sie haben alle Aufgaben in Rekordzeit richtig gelöst. Sie sind definitiv ein Bot. Menschliche Nutzer sind viel schlechter.<br><br>'
+            + '<span style="color: var(--gold); font-style: italic; font-size: 14px; letter-spacing: 1px;">'
+            + '↩ Bitte versuchen Sie erneut zu bezahlen — und diesmal etwas schlechter abzuschneiden.'
+            + '</span>';
+          if (btn) btn.textContent = 'Zurück & Erneut bezahlen';
+        } else {
+          frBox.className = 'final-result-box success';
+          title.textContent = 'Erfolgreich verifiziert!';
+          desc.textContent = `Begründung: Sie hatten nur ${capScoreTransfer} von 6 richtig (oder waren zu langsam). Sie waren definitiv zu schlecht, um ein Bot zu sein. Zahlung angewiesen.`;
+          if (btn) btn.textContent = 'Weiter';
+          activateSecretaryState();
+        }
       }
 
       function closeCaptchaModalAndContinue() {
