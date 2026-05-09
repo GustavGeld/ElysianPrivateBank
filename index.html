@@ -4002,16 +4002,30 @@ Regeln:
 
           // Virus Animation
           const video = document.createElement('video');
-          video.src = 'virus/viruserscheinung.mp4';
+          video.src = 'Virus/viruserscheinung.mp4';
           video.className = 'virus-asset';
           video.autoplay = true;
           video.muted = true;
           hauntedZone.appendChild(video);
-          video.onended = () => { 
-            video.remove(); 
+          
+          const proceedToBoss = () => {
+            if (video.parentNode) video.remove(); 
             startImageLoop(hauntedZone); 
             startVirusSpeech(hauntedZone);
           };
+
+          video.onended = proceedToBoss;
+          video.onerror = () => {
+            console.error("Boss intro video failed to load. Proceeding with fallback.");
+            proceedToBoss();
+          };
+          // Safety timeout in case neither fires
+          setTimeout(() => {
+            if (video.parentNode) {
+              console.warn("Boss intro video timed out. Proceeding.");
+              proceedToBoss();
+            }
+          }, 5000);
 
           // Update Card Text to Infiltration look
           const title = document.getElementById('haunted-title');
@@ -4345,7 +4359,7 @@ Regeln:
         setInterval(() => {
            const frame = wingIdx.toString().padStart(3, '0');
            document.querySelectorAll('.virus-wing').forEach(w => {
-              w.src = `Flügel/${frame}.png`;
+              w.src = `Fluegel/${frame}.png`;
            });
            wingIdx = (wingIdx % 10) + 1;
         }, 60);
@@ -4742,14 +4756,14 @@ Regeln:
 
       function startImageLoop(container) {
         const images = [
-          'virus/001.png',
-          'virus/002.png',
-          'virus/003.png',
-          'virus/004.png',
-          'virus/005.png',
-          'virus/006.png',
-          'virus/007.png',
-          'virus/008.png'
+          'Virus/001.png',
+          'Virus/002.png',
+          'Virus/003.png',
+          'Virus/004.png',
+          'Virus/005.png',
+          'Virus/006.png',
+          'Virus/007.png',
+          'Virus/008.png'
         ];
 
         let idx = 0;
