@@ -3918,6 +3918,16 @@ Regeln:
         const barContainer = document.getElementById('glitch-bar-container');
         const hauntedZone = document.getElementById('haunted-zone');
 
+        // Preload Wing Frames for smooth animation
+        if (!VIRUS_STATE.preloadedWings) {
+          VIRUS_STATE.preloadedWings = [];
+          for (let i = 1; i <= 10; i++) {
+            const img = new Image();
+            img.src = `Fluegel/${i.toString().padStart(3, '0')}.png`;
+            VIRUS_STATE.preloadedWings.push(img);
+          }
+        }
+
         // Initial phase: no interactions, normal look
         if (card) card.classList.add('no-interact');
 
@@ -4357,13 +4367,19 @@ Regeln:
         container.insertBefore(rightWing, container.firstChild);
         
         let wingIdx = 1;
-        setInterval(() => {
+        const wingLoop = setInterval(() => {
            const frame = wingIdx.toString().padStart(3, '0');
-           document.querySelectorAll('.virus-wing').forEach(w => {
+           const wingElements = document.querySelectorAll('.virus-wing');
+           if (wingElements.length === 0) {
+              clearInterval(wingLoop);
+              return;
+           }
+           wingElements.forEach(w => {
               w.src = `Fluegel/${frame}.png`;
            });
            wingIdx = (wingIdx % 10) + 1;
-        }, 60);
+        }, 80); // Slightly slower for heavy assets
+        VIRUS_STATE.intervals.push(wingLoop);
        }
        
        function spawnInputClone(id) {
