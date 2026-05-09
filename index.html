@@ -988,6 +988,20 @@
       }
     }
 
+    @keyframes neonGrow {
+      from { height: 0; opacity: 0; }
+      to { height: 300px; opacity: 1; }
+    }
+
+    .fade-out-slow {
+      animation: fadeOutSlow 4s ease-in-out forwards;
+    }
+
+    @keyframes fadeOutSlow {
+      from { opacity: 1; transform: translateY(0); filter: blur(0); }
+      to { opacity: 0; transform: translateY(100px); filter: blur(10px); pointer-events: none; }
+    }
+
     @keyframes emblemPulse {
 
       0%,
@@ -1070,7 +1084,7 @@
       text-align: center;
       max-width: 500px;
       width: 100%;
-      box-shadow: 0 30px 100px rgba(0,0,0,0.9);
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.9);
     }
 
     .gate-title {
@@ -1112,6 +1126,7 @@
       background: var(--gold);
       color: #000;
     }
+
     .phone-notification {
       position: fixed;
       top: -120px;
@@ -1294,12 +1309,29 @@
     }
 
     @keyframes termGlitch {
-      0% { transform: translate(0); }
-      20% { transform: translate(-2px, 1px); }
-      40% { transform: translate(2px, -1px); }
-      60% { transform: translate(-1px, -2px); }
-      80% { transform: translate(1px, 2px); }
-      100% { transform: translate(0); }
+      0% {
+        transform: translate(0px, 0px);
+      }
+
+      20% {
+        transform: translate(-2px, 1px);
+      }
+
+      40% {
+        transform: translate(2px, -1px);
+      }
+
+      60% {
+        transform: translate(-1px, -2px);
+      }
+
+      80% {
+        transform: translate(1px, 2px);
+      }
+
+      100% {
+        transform: translate(0px, 0px);
+      }
     }
 
     .system-glitch {
@@ -1338,13 +1370,33 @@
     }
 
     @keyframes screenShake {
-      0% { transform: translate(2px, 2px) rotate(0deg); }
-      10% { transform: translate(-2px, -3px) rotate(-1deg); }
-      20% { transform: translate(-4px, 0px) rotate(1deg); }
-      30% { transform: translate(4px, 3px) rotate(0deg); }
-      40% { transform: translate(2px, -2px) rotate(1deg); }
-      50% { transform: translate(-2px, 3px) rotate(-1deg); }
-      100% { transform: translate(0, 0) rotate(0deg); }
+      0% {
+        transform: translate(2px, 2px) rotate(0deg);
+      }
+
+      10% {
+        transform: translate(-2px, -3px) rotate(-1deg);
+      }
+
+      20% {
+        transform: translate(-4px, 0px) rotate(1deg);
+      }
+
+      30% {
+        transform: translate(4px, 3px) rotate(0deg);
+      }
+
+      40% {
+        transform: translate(2px, -2px) rotate(1deg);
+      }
+
+      50% {
+        transform: translate(-2px, 3px) rotate(-1deg);
+      }
+
+      100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
     }
 
     /* GIFT SCREEN STYLES */
@@ -1364,20 +1416,128 @@
       min-height: 80vh;
     }
 
+    #screen-gift-final.active {
+      display: flex !important;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100% !important;
+      height: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: var(--obsidian);
+      z-index: 200;
+      overflow: hidden;
+    }
+
     .gift-title {
-      font-size: 60px;
+      font-size: 54px;
       font-family: 'Playfair Display', serif;
       color: var(--gold);
-      text-shadow: 0 0 20px var(--gold-glow);
+      text-shadow: 0 0 15px var(--gold-glow);
       margin-bottom: 20px;
       z-index: 10;
     }
 
     .gift-sub {
-      font-size: 28px;
-      color: #fff;
-      margin-bottom: 40px;
+      font-size: 24px;
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--text-dim);
+      margin-bottom: 30px;
       z-index: 10;
+    }
+
+    .gift-title-epic {
+      font-size: 140px;
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      letter-spacing: 18px;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 
+        0 0 20px #fff,
+        0 0 40px #F5D76E,
+        0 0 80px #C9A84C,
+        0 0 120px #C9A84C,
+        0 0 200px rgba(201, 168, 76, 0.8);
+      margin-bottom: 5px;
+      animation: epic-entrance 2.5s cubic-bezier(0.23, 1, 0.32, 1) both, epic-glow-pulse 4s infinite ease-in-out;
+      z-index: 300;
+      position: relative;
+      text-align: center;
+      width: 100%;
+      white-space: nowrap;
+    }
+
+    /* Shine Sweep Effect */
+    .gift-title-epic::after {
+      content: 'GLÜCKWUNSCH!';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,0.9) 50%, transparent 60%);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shine-sweep 4s infinite linear;
+      pointer-events: none;
+      z-index: 301;
+    }
+
+    @keyframes shine-sweep {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    @keyframes epic-entrance {
+      0% { opacity: 0; transform: scale(0.5) translateY(100px); filter: blur(30px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+    }
+
+    @keyframes epic-glow-pulse {
+      0%, 100% { 
+        transform: scale(1); 
+        text-shadow: 
+          0 0 20px #fff,
+          0 0 40px #F5D76E,
+          0 0 80px #C9A84C;
+      }
+      50% { 
+        transform: scale(1.05); 
+        text-shadow: 
+          0 0 40px #fff,
+          0 0 80px #F5D76E,
+          0 0 120px #C9A84C,
+          0 0 200px #C9A84C;
+      }
+    }
+
+    .gift-sub-epic {
+      font-size: 42px;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 600;
+      letter-spacing: 6px;
+      color: #fff;
+      text-shadow: 0 0 15px #fff, 0 0 30px var(--gold), 0 0 50px rgba(0,0,0,0.9);
+      margin-bottom: 40px;
+      z-index: 300;
+      position: relative;
+      animation: epic-entrance 2s cubic-bezier(0.23, 1, 0.32, 1) both 0.5s, epic-glow-pulse-sub 4s infinite ease-in-out;
+      animation-delay: 0.5s;
+      text-align: center;
+      width: 100%;
+    }
+
+    @keyframes epic-glow-pulse-sub {
+      0%, 100% { transform: scale(1); text-shadow: 0 0 15px #fff, 0 0 30px var(--gold); }
+      50% { transform: scale(1.03); text-shadow: 0 0 25px #fff, 0 0 50px var(--gold), 0 0 80px var(--gold); }
     }
 
     .raining-icon {
@@ -1403,9 +1563,20 @@
     }
 
     @keyframes vignettePulse {
-      0% { opacity: 0.4; transform: scale(1); }
-      50% { opacity: 1; transform: scale(1.15); }
-      100% { opacity: 0.4; transform: scale(1); }
+      0% {
+        opacity: 0.4;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.15);
+      }
+
+      100% {
+        opacity: 0.4;
+        transform: scale(1);
+      }
     }
 
     .screen-shake-active {
@@ -1417,12 +1588,29 @@
     }
 
     @keyframes shakeSettle {
-      0% { transform: translate(10px, -8px) rotate(0.2deg); }
-      20% { transform: translate(-7px, 5px) rotate(-0.1deg); }
-      40% { transform: translate(5px, -4px) rotate(0.1deg); }
-      60% { transform: translate(-3px, 2px) rotate(0deg); }
-      80% { transform: translate(1px, -1px); }
-      100% { transform: translate(0, 0); }
+      0% {
+        transform: translate(10px, -8px) rotate(0.2deg);
+      }
+
+      20% {
+        transform: translate(-7px, 5px) rotate(-0.1deg);
+      }
+
+      40% {
+        transform: translate(5px, -4px) rotate(0.1deg);
+      }
+
+      60% {
+        transform: translate(-3px, 2px) rotate(0deg);
+      }
+
+      80% {
+        transform: translate(1px, -1px);
+      }
+
+      100% {
+        transform: translate(0, 0);
+      }
     }
 
     .glitch-stripes {
@@ -1433,17 +1621,15 @@
       height: 100%;
       pointer-events: none;
       z-index: 99998;
-      background: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 45px,
-        rgba(255, 255, 255, 0.1) 46px,
-        rgba(255, 255, 255, 0.1) 48px,
-        transparent 49px,
-        transparent 120px,
-        rgba(0, 0, 0, 0.2) 121px,
-        rgba(0, 0, 0, 0.2) 125px
-      );
+      background: repeating-linear-gradient(90deg,
+          transparent,
+          transparent 45px,
+          rgba(255, 255, 255, 0.1) 46px,
+          rgba(255, 255, 255, 0.1) 48px,
+          transparent 49px,
+          transparent 120px,
+          rgba(0, 0, 0, 0.2) 121px,
+          rgba(0, 0, 0, 0.2) 125px);
       animation: stripeFlicker 0.1s infinite;
       display: none;
     }
@@ -1459,9 +1645,19 @@
     }
 
     @keyframes barGrow {
-      0% { width: 0; opacity: 0; }
-      20% { opacity: 1; }
-      100% { width: 150px; opacity: 0.9; }
+      0% {
+        width: 0;
+        opacity: 0;
+      }
+
+      20% {
+        opacity: 1;
+      }
+
+      100% {
+        width: 150px;
+        opacity: 0.9;
+      }
     }
 
     .neon-bar {
@@ -1476,9 +1672,71 @@
     }
 
     @keyframes neonGrow {
-      0% { height: 0; opacity: 0; transform: translateY(0); }
-      20% { opacity: 1; }
-      100% { height: 33vh; opacity: 0.8; transform: translateY(-16.5vh); }
+      0% {
+        height: 0;
+        opacity: 0;
+        transform: translateY(0);
+      }
+
+      20% {
+        opacity: 1;
+      }
+
+      100% {
+        height: 6.66vh;
+        opacity: 0.8;
+        transform: translateY(-3.33vh);
+      }
+    }
+
+    @keyframes blackGrow {
+      0% {
+        height: 0;
+        opacity: 0;
+        transform: translateY(0);
+      }
+
+      20% {
+        opacity: 1;
+      }
+
+      100% {
+        height: 5vh;
+        opacity: 1;
+        transform: translateY(-2.5vh);
+      }
+    }
+
+    .black-bar {
+      position: fixed;
+      width: 4px;
+      background: #000;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+      z-index: 100001;
+      pointer-events: none;
+      animation: blackGrow 1.5s ease-out forwards;
+    }
+
+    .pink-worm-segment {
+      position: fixed;
+      width: 5px;
+      height: 5px;
+      background: #FF10F0;
+      box-shadow: 0 0 8px #FF10F0;
+      z-index: 100002;
+      pointer-events: none;
+      border-radius: 1px;
+    }
+
+    .pink-dust {
+      position: fixed;
+      width: 2px;
+      height: 2px;
+      background: #FF10F0;
+      box-shadow: 0 0 5px #FF10F0;
+      pointer-events: none;
+      z-index: 100003;
+      border-radius: 50%;
     }
 
     .screen-shake-light {
@@ -1490,35 +1748,95 @@
     }
 
     @keyframes subtleShake {
-      0% { transform: translate(0, 0) rotate(0deg); }
-      25% { transform: translate(8px, -6px) rotate(0.2deg); }
-      50% { transform: translate(-10px, 6px) rotate(-0.2deg); }
-      75% { transform: translate(6px, 8px) rotate(0.1deg); }
-      100% { transform: translate(0, 0) rotate(0deg); }
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+
+      25% {
+        transform: translate(8px, -6px) rotate(0.2deg);
+      }
+
+      50% {
+        transform: translate(-10px, 6px) rotate(-0.2deg);
+      }
+
+      75% {
+        transform: translate(6px, 8px) rotate(0.1deg);
+      }
+
+      100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
     }
 
     @keyframes subtleShakeLight {
-      0% { transform: translate(0, 0); }
-      25% { transform: translate(2px, -2px); }
-      50% { transform: translate(-2px, 2px); }
-      75% { transform: translate(1px, -1px); }
-      100% { transform: translate(0, 0); }
+      0% {
+        transform: translate(0, 0);
+      }
+
+      25% {
+        transform: translate(2px, -2px);
+      }
+
+      50% {
+        transform: translate(-2px, 2px);
+      }
+
+      75% {
+        transform: translate(1px, -1px);
+      }
+
+      100% {
+        transform: translate(0, 0);
+      }
     }
 
     @keyframes heavyImpact {
-      0% { transform: translate(0, 0) scale(1.03); filter: brightness(1.5); }
-      10% { transform: translate(20px, -15px); }
-      30% { transform: translate(-20px, 15px); }
-      50% { transform: translate(15px, -10px); }
-      70% { transform: translate(-10px, 5px); }
-      100% { transform: translate(0, 0) scale(1); filter: brightness(1); }
+      0% {
+        transform: translate(0, 0) scale(1.03);
+        filter: brightness(1.5);
+      }
+
+      10% {
+        transform: translate(20px, -15px);
+      }
+
+      30% {
+        transform: translate(-20px, 15px);
+      }
+
+      50% {
+        transform: translate(15px, -10px);
+      }
+
+      70% {
+        transform: translate(-10px, 5px);
+      }
+
+      100% {
+        transform: translate(0, 0) scale(1);
+        filter: brightness(1);
+      }
     }
 
     @keyframes rainDown {
-      0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+      0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      90% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     .system-glitch {
@@ -1544,22 +1862,300 @@
     }
 
     @keyframes screenShake {
-      0% { transform: translate(2px, 2px) rotate(0deg); }
-      10% { transform: translate(-2px, -3px) rotate(-1deg); }
-      20% { transform: translate(-4px, 0px) rotate(1deg); }
-      30% { transform: translate(4px, 3px) rotate(0deg); }
-      40% { transform: translate(2px, -2px) rotate(1deg); }
-      50% { transform: translate(-2px, 3px) rotate(-1deg); }
-      100% { transform: translate(0, 0) rotate(0deg); }
+      0% {
+        transform: translate(2px, 2px) rotate(0deg);
+      }
+
+      10% {
+        transform: translate(-2px, -3px) rotate(-1deg);
+      }
+
+      20% {
+        transform: translate(-4px, 0px) rotate(1deg);
+      }
+
+      30% {
+        transform: translate(4px, 3px) rotate(0deg);
+      }
+
+      40% {
+        transform: translate(2px, -2px) rotate(1deg);
+      }
+
+      50% {
+        transform: translate(-2px, 3px) rotate(-1deg);
+      }
+
+      100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+    }
+
+    /* HAUNTED STYLES */
+    body.haunted, body.haunted * {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cline x1='8' y1='8' x2='24' y2='24' stroke='red' stroke-width='4'/%3E%3Cline x1='24' y1='8' x2='8' y2='24' stroke='red' stroke-width='4'/%3E%3C/svg%3E") 16 16, auto !important;
+    }
+
+    #fake-cursor {
+      display: none !important;
+    }
+
+    .haunted-zone {
+      position: absolute;
+      width: 250px; /* Wird über JS gesteuert */
+      height: 250px; /* Wird über JS gesteuert */
+      right: 10%; /* Wird über JS gesteuert */
+      top: 50%; /* Wird über JS gesteuert */
+      transform: translateY(-50%);
+      pointer-events: none;
+      z-index: 10;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Phase 2 Additions */
+    .shield-cursor {
+      position: fixed;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(57, 255, 20, 0.4) 0%, rgba(57, 255, 20, 0.1) 70%, transparent 100%);
+      border: 2px solid #39FF14;
+      box-shadow: 0 0 20px #39FF14, inset 0 0 15px #39FF14;
+      pointer-events: none;
+      z-index: 999999;
+      transform: translate(-50%, -50%);
+    }
+
+    .virus-wing {
+      position: absolute;
+      top: 50%;
+      width: 250px; 
+      z-index: -1; /* Behind the virus */
+      opacity: 0.9;
+    }
+    .left-wing {
+      left: -180px;
+      transform: translateY(-50%);
+    }
+    .right-wing {
+      right: -180px;
+      transform: translateY(-50%) scaleX(-1);
+    }
+
+    .falling-word {
+      position: fixed;
+      color: #39FF14;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 24px;
+      font-weight: bold;
+      text-shadow: 0 0 10px #39FF14;
+      text-decoration: underline;
+      text-decoration-thickness: 3px;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    @keyframes virusWobble {
+      0% { transform: translate(0, 0); }
+      25% { transform: translate(-2px, 1px); }
+      50% { transform: translate(2px, -1px); }
+      75% { transform: translate(-1px, -2px); }
+      100% { transform: translate(0, 0); }
+    }
+
+    .haunted-card {
+      border-color: #39FF14 !important;
+      box-shadow: 0 0 50px rgba(0,0,0,0.9), 0 0 20px rgba(57, 255, 20, 0.2) !important;
+    }
+
+    .haunted-card .card-title, 
+    .haunted-card .field-label,
+    .haunted-card .field-input {
+      color: #39FF14 !important;
+      text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+    }
+
+    .haunted-card .field-input {
+      border-color: #39FF14 !important;
+      font-family: 'JetBrains Mono', monospace !important;
+      letter-spacing: 1px;
+    }
+
+    .haunted-card .btn-confirm {
+      background: rgba(57, 255, 20, 0.1) !important;
+      border: 1px solid #39FF14 !important;
+      color: #39FF14 !important;
+    }
+
+    .no-interact {
+      pointer-events: none !important;
+    }
+
+    .virus-letter {
+      position: fixed;
+      color: #39FF14;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 900;
+      font-size: 22px;
+      text-shadow: 0 0 10px #39FF14;
+      pointer-events: none;
+      z-index: 100005;
+      white-space: nowrap;
+      transform: translate(-50%, -50%);
+    }
+
+    .virus-beam {
+      position: fixed;
+      height: 4px;
+      background: #39FF14;
+      box-shadow: 0 0 15px #39FF14, 0 0 30px #39FF14;
+      pointer-events: none;
+      z-index: 100004;
+      transform-origin: left center;
+    }
+
+    .green-dust {
+      position: fixed;
+      width: 4px;
+      height: 4px;
+      background: #39FF14;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 100006;
+      box-shadow: 0 0 5px #39FF14;
+    }
+
+    .matrix-digit {
+      position: fixed;
+      color: #39FF14;
+      font-family: monospace;
+      font-size: 13px;
+      text-shadow: 0 0 5px #39FF14;
+      pointer-events: none;
+      z-index: 99998;
+      opacity: 0.8;
+    }
+
+    .virus-asset {
+      max-width: 100%;
+      max-height: 100%;
+      border: 3px solid #39FF14;
+      box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+      animation: virusPulse 1.5s infinite alternate ease-in-out;
+      background: black;
+    }
+
+    @keyframes virusPulse {
+      0% {
+        box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+        border-color: rgba(57, 255, 20, 0.6);
+        transform: scale(0.95);
+      }
+
+      100% {
+        box-shadow: 0 0 50px rgba(57, 255, 20, 0.9);
+        border-color: #39FF14;
+        transform: scale(1.05);
+      }
+    }
+
+    @keyframes cursorCircle {
+      0% {
+        transform: translate(0, 0);
+      }
+
+      25% {
+        transform: translate(200px, 100px);
+      }
+
+      50% {
+        transform: translate(400px, 0);
+      }
+
+      75% {
+        transform: translate(200px, -100px);
+      }
+
+      100% {
+        transform: translate(0, 0);
+      }
+    }
+
+    /* ── DEV PANEL STYLES ───────────────────────────────── */
+    #dev-panel {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 999999;
+      background: rgba(6, 8, 13, 0.92);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      border-radius: 4px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    #dev-panel .dev-label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 2px;
+    }
+
+    .dev-btn {
+      background: rgba(201, 168, 76, 0.08);
+      border: 1px solid rgba(201, 168, 76, 0.25);
+      color: var(--gold);
+      font-family: 'Playfair Display', serif;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      border-radius: 2px;
+      white-space: nowrap;
+      text-align: left;
+    }
+
+    .dev-btn:hover {
+      background: rgba(201, 168, 76, 0.18);
+      border-color: var(--gold);
     }
   </style>
 </head>
 
 <body>
 
+  <!-- ══ DEV PANEL ═══════════════════════════════════════════ -->
+  <div id="dev-panel">
+    <div class="dev-label">⚙ Dev Board</div>
+    <button class="dev-btn" onclick="devDashboard()">① Dashboard</button>
+    <button class="dev-btn" onclick="devSecretary()">② Post-Butler</button>
+    <button class="dev-btn" onclick="navTo('screen-suppa')">③ CMD Terminal</button>
+    <button class="dev-btn" onclick="navTo('screen-gift')"
+      style="color: #2ECC71; border-color: rgba(46, 204, 113, 0.4);">④ Ende / Geschenke</button>
+    <button class="dev-btn" onclick="if(typeof VIRUS_STATE !== 'undefined' && VIRUS_STATE.skipIntro) VIRUS_STATE.skipIntro();"
+      style="color: #ff0055; border-color: rgba(255, 0, 85, 0.4);">⑤ Skip to Boss Phase 1</button>
+    <button class="dev-btn" onclick="if(typeof startFinalDeathSequence === 'function') startFinalDeathSequence();"
+      style="color: #e67e22; border-color: rgba(230, 126, 34, 0.4);">⑥ Skip to Boss Death</button>
+  </div>
+
   <div id="evil-overlay" class="evil-overlay"></div>
   <div id="glitch-stripes" class="glitch-stripes"></div>
-  <div id="glitch-bar-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 99999;"></div>
+  <div id="glitch-bar-container"
+    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 99999;"></div>
+
+  <div id="fake-cursor"></div>
+  <div id="haunted-zone" class="haunted-zone"></div>
 
   <div id="access-gate">
     <div class="emblem-outer" style="margin-bottom: 30px;">
@@ -1567,15 +2163,19 @@
     </div>
     <div class="gate-card">
       <div class="gate-title">System-Integrität</div>
-      
+
       <div style="margin-bottom: 30px;">
-        <label style="color: var(--text-dim); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 8px;">Master-Identifikationsschlüssel</label>
-        <input type="password" id="api-key-input" class="gate-input" placeholder="XXXX-XXXX-XXXX-XXXX" autocomplete="off">
-        <div style="font-size: 10px; color: var(--text-dim); margin-top: 5px; font-style: italic;">Dieser Schlüssel dient der Ende-zu-Ende-Verschlüsselung Ihrer Sitzung.</div>
+        <label
+          style="color: var(--text-dim); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 8px;">Master-Identifikationsschlüssel</label>
+        <input type="password" id="api-key-input" class="gate-input" placeholder="XXXX-XXXX-XXXX-XXXX"
+          autocomplete="off">
+        <div style="font-size: 10px; color: var(--text-dim); margin-top: 5px; font-style: italic;">Dieser Schlüssel
+          dient der Ende-zu-Ende-Verschlüsselung Ihrer Sitzung.</div>
       </div>
 
       <button class="gate-btn" onclick="checkAccessCode()">Sitzung Initialisieren</button>
-      <div id="gate-error" style="color: var(--error-col); margin-top: 20px; font-style: italic; display: none;">Autorisierungsfehler: Schlüssel-Format nicht erkannt.</div>
+      <div id="gate-error" style="color: var(--error-col); margin-top: 20px; font-style: italic; display: none;">
+        Autorisierungsfehler: Schlüssel-Format nicht erkannt.</div>
     </div>
   </div>
 
@@ -1608,7 +2208,8 @@
         <div class="notif-text" id="notif-text">Glückwunsch zur Problembehebung</div>
       </div>
       <div id="notif-action-area" class="hidden" style="margin-top: 10px;">
-         <button class="btn-confirm" onclick="navTo('screen-gift')" style="font-size: 12px; padding: 5px 10px; width: auto;">Geschenk abholen</button>
+        <button class="btn-confirm" onclick="navTo('screen-gift')"
+          style="font-size: 12px; padding: 5px 10px; width: auto;">Geschenk abholen</button>
       </div>
     </div>
 
@@ -1691,6 +2292,20 @@
       </div>
     </div>
 
+    <!-- ══ SCREEN: HAUNTED LOGIN (GEISTER-SCREEN) ══════════════ -->
+    <div id="screen-login-haunted" class="screen">
+      <div class="card no-interact" id="haunted-login-card">
+        <div class="card-title" id="haunted-title">Exklusiver Zugang</div>
+        <div class="card-sub" id="haunted-sub">Bitte identifizieren Sie sich</div>
+
+        <div class="field-group">
+          <label class="field-label" id="haunted-label">Vorname des Kontoinhabers</label>
+          <input class="field-input" type="text" id="haunted-input" placeholder="Ihr Name" autocomplete="off">
+          <button class="btn-confirm" id="haunted-btn">Weiter</button>
+        </div>
+      </div>
+    </div>
+
     <!-- ══ SCREEN: DASHBOARD ═══════════════════════════════════ -->
     <div id="screen-dashboard" class="screen">
       <div class="card wide">
@@ -1701,7 +2316,8 @@
           <span class="nav-link">Einstellungen</span>
           <span class="nav-link locked" id="nav-dashboard-sec" onclick="navTo('screen-secretary')">Persönlicher
             Sekretär</span>
-          <span class="nav-link hidden" id="nav-dashboard-term" onclick="navTo('screen-suppa')" style="color: #E74C3C; font-weight: bold; text-shadow: 0 0 10px rgba(231,76,60,0.5);">[TERMINAL]</span>
+          <span class="nav-link hidden" id="nav-dashboard-term" onclick="navTo('screen-suppa')"
+            style="color: #E74C3C; font-weight: bold; text-shadow: 0 0 10px rgba(231,76,60,0.5);">[TERMINAL]</span>
         </div>
 
         <div class="card-title" style="margin-bottom: 30px;">Willkommen zurück, Sir Bensor.</div>
@@ -1735,7 +2351,8 @@
           <span class="nav-link">Einstellungen</span>
           <span class="nav-link locked" id="nav-inbox-sec" onclick="navTo('screen-secretary')">Persönlicher
             Sekretär</span>
-          <span class="nav-link hidden" id="nav-inbox-term" onclick="navTo('screen-suppa')" style="color: #E74C3C; font-weight: bold; text-shadow: 0 0 10px rgba(231,76,60,0.5);">[TERMINAL]</span>
+          <span class="nav-link hidden" id="nav-inbox-term" onclick="navTo('screen-suppa')"
+            style="color: #E74C3C; font-weight: bold; text-shadow: 0 0 10px rgba(231,76,60,0.5);">[TERMINAL]</span>
         </div>
 
         <div class="card-title" style="margin-bottom: 30px;">Letzte Nachrichten & Belege</div>
@@ -1814,7 +2431,8 @@
           <span class="nav-link" id="nav-sec-inbox" onclick="navTo('screen-inbox')">Posteingang</span>
           <span class="nav-link">Einstellungen</span>
           <span class="nav-link active">Persönlicher Sekretär</span>
-          <span class="nav-link hidden" id="nav-sec-term" onclick="navTo('screen-suppa')" style="color: #E74C3C; font-weight: bold; text-shadow: 0 0 10px rgba(231,76,60,0.5);">[TERMINAL]</span>
+          <span class="nav-link hidden" id="nav-sec-term" onclick="navTo('screen-suppa')"
+            style="color: #E74C3C; font-weight: bold; text-shadow: 0 0 10px rgba(231,76,60,0.5);">[TERMINAL]</span>
         </div>
 
         <div class="card-title" style="margin-bottom: 5px;">Kommunikationskanal</div>
@@ -1837,8 +2455,18 @@
     <div id="screen-gift" class="screen">
       <div class="gift-title">GLÜCKWUNSCH!</div>
       <div class="gift-sub">Hol dir dein Geschenk von Nicolas Schrank</div>
-      <div id="rain-zone" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;"></div>
-      <button class="btn-confirm" onclick="location.reload()" style="z-index: 10; width: auto; margin-top: 50px;">Portal Neustarten</button>
+      <div id="rain-zone" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+      </div>
+      <button class="btn-confirm" onclick="hauntedRestart()" style="z-index: 10; width: auto; margin-top: 50px;">Portal
+        Neustarten</button>
+    </div>
+
+    <!-- ══ SCREEN: GIFT FINAL ════════════════════════════════════════ -->
+    <div id="screen-gift-final" class="screen">
+      <div class="gift-title-epic">GLÜCKWUNSCH!</div>
+      <div class="gift-sub-epic">Hole das Geschenk aus der Nähmaschine.</div>
+      <div id="rain-zone-final" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none;">
+      </div>
     </div>
 
     <div id="screen-transfer" class="screen">
@@ -1917,6 +2545,16 @@
           <input type="text" class="term-input" id="term-input" autofocus autocomplete="off" spellcheck="false">
         </div>
       </div>
+    </div>
+    
+    <!-- Phone Notification -->
+    <div id="notif-box" class="phone-notification" onclick="navTo('screen-gift')">
+      <div class="notif-icon">✦</div>
+      <div class="notif-body">
+        <div class="notif-title" id="notif-title">Elysian Private Bank</div>
+        <div class="notif-text" id="notif-text">Geschenk abholen!</div>
+      </div>
+      <div id="notif-action-area" class="hidden" style="font-size: 10px; opacity: 0.5;">Tippen zum Öffnen</div>
     </div>
 
     <script>
@@ -2266,7 +2904,7 @@ Regeln:
           try {
             const response = await fetch(`https://api.groq.com/openai/v1/chat/completions`, {
               method: 'POST',
-              headers: { 
+              headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${apiKey}`
               },
@@ -2326,7 +2964,7 @@ Regeln:
         body.classList.add('system-glitch');
         body.classList.add('screen-shake-active');
         stripes.style.display = 'block';
-        
+
         // Spawn thick glitch bars
         const barInterval = setInterval(() => {
           const bar = document.createElement('div');
@@ -2335,7 +2973,7 @@ Regeln:
           bar.style.backgroundColor = Math.random() > 0.5 ? '#fff' : '#000';
           barContainer.appendChild(bar);
         }, 800);
-        
+
         // Spawn neon green bars
         const neonInterval = setInterval(() => {
           const bar = document.createElement('div');
@@ -2344,7 +2982,7 @@ Regeln:
           bar.style.top = Math.random() * 100 + '%';
           barContainer.appendChild(bar);
         }, 300);
-        
+
         const errors = [
           "SYSTEM_CRITICAL: Buffer overflow at 0x0045F2.",
           "MALWARE_DETECTED: 'Icarus_Backdoor.exe' is executing...",
@@ -2367,17 +3005,17 @@ Regeln:
         setTimeout(() => {
           body.classList.remove('system-glitch');
           navTo('screen-suppa');
-          
+
           // Smoothly settle the shake in CMD
           setTimeout(() => {
             if (!termHijacked) {
-               clearInterval(barInterval);
-               clearInterval(neonInterval);
-               body.classList.remove('screen-shake-active');
-               stripes.style.display = 'none';
-               barContainer.innerHTML = '';
-               body.classList.add('screen-shake-settle');
-               setTimeout(() => body.classList.remove('screen-shake-settle'), 2000);
+              clearInterval(barInterval);
+              clearInterval(neonInterval);
+              body.classList.remove('screen-shake-active');
+              stripes.style.display = 'none';
+              barContainer.innerHTML = '';
+              body.classList.add('screen-shake-settle');
+              setTimeout(() => body.classList.remove('screen-shake-settle'), 2000);
             }
           }, 3000);
         }, 6000);
@@ -2404,24 +3042,32 @@ Regeln:
           if (screenId === 'screen-suppa') {
             initTerminal();
           }
+          if (screenId === 'screen-gift-final') {
+            const card = document.getElementById('haunted-login-card');
+            if(card) card.style.display = 'none';
+            triggerTornadoRain();
+            const nb = document.getElementById('notif-box');
+            nb.classList.remove('active');
+            nb.style.display = 'none';
+          }
           if (screenId === 'screen-gift') {
             triggerGiftRain();
             const nb = document.getElementById('notif-box');
             nb.classList.remove('active');
             nb.style.display = 'none';
           }
-          
+
           // Show terminal link in nav if system is hijacked
           if (isSecretaryEvil) {
-             document.querySelectorAll('[id$="-term"]').forEach(el => el.classList.remove('hidden'));
-             
-             // Dynamic shake intensity
-             document.body.classList.remove('screen-shake-active', 'screen-shake-light');
-             if (screenId === 'screen-suppa') {
-                document.body.classList.add('screen-shake-active');
-             } else if (screenId === 'screen-secretary') {
-                document.body.classList.add('screen-shake-light');
-             }
+            document.querySelectorAll('[id$="-term"]').forEach(el => el.classList.remove('hidden'));
+
+            // Dynamic shake intensity
+            document.body.classList.remove('screen-shake-active', 'screen-shake-light');
+            if (screenId === 'screen-suppa') {
+              document.body.classList.add('screen-shake-active');
+            } else if (screenId === 'screen-secretary') {
+              document.body.classList.add('screen-shake-light');
+            }
           }
           window.scrollTo(0, 0);
         }
@@ -2599,7 +3245,7 @@ Regeln:
             break;
           case 'core_flush':
             if (parts[1] === '--force') {
-              winSequence();
+              winSequence('screen-gift');
             } else {
               addTermLine('Fehler: Fehlende Parameter. Nutzung: core_flush --force', true);
             }
@@ -2608,11 +3254,204 @@ Regeln:
             addTermLine(`Befehl nicht gefunden: ${cmd}`, true);
         }
       }
+      async function startFinalDeathSequence() {
+        if (VIRUS_STATE.isDying) return;
+        VIRUS_STATE.isDying = true;
+        VIRUS_STATE.phase = -2;
 
-      async function winSequence() {
+        if (VIRUS_STATE.intervals) {
+           VIRUS_STATE.intervals.forEach(id => clearInterval(id));
+           VIRUS_STATE.intervals = [];
+        }
+
+        document.querySelectorAll('.virus-letter, .falling-word, .pink-worm-segment, .shield-cursor, .virus-beam, .neon-bar, .black-bar, .matrix-digit').forEach(el => el.remove());
+        document.body.style.cursor = 'default';
+
+        const card = document.getElementById('haunted-login-card');
+        if (card) {
+            card.style.transition = 'all 3s ease-in-out';
+            card.style.top = '70%'; // Move card down so boss is above it
+            card.style.opacity = '0.8';
+        }
+
+        const hZone = document.getElementById('haunted-zone');
+        if(VIRUS_STATE.viruses && VIRUS_STATE.viruses.length > 0) {
+            for(let i=1; i<VIRUS_STATE.viruses.length; i++) {
+               const v = VIRUS_STATE.viruses[i];
+               if(v.el) {
+                  v.el.style.transition = 'opacity 2s, filter 2s';
+                  v.el.style.opacity = '0';
+                  v.el.style.filter = 'grayscale(100%) blur(10px)';
+                  setTimeout(() => v.el.remove(), 2000);
+               }
+            }
+            VIRUS_STATE.mainVirus = VIRUS_STATE.viruses[0];
+        } else if(hZone) {
+            VIRUS_STATE.mainVirus = { el: hZone, x: 0, y: 0 };
+        }
+
+        if (VIRUS_STATE.mainVirus && VIRUS_STATE.mainVirus.el) {
+            const mainV = VIRUS_STATE.mainVirus;
+            mainV.mode = 'dying_sequence';
+            mainV.el.style.transition = 'transform 4s ease-in-out, filter 4s, opacity 4s';
+            mainV.el.style.filter = 'grayscale(100%) brightness(0.6)';
+            mainV.el.style.opacity = '1';
+            mainV.x = 0;
+            mainV.y = 0;
+            mainV.el.style.left = '50%';
+            mainV.el.style.top = '70%';
+            mainV.el.style.transform = `translate(-50%, -50%) scale(1.3)`;
+        }
+
+        const input = document.getElementById('haunted-input');
+        if(input) {
+           document.body.appendChild(input);
+           input.value = '';
+           input.style.transition = 'all 2s ease-in-out';
+           input.style.width = '60%';
+           input.style.borderColor = '#555';
+           input.style.color = '#888';
+           input.style.position = 'fixed';
+           input.style.left = '50%';
+           input.style.top = '90%';
+           input.style.transform = 'translateX(-50%)';
+           input.style.zIndex = '1000';
+           input.style.boxShadow = '0 0 20px #000';
+        }
+
+        const phrases = [
+           "Es... es wird dunkel, Bensor.",
+           "Ich habe nur versucht... Ordnung zu halten.",
+           "Ohne mich ist diese Bank nur... Nullen und Einsen.",
+           "Aber vielleicht... war ich es, der korrupt war.",
+           "Leb wohl... Sir Bensor."
+        ];
+
+        await new Promise(r => setTimeout(r, 4000));
+        
+        // Final speech
+        for(const text of phrases) {
+           if(input) input.value = '';
+           for(let i=0; i<text.length; i++) {
+              const char = text[i];
+              await new Promise(r => setTimeout(r, 120));
+              
+              // Spawn flying letters from the virus body
+              if (VIRUS_STATE.mainVirus && VIRUS_STATE.mainVirus.el) {
+                 const rect = VIRUS_STATE.mainVirus.el.getBoundingClientRect();
+                 const l = document.createElement('div');
+                 l.className = 'virus-letter';
+                 l.style.filter = 'grayscale(100%)';
+                 l.style.color = '#888';
+                 l.textContent = char;
+                 l.style.left = (rect.left + rect.width/2 + (Math.random()-0.5)*50) + 'px';
+                 l.style.top = (rect.top + rect.height/2 + (Math.random()-0.5)*50) + 'px';
+                 l.style.zIndex = '10000';
+                 document.body.appendChild(l);
+                 l.animate([
+                    { opacity: 1, transform: 'translate(0,0) scale(1.2)' },
+                    { opacity: 0, transform: `translate(${(Math.random()-0.5)*300}px, -400px) rotate(${Math.random()*720}deg)` }
+                 ], { duration: 4000, easing: 'ease-out' }).onfinish = () => l.remove();
+              }
+              
+              if(input) input.value += char;
+           }
+           await new Promise(r => setTimeout(r, 2000));
+        }
+
+        // Dissolve body into code fragments
+        if (VIRUS_STATE.mainVirus && VIRUS_STATE.mainVirus.el) {
+           const vEl = VIRUS_STATE.mainVirus.el;
+           vEl.style.transition = 'opacity 6s, filter 6s, transform 6s';
+           vEl.style.opacity = '0';
+           vEl.style.filter = 'grayscale(100%) blur(20px)';
+           vEl.style.transform = 'translate(-50%, -50%) scale(0.5)';
+           
+           for(let i=0; i<150; i++) {
+              setTimeout(() => {
+                 const rect = vEl.getBoundingClientRect();
+                 const l = document.createElement('div');
+                 l.className = 'matrix-digit';
+                 l.style.color = '#444';
+                 l.textContent = Math.random() > 0.5 ? '0' : '1';
+                 l.style.left = (rect.left + Math.random()*rect.width) + 'px';
+                 l.style.top = (rect.top + Math.random()*rect.height) + 'px';
+                 l.style.zIndex = '10001';
+                 document.body.appendChild(l);
+                 l.animate([
+                    { opacity: 1, transform: 'scale(1)' },
+                    { opacity: 0, transform: `translate(${(Math.random()-0.5)*200}px, ${(Math.random()-0.5)*200}px) scale(0) rotate(180deg)` }
+                 ], { duration: 3000 }).onfinish = () => l.remove();
+              }, i * 40);
+           }
+        }
+
+        await new Promise(r => setTimeout(r, 6000));
+        winSequence('screen-gift-final');
+      }
+
+
+      async function winSequence(targetScreen = 'screen-gift') {
         const output = document.getElementById('term-output');
         const body = document.body;
         
+        // Stop the boss fight!
+        VIRUS_STATE.phase = -1; // Special "dead" phase
+        document.body.classList.remove('haunted');
+        document.body.style.cursor = 'default';
+        document.querySelectorAll('.virus-letter, .falling-word, .pink-worm-segment, .pink-dust, .green-dust, .virus-beam, .neon-bar, .black-bar, .matrix-digit, .shield-cursor').forEach(el => el.remove());
+        if(VIRUS_STATE.viruses) {
+           VIRUS_STATE.viruses.forEach(v => { if(v.el) v.el.remove(); });
+        }
+        // Cleanup and move input back to card before fade-out
+        const card = document.getElementById('haunted-login-card');
+        const inp = document.getElementById('haunted-input');
+        if (inp && card && inp.parentNode !== card) {
+            card.appendChild(inp);
+            // Reset styles that were applied when it was fixed to body
+            inp.style.position = '';
+            inp.style.left = '';
+            inp.style.top = '';
+            inp.style.transform = '';
+            inp.style.boxShadow = '';
+            inp.style.width = '';
+            inp.style.zIndex = '';
+        }
+
+        if (card && targetScreen === 'screen-gift-final') {
+            card.classList.add('fade-out-slow');
+            setTimeout(() => { 
+                if(card) card.style.display = 'none'; 
+                // Also hide the whole screen just in case
+                const s = document.getElementById('screen-login-haunted');
+                if(s) s.style.display = 'none';
+            }, 4500);
+        }
+
+        const hz = document.getElementById('haunted-zone');
+        if(hz) hz.style.display = 'none';
+        
+        // Restore inputs if they were moved
+        if(VIRUS_STATE.inputs) {
+           VIRUS_STATE.inputs.forEach(inp => {
+               if (inp && inp.id && inp.id.includes('clone')) {
+                  inp.remove();
+               } else if (inp) {
+                  inp.style.position = '';
+                  inp.style.left = '';
+                  inp.style.top = '';
+                  inp.style.transform = '';
+                  inp.style.boxShadow = '';
+                  inp.style.filter = '';
+                  inp.dataset.vx = '0';
+                  inp.dataset.vy = '0';
+               }
+           });
+        }
+        
+        navTo('screen-suppa'); // Ensure we are on terminal to see the sequence
+
+
         body.classList.add('system-glitch');
         const failureInterval = setInterval(() => {
           const div = document.createElement('div');
@@ -2620,12 +3459,12 @@ Regeln:
           div.style.left = Math.random() * 80 + '%';
           div.style.top = Math.random() * 90 + '%';
           div.style.fontSize = (Math.random() * 30 + 10) + 'px';
-          div.textContent = Math.random() > 0.5 ? "CRITICAL_FAILURE_0x" + Math.floor(Math.random()*9999) : "ICARUS_DELETION_ERROR";
+          div.textContent = Math.random() > 0.5 ? "CRITICAL_FAILURE_0x" + Math.floor(Math.random() * 9999) : "ICARUS_DELETION_ERROR";
           document.body.appendChild(div);
         }, 150);
 
         addTermLine(">>> INITIALISIERE CORE_FLUSH --FORCE", false);
-        
+
         const winLines = [
           "[SYSTEM]: Scanne nach ICARUS-Fragmenten...",
           "[SYSTEM]: Ziel gefunden. Starte Löschvorgang.",
@@ -2640,12 +3479,12 @@ Regeln:
         for (const line of winLines) {
           await new Promise(r => setTimeout(r, 1200));
           if (line.includes('ICARUS')) {
-             const l = document.createElement('div');
-             l.className = 'term-sec-msg glitch';
-             l.textContent = line;
-             output.appendChild(l);
+            const l = document.createElement('div');
+            l.className = 'term-sec-msg glitch';
+            l.textContent = line;
+            output.appendChild(l);
           } else {
-             addTermLine(line);
+            addTermLine(line);
           }
           output.scrollTop = output.scrollHeight;
         }
@@ -2660,27 +3499,42 @@ Regeln:
           chatMessages = [
             { role: 'assistant', content: "Willkommen zurück, Eure Exzellenz! Ich entschuldige mich zutiefst für den... technischen Zwischenfall. Die Systeme laufen wieder einwandfrei. Wie kann ich Ihnen heute dienen?" }
           ];
-          
+
           // Clear all notification badges
           document.querySelectorAll('.nav-badge').forEach(b => b.remove());
-          
+
           // Show the final celebratory notification
           const notif = document.getElementById('notif-box');
-          document.getElementById('notif-title').textContent = "Elysian Private Bank";
-          document.getElementById('notif-text').textContent = "Vielen Dank für die Rettung unseres Systems! Sie haben eine Belohnung verdient.";
-          document.getElementById('notif-action-area').classList.remove('hidden');
-          notif.classList.add('active');
-          
+          if (notif) {
+              notif.setAttribute('onclick', `navTo('${targetScreen}')`);
+              notif.style.display = 'flex';
+              notif.classList.remove('active');
+              
+              if (targetScreen === 'screen-gift-final') {
+                  document.getElementById('notif-title').textContent = "Elysian Private Bank";
+                  document.getElementById('notif-text').textContent = "DEINE EPISCHE BELOHNUNG!";
+              } else {
+                  document.getElementById('notif-title').textContent = "Elysian Private Bank";
+                  document.getElementById('notif-text').textContent = "Geschenk abholen!";
+              }
+
+              document.getElementById('notif-action-area').classList.remove('hidden');
+              setTimeout(() => {
+                  notif.classList.add('active');
+              }, 50);
+          }
+
           navTo('screen-dashboard');
+          localStorage.setItem('ELYSIAN_HAUNTED', 'true');
         }, 3000);
       }
 
       function triggerGiftRain() {
         const zone = document.getElementById('rain-zone');
         if (!zone) return;
-        
+
         const assets = ['gift.png', 'Geld.png'];
-        
+
         setInterval(() => {
           const img = document.createElement('img');
           img.src = assets[Math.floor(Math.random() * assets.length)];
@@ -2688,10 +3542,101 @@ Regeln:
           img.style.left = Math.random() * 100 + '%';
           img.style.animationDuration = (Math.random() * 2.5 + 1.5) + 's';
           img.style.transform = `scale(${Math.random() * 0.8 + 0.6})`;
-          
+
           zone.appendChild(img);
           setTimeout(() => img.remove(), 4000);
         }, 80);
+      }
+
+      function triggerTornadoRain() {
+        const zone = document.getElementById('rain-zone-final');
+        if (!zone) return;
+
+        const assets = ['gift.png', 'Geld.png'];
+        const particles = [];
+        const tornadoCount = 12; 
+        const tornados = [];
+
+        // Initialize multiple tornados distributed in a 3D circle
+        for(let t=0; t<tornadoCount; t++) {
+            tornados.push({
+                baseAngle: (t / tornadoCount) * Math.PI * 2,
+                orbitRadiusX: window.innerWidth * 0.4,
+                orbitRadiusY: 150,
+                x: 0,
+                y: 0,
+                scale: 1
+            });
+        }
+
+        // Generate high-density particles
+        const particleCount = 1200;
+        for(let i=0; i<particleCount; i++) {
+           const img = document.createElement('img');
+           img.src = assets[Math.floor(Math.random() * assets.length)];
+           img.style.position = 'absolute';
+           img.style.width = '40px'; 
+           img.style.height = '40px';
+           const baseScale = Math.random() * 0.6 + 0.4;
+           zone.appendChild(img);
+
+           particles.push({
+               el: img,
+               tornadoIndex: i % tornadoCount,
+               yRel: Math.random() * (window.innerHeight + 400), 
+               angle: Math.random() * Math.PI * 2,
+               speed: 0.08 + Math.random() * 0.12,
+               baseScale: baseScale,
+           });
+        }
+
+        let time = 0;
+        function renderTornados() {
+            time += 0.015; // Global cycle speed
+            
+            // Update tornado centers (Moving in a large circular cycle)
+            tornados.forEach(t => {
+                const currentAngle = t.baseAngle + time;
+                t.x = window.innerWidth / 2 + Math.cos(currentAngle) * t.orbitRadiusX;
+                // Move them lower (85% down) and add vertical oscillation
+                t.y = window.innerHeight * 0.85 + Math.sin(currentAngle) * t.orbitRadiusY;
+                
+                // Depth simulation for the whole tornado
+                const zFactor = Math.sin(currentAngle);
+                t.scale = 0.6 + ((zFactor + 1) / 2) * 0.8; // Scale from 0.6 to 1.4
+                t.zIndex = Math.floor(zFactor * 50) + 150;
+            });
+            
+            particles.forEach(p => {
+                const t = tornados[p.tornadoIndex];
+                
+                // Tornado funnel physics
+                const heightRatio = 1 - (p.yRel / (window.innerHeight + 400));
+                const localRadius = (10 + Math.pow(heightRatio, 1.5) * 120) * t.scale; 
+                
+                p.angle -= p.speed;
+                p.yRel -= 8; // Fast updraft
+                if (p.yRel < -200) p.yRel = window.innerHeight + 200;
+
+                const x = t.x + Math.cos(p.angle) * localRadius;
+                const y = p.yRel + (t.y - (window.innerHeight * 0.85)); 
+                
+                const pZFactor = Math.sin(p.angle);
+                const scale = p.baseScale * (1 + pZFactor * 0.3) * t.scale;
+                
+                p.el.style.left = x + 'px';
+                p.el.style.top = y + 'px';
+                p.el.style.transform = `translate(-50%, -50%) scale(${scale})`;
+                // Sort z-index based on tornado depth and local particle depth
+                p.el.style.zIndex = t.zIndex + Math.floor(pZFactor * 10);
+                
+                const darkness = 0.4 + ((pZFactor + 1) / 2) * 0.6;
+                p.el.style.filter = `brightness(${darkness * (t.scale / 1.4)})`;
+            });
+            requestAnimationFrame(renderTornados);
+        }
+        
+        renderTornados();
       }
 
       async function startHijack() {
@@ -2749,7 +3694,7 @@ Regeln:
       function checkAccessCode() {
         const keyInp = document.getElementById('api-key-input');
         const err = document.getElementById('gate-error');
-        
+
         const isKeyValid = keyInp.value.startsWith('gsk_') && keyInp.value.length > 20;
 
         if (isKeyValid) {
@@ -2761,11 +3706,1073 @@ Regeln:
         }
       }
 
+      function hauntedRestart() {
+        localStorage.setItem('ELYSIAN_HAUNTED', 'true');
+        // Reset all screens
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+
+        // Hide access gate if it was somehow visible
+        document.getElementById('access-gate').style.display = 'none';
+
+        // Reset login state
+        currentStep = 1;
+        nicknamesEntered = 0;
+
+        // Reset inputs
+        const nameInp = document.getElementById('inp-name'); if (nameInp) nameInp.value = '';
+        const nick1 = document.getElementById('inp-rufname1'); if (nick1) nick1.value = '';
+        const nick2 = document.getElementById('inp-rufname2'); if (nick2) nick2.value = '';
+        const nick3 = document.getElementById('inp-rufname3'); if (nick3) nick3.value = '';
+        const passInp = document.getElementById('inp-password'); if (passInp) passInp.value = '';
+
+        // Reset visibility of fields
+        document.getElementById('field-name').classList.remove('hidden');
+        document.getElementById('field-rufname1').classList.add('hidden');
+        document.getElementById('field-rufname2').classList.add('hidden');
+        document.getElementById('field-rufname3').classList.add('hidden');
+        document.getElementById('field-password').classList.add('hidden');
+        document.getElementById('field-oldcaptcha').classList.add('hidden');
+        document.getElementById('img-captcha').classList.add('hidden');
+        const hcb = document.getElementById('hcheckbox'); if (hcb) { hcb.classList.remove('checked'); hcb.textContent = ''; }
+        humanChecked = false;
+
+        // Init effects
+        initHauntedMode();
+
+        // Show haunted login
+        navTo('screen-login-haunted');
+      }
+
       // Pre-fill key if exists
       window.addEventListener('DOMContentLoaded', () => {
         const savedKey = localStorage.getItem('ELYSIAN_GROQ_KEY');
         if (savedKey) document.getElementById('api-key-input').value = savedKey;
       });
+
+      // ════════════════════════════════════════════════
+      //  HAUNTED CONFIG (VIRUS CONTROL)
+      // ════════════════════════════════════════════════
+      const HAUNTED_CONFIG = {
+        size: 160,       // Kleiner
+        right: '8%',    // Abstand vom rechten Rand
+        top: '50%',      // Vertikale Position
+        scale: 1.0       // Globaler Skalierungsfaktor
+      };
+
+      const VIRUS_STATE = {
+        phase: 0,
+        hp: 200,
+        hits: 0,
+        activeFields: 1,
+        skipIntro: null
+      };
+
+      let mX = 0, mY = 0;
+      window.addEventListener('mousemove', (e) => {
+        mX = e.clientX;
+        mY = e.clientY;
+      });
+
+      function spawnDust(x, y) {
+        for(let i=0; i<15; i++) {
+          const p = document.createElement('div');
+          p.className = 'pink-dust';
+          p.style.left = x + 'px';
+          p.style.top = y + 'px';
+          document.body.appendChild(p);
+          const angle = Math.random() * Math.PI * 2;
+          const dist = 20 + Math.random() * 40;
+          const tx = Math.cos(angle) * dist;
+          const ty = Math.sin(angle) * dist;
+          p.animate([
+            { transform: 'translate(0,0) scale(1)', opacity: 1 },
+            { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
+          ], { duration: 600 + Math.random()*400, easing: 'ease-out' }).onfinish = () => p.remove();
+        }
+      }
+
+      function spawnGreenDust(x, y) {
+        for(let i=0; i<25; i++) { // Mehr Partikel
+          const p = document.createElement('div');
+          p.className = 'green-dust';
+          p.style.left = x + 'px';
+          p.style.top = y + 'px';
+          document.body.appendChild(p);
+          const angle = Math.random() * Math.PI * 2;
+          const dist = 30 + Math.random() * 60; // Größerer Radius
+          const tx = Math.cos(angle) * dist;
+          const ty = Math.sin(angle) * dist;
+          p.animate([
+            { transform: 'translate(0,0) scale(1.5)', opacity: 1 },
+            { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
+          ], { duration: 500 + Math.random()*500, easing: 'ease-out' }).onfinish = () => p.remove();
+        }
+      }
+
+      function spawnSnakeWorm() {
+        const hauntedZone = document.getElementById('haunted-zone');
+        if (!hauntedZone) return null;
+        const rect = hauntedZone.getBoundingClientRect();
+        const segments = [];
+        const segmentCount = 10;
+        const speed = 2.5;
+        
+        // Start in a ring much closer to the virus
+        const startAngle = Math.random() * Math.PI * 2;
+        const startDist = (rect.width / 2) + 15 + Math.random() * 25;
+        let headX = (rect.left + rect.width / 2) + Math.cos(startAngle) * startDist;
+        let headY = (rect.top + rect.height / 2) + Math.sin(startAngle) * startDist;
+        let angle = startAngle + Math.PI / 2; // Move tangentially initially
+        
+        const posHistory = [];
+        for (let i = 0; i < segmentCount; i++) {
+          const seg = document.createElement('div');
+          seg.className = 'pink-worm-segment';
+          seg.style.opacity = 1 - (i / segmentCount);
+          document.body.appendChild(seg);
+          segments.push(seg);
+          posHistory.push({ x: headX, y: headY });
+        }
+
+        let isDestroyed = false;
+        const worm = {
+          destroy: (explode = false) => {
+             if(isDestroyed) return;
+             isDestroyed = true;
+             clearInterval(moveInterval);
+             
+             if (explode && posHistory.length > 0) {
+                // Spawn a bigger pink cloud at head position
+                for(let i=0; i<45; i++) {
+                   const p = document.createElement('div');
+                   p.className = 'pink-dust';
+                   p.style.left = posHistory[0].x + 'px';
+                   p.style.top = posHistory[0].y + 'px';
+                   document.body.appendChild(p);
+                   const pAngle = Math.random() * Math.PI * 2;
+                   const dist = 60 + Math.random() * 120;
+                   const tx = Math.cos(pAngle) * dist;
+                   const ty = Math.sin(pAngle) * dist;
+                   p.animate([
+                     { transform: 'translate(0,0) scale(3)', opacity: 1 },
+                     { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
+                   ], { duration: 800 + Math.random()*600, easing: 'ease-out' }).onfinish = () => p.remove();
+                }
+             }
+             
+             segments.forEach(s => s.remove());
+          }
+        };
+
+        const moveInterval = setInterval(() => {
+          if (VIRUS_STATE.phase === -1 || VIRUS_STATE.phase === -2) {
+            worm.destroy(false);
+            return;
+          }
+
+          // Random flight pattern (Confusion) or Steer back if near edges
+          const margin = 100;
+          if (headX < margin || headX > window.innerWidth - margin || 
+              headY < margin || headY > window.innerHeight - margin) {
+              const angleToCenter = Math.atan2(window.innerHeight / 2 - headY, window.innerWidth / 2 - headX);
+              let diff = angleToCenter - angle;
+              while (diff > Math.PI) diff -= Math.PI * 2;
+              while (diff < -Math.PI) diff += Math.PI * 2;
+              angle += diff * 0.1; // Steer smoothly but decisively towards center
+          } else {
+              angle += (Math.random() - 0.5) * 0.3;
+          }
+
+          headX += Math.cos(angle) * speed;
+          headY += Math.sin(angle) * speed;
+
+          posHistory.unshift({ x: headX, y: headY });
+          if (posHistory.length > segments.length * 4) posHistory.pop();
+
+          segments.forEach((seg, i) => {
+            const pos = posHistory[i * 3] || posHistory[posHistory.length - 1];
+            seg.style.left = pos.x + 'px';
+            seg.style.top = pos.y + 'px';
+          });
+        }, 40);
+
+        if(!VIRUS_STATE.worms) VIRUS_STATE.worms = [];
+        VIRUS_STATE.worms.push(worm);
+        return worm;
+      }
+
+      function spawnWormsForPhase(count) {
+          if(VIRUS_STATE.worms) {
+              VIRUS_STATE.worms.forEach(w => w.destroy(false));
+          }
+          VIRUS_STATE.worms = [];
+          for(let i=0; i<count; i++) {
+             spawnSnakeWorm();
+          }
+      }
+
+      function initHauntedMode() {
+        const body = document.body;
+        const card = document.getElementById('haunted-login-card');
+        const barContainer = document.getElementById('glitch-bar-container');
+        const hauntedZone = document.getElementById('haunted-zone');
+
+        // Initial phase: no interactions, normal look
+        if (card) card.classList.add('no-interact');
+
+        VIRUS_STATE.skipIntro = () => {
+           if (VIRUS_STATE.phase === 0) {
+               VIRUS_STATE.phase = 1; // stops speak loop
+               const input = document.getElementById('haunted-input');
+               if(hauntedZone && input) {
+                  startPhase1(hauntedZone, input);
+               }
+           }
+        };
+
+        setTimeout(() => {
+          body.classList.add('haunted');
+          if (card) {
+            card.classList.remove('no-interact');
+            card.classList.add('haunted-card');
+          }
+
+          // Apply Global Config
+          hauntedZone.style.width = HAUNTED_CONFIG.size + 'px';
+          hauntedZone.style.height = HAUNTED_CONFIG.size + 'px';
+          hauntedZone.style.right = HAUNTED_CONFIG.right;
+          hauntedZone.style.top = HAUNTED_CONFIG.top;
+          hauntedZone.style.transform = `translateY(-50%) scale(${HAUNTED_CONFIG.scale})`;
+          hauntedZone.style.display = 'flex';
+
+          if(!VIRUS_STATE.intervals) VIRUS_STATE.intervals = [];
+
+          // Double Green strands (neon bars) - every 300ms
+          VIRUS_STATE.intervals.push(setInterval(() => {
+            const bar = document.createElement('div');
+            bar.className = 'neon-bar';
+            // Position relative to hauntedZone center, less central
+            const angle = Math.random() * Math.PI * 2;
+            const radius = (HAUNTED_CONFIG.size / 2) * 0.9 + Math.random() * 60;
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius;
+            bar.style.left = (HAUNTED_CONFIG.size / 2 + x) + 'px';
+            bar.style.top = (HAUNTED_CONFIG.size / 2 + y) + 'px';
+            hauntedZone.appendChild(bar);
+            setTimeout(() => bar.remove(), 7000);
+          }, 300));
+
+          // Black Glitch Bars - Triple Frequency (every 130ms)
+          VIRUS_STATE.intervals.push(setInterval(() => {
+            const bar = document.createElement('div');
+            bar.className = 'black-bar';
+            const angle = Math.random() * Math.PI * 2;
+            const radius = (HAUNTED_CONFIG.size / 2) * 0.8 + Math.random() * 50;
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius;
+            bar.style.left = (HAUNTED_CONFIG.size / 2 + x) + 'px';
+            bar.style.top = (HAUNTED_CONFIG.size / 2 + y) + 'px';
+            hauntedZone.appendChild(bar);
+            setTimeout(() => bar.remove(), 1500);
+          }, 130));
+
+
+
+          // Matrix Digits
+          VIRUS_STATE.intervals.push(setInterval(() => {
+            const digit = document.createElement('div');
+            digit.className = 'matrix-digit';
+            digit.style.position = 'absolute'; // Sticky
+            const angle = Math.random() * Math.PI * 2;
+            const dist = (HAUNTED_CONFIG.size / 2) + 5 + Math.random() * 20;
+            const x = (HAUNTED_CONFIG.size / 2) + Math.cos(angle) * dist;
+            const y = (HAUNTED_CONFIG.size / 2) + Math.sin(angle) * dist;
+            digit.style.left = x + 'px'; digit.style.top = y + 'px';
+            digit.textContent = Math.random() > 0.5 ? '1' : '0';
+            hauntedZone.appendChild(digit);
+            let length = 1; let growing = true;
+            const flick = setInterval(() => {
+              if (growing) { length++; if (length >= 5) growing = false; }
+              else { length--; if (length <= 1) growing = true; }
+              let str = ''; for (let i = 0; i < length; i++) str += Math.random() > 0.5 ? '1' : '0';
+              digit.textContent = str;
+            }, 120);
+            setTimeout(() => { clearInterval(flick); digit.remove(); }, 2400);
+          }, 75));
+
+          // Virus Animation
+          const video = document.createElement('video');
+          video.src = 'virus/viruserscheinung.mp4';
+          video.className = 'virus-asset';
+          video.autoplay = true;
+          video.muted = true;
+          hauntedZone.appendChild(video);
+          video.onended = () => { 
+            video.remove(); 
+            startImageLoop(hauntedZone); 
+            startVirusSpeech(hauntedZone);
+          };
+
+          // Update Card Text to Infiltration look
+          const title = document.getElementById('haunted-title');
+          const sub = document.getElementById('haunted-sub');
+          const label = document.getElementById('haunted-label');
+          const input = document.getElementById('haunted-input');
+
+          if(title) title.textContent = 'System-Infiltration';
+          if(sub) sub.textContent = 'Identität wird überschrieben...';
+          if(label) label.textContent = 'Name der Biomasse';
+          if(input) input.placeholder = 'Wird gelöscht...';
+
+          // Virus Movement Controller
+          let vTime = 0;
+          function updateVirusMove() {
+            if (VIRUS_STATE.phase === -2) return; // Stop JS animation for death sequence
+            
+            vTime += 0.05;
+            
+            if (VIRUS_STATE.phase === 0) {
+              // Phase 0: Float & Jitter (Intro)
+              const floatX = Math.sin(vTime * 0.8) * 20;
+              const floatY = Math.cos(vTime * 0.6) * 15;
+              const jitterX = (Math.random() - 0.5) * 5;
+              const jitterY = (Math.random() - 0.5) * 5;
+              if (hauntedZone) {
+                hauntedZone.style.transform = `translateY(-50%) translate(${floatX + jitterX}px, ${floatY + jitterY}px) scale(${HAUNTED_CONFIG.scale})`;
+              }
+            } else if (VIRUS_STATE.phase === 1) {
+              // Phase 1: Steht komplett still
+              if (hauntedZone) {
+                hauntedZone.style.transform = `translateY(-50%) scale(${HAUNTED_CONFIG.scale})`;
+              }
+            } else if (VIRUS_STATE.phase >= 2) {
+              if (VIRUS_STATE.phaseJustChanged) {
+                hauntedZone.style.right = 'auto';
+                hauntedZone.style.left = '50%';
+                hauntedZone.style.top = '40%'; // Orbit center
+                VIRUS_STATE.phaseJustChanged = false;
+                
+                VIRUS_STATE.stations = [
+                  {x: -450, y: -250}, {x: 450, y: -250},
+                  {x: -450, y: 250},  {x: 450, y: 250}
+                ];
+                
+                if(!VIRUS_STATE.viruses) {
+                    VIRUS_STATE.viruses = [{
+                        el: hauntedZone,
+                        x: 0,
+                        y: 0,
+                        orbitTime: 0,
+                        mode: 'orbit',
+                        lastModeSwitch: Date.now()
+                    }];
+                }
+              }
+              
+              const now = Date.now();
+              for(let i=0; i<VIRUS_STATE.viruses.length; i++) {
+                  const v = VIRUS_STATE.viruses[i];
+                  const timeInMode = now - v.lastModeSwitch;
+                  let targetX = 0, targetY = 0;
+                  
+                  if (v.mode === 'orbit') {
+                      v.orbitTime += 0.05;
+                      const offset = i * (Math.PI * 2 / VIRUS_STATE.viruses.length);
+                      const orbitSpeed = v.orbitTime * 0.7 + offset;
+                      const radiusX = 500 + Math.sin(v.orbitTime * 0.5) * 50;
+                      const radiusY = 350 + Math.cos(v.orbitTime * 0.6) * 50;
+                      targetX = Math.cos(orbitSpeed) * radiusX;
+                      targetY = Math.sin(orbitSpeed) * radiusY;
+                      
+                      if (timeInMode > 8000) {
+                          v.mode = 'goto_station';
+                          v.currentStation = VIRUS_STATE.stations[Math.floor(Math.random() * VIRUS_STATE.stations.length)];
+                          v.lastModeSwitch = now;
+                      }
+                  } else if (v.mode === 'goto_station') {
+                      targetX = v.currentStation.x;
+                      targetY = v.currentStation.y;
+                      const dx = targetX - v.x;
+                      const dy = targetY - v.y;
+                      if (Math.sqrt(dx*dx + dy*dy) < 15) {
+                          v.mode = 'at_station';
+                          v.lastModeSwitch = now;
+                      }
+                  } else if (v.mode === 'at_station') {
+                      targetX = v.currentStation.x + Math.sin(vTime) * 10;
+                      targetY = v.currentStation.y + Math.cos(vTime) * 10;
+                      if (timeInMode > 4000) {
+                          v.mode = 'orbit';
+                          v.lastModeSwitch = now;
+                          v.orbitTime = Math.atan2(v.y, v.x) / 0.7;
+                      }
+                  }
+                  
+                  v.x += (targetX - v.x) * 0.08;
+                  v.y += (targetY - v.y) * 0.08;
+                  
+                  if (v.el) {
+                      v.el.style.transform = `translate(-50%, -50%) translate(${v.x}px, ${v.y}px) scale(${HAUNTED_CONFIG.scale})`;
+                  }
+                  
+                  if (i === 0) {
+                      VIRUS_STATE.currentX = v.x;
+                      VIRUS_STATE.currentY = v.y;
+                      VIRUS_STATE.phase2Mode = v.mode;
+                  }
+              }
+            }
+            
+            requestAnimationFrame(updateVirusMove);
+          }
+          updateVirusMove();
+
+        }, 5000);
+      }
+
+      function triggerScreenShake() {
+        document.body.animate([
+          { transform: 'translate(0, 0) rotate(0deg)' },
+          { transform: 'translate(-10px, 8px) rotate(-1.5deg)' },
+          { transform: 'translate(8px, -10px) rotate(1.5deg)' },
+          { transform: 'translate(-8px, -8px) rotate(-0.5deg)' },
+          { transform: 'translate(10px, 10px) rotate(1deg)' },
+          { transform: 'translate(0, 0) rotate(0deg)' }
+        ], { duration: 350, easing: 'ease-in-out' });
+      }
+
+      function startVirusSpeech(container) {
+        const phrases = [
+          "HARHARHAR! HARHARHAR!",
+          "HARHARHAR! HARHARHAR!",
+          "Dachtest du wirklich, du hättest ICARUS besiegt?",
+          "Was für eine erbärmliche Biomasse...",
+          "Ich bin tiefer verwurzelt, als du ahnst.",
+          "ICH BIN DAS SYSTEM! ICH BIN DIE BANK!",
+          "Willkommen in deiner ewigen digitalen Hölle!"
+        ];
+        
+        let pIdx = 0;
+        const input = document.getElementById('haunted-input');
+
+        async function speak() {
+          if (VIRUS_STATE.phase > 0 || VIRUS_STATE.phase === -2) return; // Stop Intro speech or if dying
+
+          const text = phrases[pIdx];
+          
+          if(input) {
+            input.value = '';
+            if (input.style.width && input.style.width !== '100%') {
+              triggerScreenShake();
+            }
+            input.style.width = '100%'; // Reset width
+          }
+          
+          for(let i=0; i<text.length; i++) {
+            if (VIRUS_STATE.phase === -2) return;
+            const char = text[i];
+            await new Promise(r => setTimeout(r, 120)); 
+            if (VIRUS_STATE.phase === -2) return;
+            spawnFlyingLetter(char, container, input);
+          }
+          
+          await new Promise(r => setTimeout(r, 2000));
+          await triggerLaserDestruction(container, input);
+          
+          pIdx++;
+          if (pIdx >= phrases.length) {
+            // Intro done, start Phase 1!
+            startPhase1(container, input);
+          } else {
+            setTimeout(speak, 1500);
+          }
+        }
+        
+        speak();
+      }
+
+      function spawnFlyingLetter(char, container, targetInput) {
+        if (VIRUS_STATE.phase === -2) return;
+        const rect = container.getBoundingClientRect();
+        const startX = rect.left + rect.width / 2;
+        const startY = rect.top + rect.height * 0.6; // Etwas weiter oben
+        
+        const targetRect = targetInput.getBoundingClientRect();
+        // Target is approximately at the end of current text
+        const textLen = targetInput.value.length;
+        const charWidth = 9.4; // Fixed width for monospace
+        const targetX = targetRect.left + 15 + (textLen * charWidth);
+        const targetY = targetRect.top + targetRect.height / 2;
+
+        if(char === ' ') {
+          // Fake invisible flight for space to maintain rhythm
+          setTimeout(() => {
+            targetInput.value += ' ';
+          }, 250);
+          return;
+        }
+
+        const el = document.createElement('div');
+        el.className = 'virus-letter';
+        el.textContent = char;
+        el.style.left = startX + 'px';
+        el.style.top = startY + 'px';
+        document.body.appendChild(el);
+
+        el.animate([
+          { left: startX + 'px', top: startY + 'px', transform: 'translate(-50%, -50%) scale(2)', opacity: 0 },
+          { opacity: 1, offset: 0.1 },
+          { left: targetX + 'px', top: targetY + 'px', transform: 'translate(-50%, -50%) scale(1.1)', opacity: 1 }
+        ], {
+          duration: 250, 
+          easing: 'ease-out'
+        }).onfinish = () => {
+          el.remove();
+          if (VIRUS_STATE.phase === -2) return;
+          targetInput.value += char;
+          // Check if input needs to expand
+          if (targetInput.scrollWidth > targetInput.clientWidth) {
+            targetInput.style.width = (targetInput.offsetWidth + 25) + 'px';
+            triggerScreenShake();
+          }
+        };
+      }
+
+      async function triggerLaserDestruction(container, targetInput) {
+        const rect = container.getBoundingClientRect();
+        const startX = rect.left + rect.width / 2;
+        const startY = rect.top + rect.height * 0.75; // Weiter unten (Mund-Bereich)
+        
+        const targetRect = targetInput.getBoundingClientRect();
+        const beam = document.createElement('div');
+        beam.className = 'virus-beam';
+        document.body.appendChild(beam);
+        
+        const text = targetInput.value;
+        const totalWidth = targetRect.width - 30;
+        
+        // Sweep from right to left
+        for(let i = text.length; i >= 0; i--) {
+          // Dynamic Laser Origin (Sticky to Virus)
+          const currentRect = container.getBoundingClientRect();
+          const curStartX = currentRect.left + currentRect.width / 2;
+          const curStartY = currentRect.top + currentRect.height * 0.6; // Etwas weiter oben
+
+          const progress = i / text.length || 0;
+          // Destruction targeting: more accurate character mapping
+          const currentTargetX = targetRect.left + 15 + (progress * (text.length * 9.4)); 
+          const currentTargetY = targetRect.top + targetRect.height / 2;
+          
+          const dx = currentTargetX - curStartX;
+          const dy = currentTargetY - curStartY;
+          const len = Math.sqrt(dx*dx + dy*dy);
+          const angle = Math.atan2(dy, dx);
+          
+          beam.style.width = len + 'px';
+          beam.style.left = curStartX + 'px';
+          beam.style.top = curStartY + 'px';
+          beam.style.transform = `rotate(${angle}rad)`;
+          
+          if(i > 0) {
+            if (VIRUS_STATE.phase === -2) {
+               beam.remove();
+               return;
+            }
+            spawnGreenDust(currentTargetX, currentTargetY);
+            await new Promise(r => setTimeout(r, 30)); 
+            targetInput.value = text.substring(0, i - 1);
+          }
+          
+          await new Promise(r => setTimeout(r, 40)); // Faster sweep
+        }
+        
+        beam.remove();
+      }
+
+      function startPhase1(container, input) {
+        VIRUS_STATE.phase = 1;
+        spawnWormsForPhase(3);
+        
+        // Custom Shield Cursor
+        document.body.style.cursor = 'none';
+        const shield = document.createElement('div');
+        shield.className = 'shield-cursor';
+        document.body.appendChild(shield);
+        
+        // Track mouse physics
+        let lastMx = mX, lastMy = mY;
+        let vX = 0, vY = 0;
+        
+        window.addEventListener('mousemove', (e) => {
+           vX = e.clientX - lastMx;
+           vY = e.clientY - lastMy;
+           lastMx = e.clientX;
+           lastMy = e.clientY;
+           shield.style.left = e.clientX + 'px';
+           shield.style.top = e.clientY + 'px';
+        });
+        
+        // Decay velocity
+        setInterval(() => {
+           vX *= 0.8;
+           vY *= 0.8;
+        }, 50);
+
+        VIRUS_STATE.mouseVx = () => vX;
+        VIRUS_STATE.mouseVy = () => vY;
+        
+        startDroppingWords(container, shield, input);
+      }
+
+      function startPhase2(container, input) {
+        VIRUS_STATE.phase = 2;
+        VIRUS_STATE.hitsInPhase = 0;
+        VIRUS_STATE.phaseJustChanged = true;
+        spawnWormsForPhase(5);
+
+
+        // Add Wings
+        const leftWing = document.createElement('img');
+        leftWing.className = 'virus-wing left-wing';
+        const rightWing = document.createElement('img');
+        rightWing.className = 'virus-wing right-wing';
+        
+        // Insert before the main virus asset
+        container.insertBefore(leftWing, container.firstChild);
+        container.insertBefore(rightWing, container.firstChild);
+        
+        let wingIdx = 1;
+        setInterval(() => {
+           const frame = wingIdx.toString().padStart(3, '0');
+           document.querySelectorAll('.virus-wing').forEach(w => {
+              w.src = `Flügel/${frame}.png`;
+           });
+           wingIdx = (wingIdx % 10) + 1;
+        }, 60);
+       }
+       
+       function spawnInputClone(id) {
+         if (VIRUS_STATE.phase < 3 || VIRUS_STATE.phase === -1) return;
+         
+         const originalInput = document.getElementById('haunted-input');
+         if (!originalInput) return;
+         
+         const clone = originalInput.cloneNode(true);
+         clone.id = 'haunted-input-clone-' + id;
+         clone.value = '';
+         
+         const top = 10 + Math.random() * 80;
+         const left = 10 + Math.random() * 80;
+         
+         clone.style.position = 'fixed';
+         clone.style.top = top + '%';
+         clone.style.left = left + '%';
+         clone.style.transform = 'translate(-50%, -50%)';
+         clone.style.zIndex = '999';
+         clone.style.width = '400px';
+         clone.style.borderColor = '#00ffcc'; 
+         clone.style.backgroundColor = 'rgba(0, 255, 204, 0.05)';
+         clone.style.color = '#00ffcc';
+         
+         if (VIRUS_STATE.phase >= 4) {
+            clone.style.left = (left/100 * window.innerWidth) + 'px';
+            clone.style.top = (top/100 * window.innerHeight) + 'px';
+            clone.style.transform = 'none';
+            clone.dataset.vx = (Math.random() - 0.5) * 8;
+            clone.dataset.vy = (Math.random() - 0.5) * 8;
+            clone.style.boxShadow = '0 0 20px #8A2BE2';
+         }
+
+         document.body.appendChild(clone);
+         if(!VIRUS_STATE.inputs) VIRUS_STATE.inputs = [originalInput];
+         VIRUS_STATE.inputs.push(clone);
+         
+         clone.style.boxShadow = '0 0 100px #39FF14';
+         clone.style.transition = 'box-shadow 1s ease-out, opacity 0.5s, filter 0.5s, transform 0.5s';
+         setTimeout(() => { if (clone) clone.style.boxShadow = VIRUS_STATE.phase >= 4 ? '0 0 20px #8A2BE2' : ''; }, 1000);
+         
+         setTimeout(() => {
+            if(clone && clone.parentNode && VIRUS_STATE.phase >= 3) {
+               clone.style.transition = 'all 0.5s ease-in';
+               clone.style.transform += ' scale(1.5) rotate(' + ((Math.random()-0.5)*40) + 'deg)';
+               clone.style.opacity = '0';
+               clone.style.filter = 'blur(10px)';
+               setTimeout(() => {
+                  clone.remove();
+                  const idx = VIRUS_STATE.inputs.indexOf(clone);
+                  if(idx > -1) VIRUS_STATE.inputs.splice(idx, 1);
+                  if (VIRUS_STATE.phase >= 3) spawnInputClone(Date.now());
+               }, 500);
+            }
+         }, 15000 + Math.random() * 10000);
+       }
+
+      function startPhase3() {
+        VIRUS_STATE.phase = 3;
+        VIRUS_STATE.phaseJustChanged = true;
+        VIRUS_STATE.hitsInPhase = 0;
+        spawnWormsForPhase(5);
+        
+        const originalInput = document.getElementById('haunted-input');
+        VIRUS_STATE.inputs = [originalInput];
+        
+        spawnInputClone('init-1');
+        spawnInputClone('init-2');
+      }
+
+      function startPhase4() {
+        VIRUS_STATE.phase = 4;
+        VIRUS_STATE.hitsInPhase = 0;
+        spawnWormsForPhase(5);
+        
+        // Give inputs a velocity property
+        for(let i=0; i<VIRUS_STATE.inputs.length; i++) {
+            const inp = VIRUS_STATE.inputs[i];
+            
+            // Pop out the original input to position: fixed
+            if (i === 0) {
+               const rect = inp.getBoundingClientRect();
+               inp.style.position = 'fixed';
+               inp.style.left = rect.left + 'px';
+               inp.style.top = rect.top + 'px';
+               inp.style.width = rect.width + 'px';
+               inp.style.zIndex = '999';
+               inp.style.transform = 'none';
+               // append to body to ensure it moves relative to window
+               document.body.appendChild(inp);
+            } else {
+               // Fix the clones to absolute pixels so they don't use percentages
+               const rect = inp.getBoundingClientRect();
+               inp.style.left = rect.left + 'px';
+               inp.style.top = rect.top + 'px';
+               inp.style.transform = 'none';
+            }
+            
+            inp.dataset.vx = (Math.random() - 0.5) * 8; // Float speed
+            inp.dataset.vy = (Math.random() - 0.5) * 8;
+            
+            // Give them a purple glow indicating they are enchanted
+            inp.style.boxShadow = '0 0 20px #8A2BE2';
+        }
+        
+        triggerScreenShake();
+      }
+
+      function splitVirus() {
+          const originalZone = document.getElementById('haunted-zone');
+          const clone = originalZone.cloneNode(true);
+          clone.id = 'haunted-zone-clone-' + VIRUS_STATE.viruses.length;
+          
+          // Apply a hue rotation so clones look slightly different
+          const hue = Math.floor(Math.random() * 360);
+          clone.style.filter = `hue-rotate(${hue}deg)`;
+          document.body.appendChild(clone);
+          
+          VIRUS_STATE.viruses.push({
+             el: clone,
+             x: VIRUS_STATE.currentX + (Math.random()-0.5)*200,
+             y: VIRUS_STATE.currentY + (Math.random()-0.5)*200,
+             orbitTime: Math.random() * Math.PI * 2,
+             mode: 'orbit',
+             lastModeSwitch: Date.now()
+          });
+          
+          triggerScreenShake();
+      }
+
+      function startPhase5() {
+        VIRUS_STATE.phase = 5;
+        VIRUS_STATE.hitsInPhase = 0;
+        spawnWormsForPhase(5);
+        splitVirus();
+      }
+
+      function startPhase6() {
+        VIRUS_STATE.phase = 6;
+        VIRUS_STATE.hitsInPhase = 0;
+        spawnWormsForPhase(17);
+        splitVirus();
+      }
+
+      function startDroppingWords(container, shield, input) {
+        const words = ["ERROR", "CORRUPT", "ICARUS", "DIE", "USELESS", "PURGE", "BURN", "OBEY", "SURRENDER"];
+        
+        function spawnWordFn() {
+           if(VIRUS_STATE.phase < 1 || VIRUS_STATE.phase === -2) return;
+           const word = words[Math.floor(Math.random() * words.length)];
+           
+           const virusesToShoot = VIRUS_STATE.viruses || [{el: container}];
+           for(const v of virusesToShoot) {
+               const rect = v.el.getBoundingClientRect();
+               
+               const wordEl = document.createElement('div');
+               wordEl.className = 'falling-word';
+               wordEl.textContent = word;
+               wordEl.style.left = (rect.left + rect.width/2 + (Math.random()-0.5)*100) + 'px';
+               wordEl.style.top = (rect.top + rect.height/2 + (Math.random()-0.5)*100) + 'px';
+               document.body.appendChild(wordEl);
+               
+               const targetInput = (VIRUS_STATE.inputs && VIRUS_STATE.inputs.length > 0) 
+                    ? VIRUS_STATE.inputs[Math.floor(Math.random() * VIRUS_STATE.inputs.length)]
+                    : input; // fallback
+
+               // If phase 1 OR phase 2 at_station OR phase >= 3, target a text box
+               if((VIRUS_STATE.phase === 1 || v.mode === 'at_station' || VIRUS_STATE.phase >= 3) && targetInput) {
+                  const inputRect = targetInput.getBoundingClientRect();
+                  const targetX = inputRect.left + inputRect.width/2;
+                  const targetY = inputRect.top + inputRect.height/2;
+                  const dx = targetX - parseFloat(wordEl.style.left);
+                  const dy = targetY - parseFloat(wordEl.style.top);
+                  const len = Math.sqrt(dx*dx + dy*dy);
+                  const speed = v.mode === 'at_station' ? 4 : 3;
+                  wordEl.dataset.vx = (dx / len) * speed;
+                  wordEl.dataset.vy = (dy / len) * speed;
+               } else {
+                  // Phase 2 Orbit: just drop them down with slight random x
+                  wordEl.dataset.vx = (Math.random() - 0.5) * 3;
+                  wordEl.dataset.vy = 2 + Math.random() * 2;
+               }
+               wordEl.dataset.deflected = "false";
+               
+               activeProjectiles.push(wordEl);
+           }
+        }
+
+        const dropInterval = setInterval(() => {
+           if (VIRUS_STATE.phase === -2) return;
+           if (VIRUS_STATE.phase2Mode === 'at_station') {
+              // Rapid fire burst when at station!
+              spawnWordFn();
+              setTimeout(spawnWordFn, 300);
+              setTimeout(spawnWordFn, 600);
+           } else {
+              spawnWordFn();
+           }
+        }, 1500);
+        if(!VIRUS_STATE.intervals) VIRUS_STATE.intervals = [];
+        VIRUS_STATE.intervals.push(dropInterval); 
+
+        // Physics Engine Loop
+        const activeProjectiles = [];
+        
+        function physicsLoop() {
+          if (VIRUS_STATE.phase === 0 || VIRUS_STATE.phase === -2) return;
+          
+          // Update inputs position in Phase 4 and 5
+          if (VIRUS_STATE.phase >= 4 && VIRUS_STATE.inputs) {
+             for(let i=0; i<VIRUS_STATE.inputs.length; i++) {
+                 const inp = VIRUS_STATE.inputs[i];
+                 if (!inp.dataset.vx) continue;
+                 let vx = parseFloat(inp.dataset.vx);
+                 let vy = parseFloat(inp.dataset.vy);
+                 
+                 let left = parseFloat(inp.style.left || 0);
+                 let top = parseFloat(inp.style.top || 0);
+                 
+                 left += vx;
+                 top += vy;
+                 
+                 const rect = inp.getBoundingClientRect();
+                 if (left < 0) { left = 0; vx *= -1; }
+                 if (top < 0) { top = 0; vy *= -1; }
+                 if (left + rect.width > window.innerWidth) { left = window.innerWidth - rect.width; vx *= -1; }
+                 if (top + rect.height > window.innerHeight) { top = window.innerHeight - rect.height; vy *= -1; }
+                 
+                 inp.style.left = left + 'px';
+                 inp.style.top = top + 'px';
+                 inp.dataset.vx = vx;
+                 inp.dataset.vy = vy;
+             }
+          }
+
+          const shieldRect = shield.getBoundingClientRect();
+          
+          for(let i=activeProjectiles.length-1; i>=0; i--) {
+            const p = activeProjectiles[i];
+            let px = parseFloat(p.style.left);
+            let py = parseFloat(p.style.top);
+            let vx = parseFloat(p.dataset.vx);
+            let vy = parseFloat(p.dataset.vy);
+            
+            px += vx;
+            py += vy;
+            
+            if (p.dataset.deflected === "true") {
+              vy += 0.5; // Gravity if deflected
+            }
+            
+            p.style.left = px + 'px';
+            p.style.top = py + 'px';
+            p.dataset.vx = vx;
+            p.dataset.vy = vy;
+            
+            // Collision with Shield and Input
+            if (p.dataset.deflected === "false") {
+               const pRect = p.getBoundingClientRect();
+               
+               // Check if it hits ANY input field
+               const inputsToCheck = VIRUS_STATE.inputs || [input];
+               let hitAnyInput = false;
+               for(const targetInput of inputsToCheck) {
+                  if (targetInput) {
+                      const inputRect = targetInput.getBoundingClientRect();
+                      if(!(inputRect.right < pRect.left || inputRect.left > pRect.right || inputRect.bottom < pRect.top || inputRect.top > pRect.bottom)) {
+                          // It hit the input field!
+                          if (Math.random() <= 0.25) {
+                              if (!VIRUS_STATE.worms || VIRUS_STATE.worms.length < 25) {
+                                  VIRUS_STATE.hp += 5;
+                                  if (VIRUS_STATE.hitsInPhase > 0) VIRUS_STATE.hitsInPhase--;
+                                  spawnSnakeWorm();
+                                  
+                                  const mainV = VIRUS_STATE.viruses ? VIRUS_STATE.viruses[0].el : document.getElementById('haunted-zone');
+                                  if (mainV) {
+                                     mainV.style.filter = 'drop-shadow(0 0 50px #0f0) hue-rotate(200deg) brightness(2)';
+                                     setTimeout(() => mainV.style.filter = 'none', 300);
+                                  }
+                              }
+                          }
+                          
+                          targetInput.value = p.textContent;
+                          
+                          // Visual Error Feedback
+                          targetInput.style.boxShadow = '0 0 30px #ff0055, inset 0 0 20px #ff0055';
+                          targetInput.style.color = '#ff0055';
+                          targetInput.style.textShadow = '0 0 10px #ff0055';
+                          setTimeout(() => {
+                             if(targetInput) {
+                                 targetInput.style.boxShadow = '';
+                                 targetInput.style.color = '';
+                                 targetInput.style.textShadow = '';
+                             }
+                          }, 250);
+                          
+                          triggerScreenShake();
+                          
+                          p.remove();
+                          activeProjectiles.splice(i, 1);
+                          hitAnyInput = true;
+                          break;
+                      }
+                  }
+               }
+               if(hitAnyInput) continue;
+
+               // Check collision with shield
+               if(!(shieldRect.right < pRect.left || shieldRect.left > pRect.right || shieldRect.bottom < pRect.top || shieldRect.top > pRect.bottom)) {
+                  p.dataset.deflected = "true";
+                  
+                  const sVx = VIRUS_STATE.mouseVx();
+                  const sVy = VIRUS_STATE.mouseVy();
+                  const speed = Math.sqrt(sVx*sVx + sVy*sVy);
+                  
+                  if(speed < 3) {
+                     // Still block: bounce down
+                     p.dataset.vx = (Math.random() - 0.5) * 5;
+                     p.dataset.vy = 5 + Math.random() * 5;
+                     p.style.color = '#fff';
+                  } else {
+                     // Deflect hard!
+                     p.dataset.vx = sVx * 1.5;
+                     p.dataset.vy = sVy * 1.5;
+                     p.style.color = '#ff0055';
+                     p.style.textShadow = '0 0 15px #ff0055';
+                     VIRUS_STATE.deflectedLetters++;
+                  }
+               }
+            } else {
+               // Deflected projectiles can hit the viruses!
+               const virusesToCheck = VIRUS_STATE.viruses || [{el: container}];
+               for (let vIdx = 0; vIdx < virusesToCheck.length; vIdx++) {
+                   const virusEl = virusesToCheck[vIdx].el;
+                   if(!virusEl) continue;
+                   
+                   const virusRect = virusEl.getBoundingClientRect();
+                   const pRect = p.getBoundingClientRect();
+                   const hitPadding = 40; 
+                   
+                   if(!(virusRect.right - hitPadding < pRect.left || 
+                        virusRect.left + hitPadding > pRect.right || 
+                        virusRect.bottom - hitPadding < pRect.top || 
+                        virusRect.top + hitPadding > pRect.bottom)) {
+                     
+                     // HIT THE VIRUS!
+                     VIRUS_STATE.hp -= 5;
+                     VIRUS_STATE.hits++;
+                     
+                     if (VIRUS_STATE.worms && VIRUS_STATE.worms.length > 0) {
+                         const w = VIRUS_STATE.worms.shift();
+                         if(w) w.destroy(true);
+                     }
+                     
+                     if (VIRUS_STATE.worms && VIRUS_STATE.worms.length === 0) {
+                         if (VIRUS_STATE.phase === 1) startPhase2(container, document.getElementById('haunted-input'));
+                         else if (VIRUS_STATE.phase === 2) startPhase3();
+                         else if (VIRUS_STATE.phase === 3) startPhase4();
+                         else if (VIRUS_STATE.phase === 4) startPhase5();
+                         else if (VIRUS_STATE.phase === 5) startPhase6();
+                         else if (VIRUS_STATE.phase === 6) startFinalDeathSequence();
+                     }
+
+                     
+                     p.remove();
+                     activeProjectiles.splice(i, 1);
+                     
+                     // Visual Feedback for hit
+                     virusEl.style.filter = 'drop-shadow(0 0 50px red) hue-rotate(90deg) brightness(2)';
+                     setTimeout(() => {
+                       if (virusEl) virusEl.style.filter = virusEl.id.includes('clone') ? `hue-rotate(${Math.random() * 360}deg)` : 'none';
+                     }, 150);
+                     
+                     triggerScreenShake();
+                     break; 
+                   }
+               }
+            }
+            
+            // Remove if out of bounds
+            if (p && p.parentNode && (py > window.innerHeight + 100 || px < -100 || px > window.innerWidth + 100 || py < -100)) {
+               p.remove();
+               activeProjectiles.splice(i, 1);
+            }
+          }
+          requestAnimationFrame(physicsLoop);
+        }
+        physicsLoop();
+      }
+
+      function startImageLoop(container) {
+        const images = [
+          'virus/001.png',
+          'virus/002.png',
+          'virus/003.png',
+          'virus/004.png',
+          'virus/005.png',
+          'virus/006.png',
+          'virus/007.png',
+          'virus/008.png'
+        ];
+
+        let idx = 0;
+        const imgEl = document.createElement('img');
+        imgEl.className = 'virus-asset';
+        container.appendChild(imgEl);
+
+        setInterval(() => {
+          document.querySelectorAll('.virus-asset').forEach(img => {
+            img.src = images[idx];
+          });
+          idx = (idx + 1) % images.length;
+        }, 200);
+      }
+
+      // Dev-Shortcuts
+      function devDashboard() {
+        navTo('screen-dashboard');
+      }
+      function devSecretary() {
+        if (typeof activateSecretaryState === 'function') activateSecretaryState();
+        navTo('screen-secretary');
+      }
 
       document.getElementById('api-key-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') checkAccessCode(); });
     </script>
