@@ -2085,70 +2085,13 @@
       }
     }
 
-    /* ── DEV PANEL STYLES ───────────────────────────────── */
-    #dev-panel {
-      position: fixed;
-      top: 14px;
-      right: 14px;
-      z-index: 999999;
-      background: rgba(6, 8, 13, 0.92);
-      border: 1px solid rgba(201, 168, 76, 0.3);
-      border-radius: 4px;
-      padding: 10px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
-    }
 
-    #dev-panel .dev-label {
-      font-size: 9px;
-      letter-spacing: 2px;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      text-align: center;
-      margin-bottom: 2px;
-    }
-
-    .dev-btn {
-      background: rgba(201, 168, 76, 0.08);
-      border: 1px solid rgba(201, 168, 76, 0.25);
-      color: var(--gold);
-      font-family: 'Playfair Display', serif;
-      font-size: 11px;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 5px 10px;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
-      border-radius: 2px;
-      white-space: nowrap;
-      text-align: left;
-    }
-
-    .dev-btn:hover {
-      background: rgba(201, 168, 76, 0.18);
-      border-color: var(--gold);
-    }
   </style>
 </head>
 
 <body>
 
-  <!-- ══ DEV PANEL ═══════════════════════════════════════════ -->
-  <div id="dev-panel">
-    <div class="dev-label">⚙ Dev Board</div>
-    <button class="dev-btn" onclick="devDashboard()">① Dashboard</button>
-    <button class="dev-btn" onclick="devSecretary()">② Post-Butler</button>
-    <button class="dev-btn" onclick="navTo('screen-suppa')">③ CMD Terminal</button>
-    <button class="dev-btn" onclick="navTo('screen-gift')"
-      style="color: #2ECC71; border-color: rgba(46, 204, 113, 0.4);">④ Ende / Geschenke</button>
-    <button class="dev-btn" onclick="if(typeof VIRUS_STATE !== 'undefined' && VIRUS_STATE.skipIntro) VIRUS_STATE.skipIntro();"
-      style="color: #ff0055; border-color: rgba(255, 0, 85, 0.4);">⑤ Skip to Boss Phase 1</button>
-    <button class="dev-btn" onclick="if(typeof startFinalDeathSequence === 'function') startFinalDeathSequence();"
-      style="color: #e67e22; border-color: rgba(230, 126, 34, 0.4);">⑥ Skip to Boss Death</button>
-  </div>
+
 
   <div id="evil-overlay" class="evil-overlay"></div>
   <div id="glitch-stripes" class="glitch-stripes"></div>
@@ -3143,7 +3086,19 @@ Regeln:
         else { frBox.className = 'final-result-box success'; title.textContent = 'Erfolgreich verifiziert!'; desc.textContent = `Begründung: Sie hatten nur ${capScoreTransfer} von 6 richtig (oder waren zu langsam). Sie waren definitiv zu schlecht, um ein Bot zu sein. Zahlung angewiesen.`; activateSecretaryState(); }
       }
 
-      function closeCaptchaModalAndContinue() { hide('screen-captcha-modal'); if (butlerPaid) { navTo('screen-dashboard'); } else { navTo('screen-transfer'); } }
+      function closeCaptchaModalAndContinue() {
+        // Modal vollständig zurücksetzen, damit ein erneuter Versuch möglich ist
+        hide('screen-captcha-modal');
+        // Captcha-Box wieder einblenden, final-result verstecken
+        document.getElementById('modal-captcha-box').classList.remove('hidden');
+        hide('final-result');
+        if (butlerPaid) {
+          navTo('screen-dashboard');
+        } else {
+          // Fehlgeschlagen (alle 6 richtig) → zurück zur Überweisung für neuen Versuch
+          navTo('screen-transfer');
+        }
+      }
 
       // ════════════════════════════════════════════════
       //  CEO TERMINAL LOGIC
@@ -4796,14 +4751,7 @@ Regeln:
         }, 200);
       }
 
-      // Dev-Shortcuts
-      function devDashboard() {
-        navTo('screen-dashboard');
-      }
-      function devSecretary() {
-        if (typeof activateSecretaryState === 'function') activateSecretaryState();
-        navTo('screen-secretary');
-      }
+
 
       document.getElementById('api-key-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') checkAccessCode(); });
     </script>
