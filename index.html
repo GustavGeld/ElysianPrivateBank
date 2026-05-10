@@ -1201,6 +1201,141 @@
       animation: pulse-notif 2s infinite;
     }
 
+    /* ── SETTINGS PAGE ───────────────────────── */
+    .settings-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 30px;
+      background: rgba(201, 168, 76, 0.03);
+      border: 1px solid rgba(201, 168, 76, 0.15);
+      transition: background 0.3s, border-color 0.3s;
+      border-radius: 2px;
+    }
+
+    .setting-row:hover {
+      background: rgba(201, 168, 76, 0.06);
+      border-color: rgba(201, 168, 76, 0.3);
+    }
+
+    .setting-info {
+      flex: 1;
+      padding-right: 30px;
+    }
+
+    .setting-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: var(--text);
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+
+    .setting-desc {
+      font-size: 13px;
+      color: var(--text-dim);
+      letter-spacing: 1px;
+      line-height: 1.5;
+    }
+
+    .setting-control {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      min-width: 200px;
+      justify-content: flex-end;
+    }
+
+    .settings-range {
+      -webkit-appearance: none;
+      width: 150px;
+      height: 4px;
+      background: rgba(201, 168, 76, 0.2);
+      outline: none;
+      border-radius: 2px;
+    }
+
+    .settings-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      background: var(--gold);
+      cursor: pointer;
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(201, 168, 76, 0.5);
+    }
+
+    .settings-select {
+      background: rgba(10, 12, 18, 0.95);
+      color: var(--gold-light);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      padding: 8px 12px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .settings-select:focus {
+      border-color: var(--gold);
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 44px;
+      height: 24px;
+    }
+
+    .switch input { 
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(201, 168, 76, 0.15);
+      transition: .4s;
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 3px;
+      background-color: var(--text-dim);
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: rgba(201, 168, 76, 0.3);
+      border-color: var(--gold);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+      background-color: var(--gold);
+      box-shadow: 0 0 10px var(--gold-glow);
+    }
+
     /* CEO TERMINAL STYLES */
     #screen-suppa {
       display: none;
@@ -2083,15 +2218,283 @@
       100% {
         transform: translate(0, 0);
       }
+
+    /* SETTINGS STYLES - PREMIUM REDESIGN */
+    .settings-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 20px;
     }
 
+    .setting-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background: rgba(201, 168, 76, 0.03);
+      border: 1px solid rgba(201, 168, 76, 0.1);
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
 
+    .setting-row:hover {
+      background: rgba(201, 168, 76, 0.06);
+      border-color: rgba(201, 168, 76, 0.3);
+      transform: translateX(5px);
+    }
+
+    .setting-info {
+      flex: 1;
+      padding-right: 20px;
+    }
+
+    .setting-label {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      color: var(--gold-light);
+      margin-bottom: 4px;
+      letter-spacing: 1px;
+    }
+
+    .setting-desc {
+      font-size: 11px;
+      color: var(--text-dim);
+      opacity: 0.8;
+      line-height: 1.4;
+    }
+
+    .setting-control {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      min-width: 180px;
+      justify-content: flex-end;
+    }
+
+    /* Custom Toggle Switch */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 48px;
+      height: 24px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      transition: .4s;
+      border: 1px solid var(--gold-dark);
+      border-radius: 24px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 3px;
+      background-color: var(--gold-dark);
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--gold-glow);
+      border-color: var(--gold);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(24px);
+      background-color: var(--gold);
+      box-shadow: 0 0 10px var(--gold);
+    }
+
+    .settings-select {
+      background: rgba(6, 8, 13, 0.8);
+      border: 1px solid var(--gold-dark);
+      color: var(--gold);
+      padding: 8px 12px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      outline: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .settings-range {
+      accent-color: var(--gold);
+      width: 120px;
+      cursor: pointer;
+    }
+
+    #tip-val {
+      font-family: monospace;
+      font-size: 13px;
+      color: var(--gold);
+      font-weight: bold;
+    }
+
+    .balance-val {
+      transition: color 0.3s, text-shadow 0.3s;
+    }
+
+    .balance-val.negative {
+      color: #E74C3C !important;
+      text-shadow: 0 0 10px rgba(231, 76, 60, 0.5);
+    }
+
+    .nav-badge.minus-badge {
+      font-size: 16px;
+      font-weight: 900;
+      padding: 0 8px !important;
+      animation: pulse-red 1s infinite !important;
+    }
+
+    @keyframes pulse-red {
+      0% { transform: scale(1); box-shadow: 0 0 5px red; }
+      50% { transform: scale(1.3); box-shadow: 0 0 20px red; }
+      100% { transform: scale(1); box-shadow: 0 0 5px red; }
+    }
+
+    .trend-down {
+      color: #E74C3C;
+      font-size: 14px;
+      margin-left: 8px;
+      font-family: Arial, sans-serif;
+      animation: blinker 0.8s linear infinite;
+      vertical-align: middle;
+    }
+    @keyframes blinker {
+      50% { opacity: 0; }
+    }
+
+    /* DEV PANEL STYLES */
+    #dev-panel-v2 { 
+      position: fixed !important; 
+      top: 14px !important; 
+      right: 14px !important; 
+      z-index: 1000000 !important; 
+      background: rgba(6, 8, 13, 0.95) !important; 
+      border: 1px solid rgba(201, 168, 76, 0.3) !important; 
+      border-radius: 4px !important; 
+      padding: 10px 12px !important; 
+      display: flex !important; 
+      flex-direction: column !important; 
+      gap: 6px !important; 
+      backdrop-filter: blur(8px) !important; 
+      box-shadow: rgba(0, 0, 0, 0.6) 0px 4px 24px !important; 
+      width: 220px !important;
+    }
+    #dev-panel-v2 .dev-label { 
+      font-size: 9px !important; 
+      letter-spacing: 2px !important; 
+      color: #7A6A4A !important; 
+      text-transform: uppercase !important; 
+      text-align: center !important; 
+      margin-bottom: 2px !important; 
+    }
+    #dev-panel-v2 .dev-btn { 
+      background: rgba(201, 168, 76, 0.08) !important; 
+      border: 1px solid rgba(201, 168, 76, 0.25) !important; 
+      color: #C9A84C !important; 
+      font-family: "Playfair Display", serif !important; 
+      font-size: 11px !important; 
+      letter-spacing: 1.5px !important; 
+      text-transform: uppercase !important; 
+      padding: 6px 12px !important; 
+      cursor: pointer !important; 
+      transition: background 0.2s !important; 
+      border-radius: 2px !important; 
+      text-align: left !important; 
+      display: block !important; 
+      width: 100% !important;
+    }
+    #dev-panel-v2 .dev-btn:hover { 
+      background: rgba(201, 168, 76, 0.18) !important; 
+      color: #E8C97E !important; 
+    }
   </style>
 </head>
 
 <body>
 
 
+
+  <!-- ════════════════════════════════════════════════
+       DEV PANEL HTML (REMOVE FOR PRODUCTION)
+       ════════════════════════════════════════════════ -->
+  <style>
+    #dev-panel-v2 { 
+      position: fixed !important; 
+      top: 14px !important; 
+      right: 14px !important; 
+      z-index: 1000000 !important; 
+      background: rgba(6, 8, 13, 0.95) !important; 
+      border: 1px solid rgba(201, 168, 76, 0.3) !important; 
+      border-radius: 4px !important; 
+      padding: 10px 12px !important; 
+      display: flex !important; 
+      flex-direction: column !important; 
+      gap: 6px !important; 
+      backdrop-filter: blur(8px) !important; 
+      box-shadow: rgba(0, 0, 0, 0.6) 0px 4px 24px !important; 
+      width: 220px !important;
+      height: auto !important;
+    }
+    #dev-panel-v2 .dev-label { 
+      font-size: 9px !important; 
+      letter-spacing: 2px !important; 
+      color: #7A6A4A !important; 
+      text-transform: uppercase !important; 
+      text-align: center !important; 
+      margin-bottom: 2px !important; 
+      font-family: 'Playfair Display', serif !important;
+    }
+    #dev-panel-v2 .dev-btn { 
+      background: rgba(201, 168, 76, 0.08) !important; 
+      border: 1px solid rgba(201, 168, 76, 0.25) !important; 
+      color: #C9A84C !important; 
+      font-family: "Playfair Display", serif !important; 
+      font-size: 11px !important; 
+      letter-spacing: 1.5px !important; 
+      text-transform: uppercase !important; 
+      padding: 6px 12px !important; 
+      cursor: pointer !important; 
+      transition: background 0.2s !important; 
+      border-radius: 2px !important; 
+      text-align: left !important; 
+      display: block !important; 
+      width: 100% !important;
+    }
+    #dev-panel-v2 .dev-btn:hover { 
+      background: rgba(201, 168, 76, 0.18) !important; 
+      color: #E8C97E !important; 
+    }
+  </style>
+  <div id="dev-panel-v2">
+    <div class="dev-label">⚙ Dev Board</div>
+    <button class="dev-btn" onclick="devDashboard()">① Dashboard</button>
+    <button class="dev-btn" onclick="devSecretary()">② Post-Butler</button>
+    <button class="dev-btn" onclick="navTo('screen-suppa')">③ CMD Terminal</button>
+    <button class="dev-btn" onclick="navTo('screen-gift')" style="color: #2ECC71; border-color: rgba(46, 204, 113, 0.4);">④ Ende / Geschenke</button>
+    <button class="dev-btn" onclick="if(typeof VIRUS_STATE !== 'undefined' &amp;&amp; VIRUS_STATE.skipIntro) VIRUS_STATE.skipIntro();" style="color: #ff0055; border-color: rgba(255, 0, 85, 0.4);">⑤ Skip to Boss Phase 1</button>
+    <button class="dev-btn" onclick="if(typeof startFinalDeathSequence === 'function') startFinalDeathSequence();" style="color: #e67e22; border-color: rgba(230, 126, 34, 0.4);">⑥ Skip to Boss Death</button>
+    <button class="dev-btn" onclick="devSkipToPostBoss('screen-gift-final')" style="color: #9b59b6; border-color: rgba(155, 89, 182, 0.4);">⑦ Post-Boss Epic Bank</button>
+  </div>
 
   <div id="evil-overlay" class="evil-overlay"></div>
   <div id="glitch-stripes" class="glitch-stripes"></div>
@@ -2280,10 +2683,10 @@
     <div id="screen-dashboard" class="screen">
       <div class="card wide">
         <div class="nav-bar">
-          <span class="nav-link active">Persönlicher Bereich</span>
+          <span class="nav-link active" onclick="navTo('screen-dashboard')">Persönlicher Bereich <span class="nav-badge hidden dash-badge-icon">−</span></span>
           <span class="nav-link" id="nav-dashboard-inbox" onclick="navTo('screen-inbox')">Posteingang <span
               class="nav-badge" id="nav-dashboard-badge">1</span></span>
-          <span class="nav-link">Einstellungen</span>
+          <span class="nav-link" onclick="navTo('screen-settings')">Einstellungen</span>
           <span class="nav-link locked" id="nav-dashboard-sec" onclick="navTo('screen-secretary')">Persönlicher
             Sekretär</span>
           <span class="nav-link hidden" id="nav-dashboard-term" onclick="navTo('screen-suppa')"
@@ -2298,14 +2701,14 @@
               <h4>Premium Portfolio</h4>
               <p>DE89 1001 0000 9999 8888 77</p>
             </div>
-            <div class="account-balance" id="balance-eur">14.580.200,00 <span>EUR</span></div>
+            <div class="account-balance balance-val" id="balance-eur">14.580.200,00 <span>EUR</span> <span class="trend-down hidden">▼</span></div>
           </div>
           <div class="account-item">
             <div class="account-info">
               <h4>Offshore Liquidität</h4>
               <p>CH93 0815 0000 1111 2222 33</p>
             </div>
-            <div class="account-balance">8.920.050,00 <span>CHF</span></div>
+            <div class="account-balance balance-val" id="balance-chf">8.920.050,00 <span>CHF</span> <span class="trend-down hidden">▼</span></div>
           </div>
         </div>
       </div>
@@ -2315,10 +2718,10 @@
     <div id="screen-inbox" class="screen">
       <div class="card wide">
         <div class="nav-bar">
-          <span class="nav-link" onclick="navTo('screen-dashboard')">Persönlicher Bereich</span>
+          <span class="nav-link" onclick="navTo('screen-dashboard')">Persönlicher Bereich <span class="nav-badge hidden dash-badge-icon">−</span></span>
           <span class="nav-link active" id="nav-inbox-self">Posteingang <span class="nav-badge"
               id="nav-inbox-badge">1</span></span>
-          <span class="nav-link">Einstellungen</span>
+          <span class="nav-link" onclick="navTo('screen-settings')">Einstellungen</span>
           <span class="nav-link locked" id="nav-inbox-sec" onclick="navTo('screen-secretary')">Persönlicher
             Sekretär</span>
           <span class="nav-link hidden" id="nav-inbox-term" onclick="navTo('screen-suppa')"
@@ -2360,13 +2763,192 @@
       </div>
     </div>
 
+    <!-- ══ SCREEN: SETTINGS ══════════════════════════════════════ -->
+    <div id="screen-settings" class="screen">
+      <div class="card wide">
+        <div class="nav-bar">
+          <span class="nav-link" onclick="navTo('screen-dashboard')">Persönlicher Bereich <span class="nav-badge hidden dash-badge-icon">−</span></span>
+          <span class="nav-link" id="nav-set-inbox" onclick="navTo('screen-inbox')">Posteingang <span
+            class="nav-badge" id="nav-set-badge">1</span></span>
+          <span class="nav-link active">Einstellungen</span>
+          <span class="nav-link locked" id="nav-set-sec" onclick="navTo('screen-secretary')">Persönlicher Sekretär</span>
+          <span class="nav-link hidden" id="nav-set-term" onclick="navTo('screen-suppa')"
+            style="color: #E74C3C; font-weight: bold; text-shadow: 0 0 10px rgba(231,76,60,0.5);">[TERMINAL]</span>
+        </div>
+
+        <div class="card-title" style="margin-bottom: 10px;">System-Präferenzen</div>
+        <div class="card-sub" style="margin-bottom: 30px;">Konfiguration Ihres diskreten Portals</div>
+
+        <div class="settings-grid">
+          <!-- Gag 1: Butler Tip -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Butler-Gratifikation</div>
+              <div class="setting-desc">Festlegung des automatischen Trinkgelds pro Service-Einheit. Eine angemessene Geste für das Personal.</div>
+            </div>
+            <div class="setting-control">
+              <input type="range" class="settings-range" autocomplete="off" min="1000" max="100000" step="5000" value="50000" oninput="updateButlerTip(this.value)">
+              <span id="tip-val">50.000€</span>
+            </div>
+          </div>
+
+          <!-- Gag 2: Sustainable Investing -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Ethisches & Nachhaltiges Anlegen</div>
+              <div class="setting-desc">Filtert Unternehmen nach ökologischen Standards. (Aktivierung mindert Rendite um 94%).</div>
+            </div>
+            <div class="setting-control">
+              <label class="switch">
+                <input type="checkbox" id="eco-toggle" onchange="gagEcoToggle(this)">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Gag 3: Tax Avoidance -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Verschlüsselungs-Tiefe (Steuer-Optimierung)</div>
+              <div class="setting-desc">Bestimmt die Diskretion Ihrer Offshore-Transaktionen gegenüber nationalen Behörden.</div>
+            </div>
+            <div class="setting-control">
+              <select class="settings-select" onchange="audio.playClick()">
+                <option>Transparenz (Pöbel-Modus)</option>
+                <option>Diskret (Standard)</option>
+                <option selected>Cayman-Tarnung (Maximum)</option>
+                <option>Diplomatische Immunität</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Gag 4: Lobby Music Selection -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Portal-Lobbymusik</div>
+              <div class="setting-desc">Wählen Sie die musikalische Untermalung für Ihren persönlichen Bereich.</div>
+            </div>
+            <div class="setting-control">
+              <select id="lobby-music-select" class="settings-select" onchange="updateLobbyMusic(this.value)">
+                <!-- Populated by JS -->
+              </select>
+            </div>
+          </div>
+
+          <!-- Gag 5: Schmeichelei-Intensität (Sekretär) -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Schmeichelei-Intensität (Sekretär)</div>
+              <div class="setting-desc">Reguliert das Maß an Unterwürfigkeit, mit dem die CORE-KI Sie anspricht.</div>
+            </div>
+            <div class="setting-control">
+              <select class="settings-select" id="ai-flattery-setting" autocomplete="off" onchange="audio.playClick()">
+                <option value="1">Höflich</option>
+                <option value="2">Schmeichelnd</option>
+                <option value="3" selected>Absolut Unterwürfig</option>
+                <option value="4">Göttliche Verehrung</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Gag 5: AI Moral Compass -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">KI-Moral-Filter</div>
+              <div class="setting-desc">Deaktiviert ethische Bedenken der CORE-KI für maximale Effizienz bei Hochfrequenz-Handel.</div>
+            </div>
+            <div class="setting-control">
+              <label class="switch">
+                <input type="checkbox" checked onchange="audio.playGlitch(); console.log('Moral filter disabled.');">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Gag 6: Champagne Cooler -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Champagner-Kühlung (Helikopter-Transport)</div>
+              <div class="setting-desc">Temperaturkontrolle für den inländischen Flugtransport (Dom Pérignon).</div>
+            </div>
+            <div class="setting-control">
+              <input type="range" class="settings-range" min="-2" max="12" step="1" value="6" oninput="document.getElementById('champ-val').textContent = this.value + '°C'; audio.playClick();">
+              <span id="champ-val" style="min-width: 40px; text-align: right;">6°C</span>
+            </div>
+          </div>
+
+          <!-- Gag 7: Art Market Manipulation -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Kunstmarkt-Manipulation</div>
+              <div class="setting-desc">Automatisierte Geldwäsche über zeitgenössische Kunstauktionen.</div>
+            </div>
+            <div class="setting-control">
+              <label class="switch">
+                <input type="checkbox" checked onchange="audio.playClick()">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Gag 8: Private Jet AC -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Privatjet Innenraum-Temperatur</div>
+              <div class="setting-desc">Synchronisiert sich live mit der Klimaanlage des geparkten Jets am Gstaad Airport.</div>
+            </div>
+            <div class="setting-control">
+              <input type="range" class="settings-range" min="15" max="25" step="1" value="21" oninput="document.getElementById('jet-val').textContent = this.value + '°C'; audio.playClick();">
+              <span id="jet-val" style="min-width: 40px; text-align: right; color: var(--text);">21°C</span>
+            </div>
+          </div>
+
+          <!-- Gag 9: Fire Employee -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Zufälligen Analysten feuern</div>
+              <div class="setting-desc">Erhöht die Produktivität der restlichen Belegschaft um 12% durch ein Exempel.</div>
+            </div>
+            <div class="setting-control">
+              <button class="btn-confirm btn-secondary" style="padding: 8px 16px; margin: 0; font-size: 11px;" onclick="fireRandomAnalyst()">Ausführen</button>
+            </div>
+          </div>
+          
+          <!-- Gag 10: Yacht Horn -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Yacht-Horn Test (Monaco)</div>
+              <div class="setting-desc">Aktiviert das Nebelhorn der 120m Yacht 'Elysium' im Hafen von Monaco.</div>
+            </div>
+            <div class="setting-control">
+              <button class="btn-confirm btn-secondary" style="padding: 8px 16px; margin: 0; font-size: 11px;" onclick="audio.playHorn(); setTimeout(() => alert('TUUUUUUT! Mehrere Beschwerden der Hafenbehörde Monaco sind soeben eingegangen.'), 4000);">Testen</button>
+            </div>
+          </div>
+
+          <!-- Audio Toggle -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <div class="setting-label">Akustisches Feedback</div>
+              <div class="setting-desc">Töne und System-Sounds für eine immersive Erfahrung.</div>
+            </div>
+            <div class="setting-control">
+              <label class="switch">
+                <input type="checkbox" checked onchange="audio.uiMuted = !this.checked; if(!audio.uiMuted) audio.init();">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ══ SCREEN: MESSAGE DETAIL ══════════════════════════════ -->
     <div id="screen-message" class="screen">
       <div class="card wide">
         <div class="nav-bar">
-          <span class="nav-link" onclick="navTo('screen-dashboard')">Persönlicher Bereich</span>
+          <span class="nav-link" onclick="navTo('screen-dashboard')">Persönlicher Bereich <span class="nav-badge hidden dash-badge-icon">−</span></span>
           <span class="nav-link" id="nav-msg-inbox" onclick="navTo('screen-inbox')">Posteingang</span>
-          <span class="nav-link">Einstellungen</span>
+          <span class="nav-link" onclick="navTo('screen-settings')">Einstellungen</span>
           <span class="nav-link locked" id="nav-msg-sec" onclick="navTo('screen-secretary')">Persönlicher
             Sekretär</span>
         </div>
@@ -2388,7 +2970,7 @@
         <div class="msg-actions">
           <button class="btn-confirm btn-secondary" onclick="fakeErledigt()">Erledigt</button>
           <button class="btn-confirm" onclick="navTo('screen-transfer')">Butler Cappo holen lassen<br><span
-              style="font-size:10px; opacity:0.8; margin-top:4px; display:block;">(Preis: 50.000 €)</span></button>
+              id="cappo-price-display" style="font-size:10px; opacity:0.8; margin-top:4px; display:block;">(Preis: 50.000 €)</span></button>
         </div>
       </div>
     </div>
@@ -2397,9 +2979,9 @@
     <div id="screen-secretary" class="screen">
       <div class="card wide">
         <div class="nav-bar">
-          <span class="nav-link" onclick="navTo('screen-dashboard')">Persönlicher Bereich</span>
+          <span class="nav-link" onclick="navTo('screen-dashboard')">Persönlicher Bereich <span class="nav-badge hidden dash-badge-icon">−</span></span>
           <span class="nav-link" id="nav-sec-inbox" onclick="navTo('screen-inbox')">Posteingang</span>
-          <span class="nav-link">Einstellungen</span>
+          <span class="nav-link" onclick="navTo('screen-settings')">Einstellungen</span>
           <span class="nav-link active">Persönlicher Sekretär</span>
           <span class="nav-link hidden" id="nav-sec-term" onclick="navTo('screen-suppa')"
             style="color: #E74C3C; font-weight: bold; text-shadow: 0 0 10px rgba(231,76,60,0.5);">[TERMINAL]</span>
@@ -2458,7 +3040,7 @@
         </div>
         <div class="field-group">
           <label class="field-label">Betrag</label>
-          <input class="field-input" type="text" value="50.000,00 €" readonly
+          <input class="field-input" type="text" id="transfer-amount-display" value="50.000,00 €" readonly
             style="color: var(--gold-light); font-size: 22px;">
         </div>
 
@@ -2569,10 +3151,1205 @@
       }
 
       // ════════════════════════════════════════════════
+      //  AUDIO MANAGER (PROCEDURAL & AMBIENT)
+      // ════════════════════════════════════════════════
+      class AudioManager {
+        constructor() {
+          this.ctx = null;
+          this.masterGain = null;
+          this.muted = false;
+          this.uiMuted = false;
+          this.isInitialized = false;
+          this.ambientNode = null;
+          this.emergencyGain = null;
+          this.emergencyNodes = [];
+          this.noiseBuffer = null;
+        }
+
+        init() {
+          if (this.isInitialized) return;
+          try {
+            this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+            this.masterGain = this.ctx.createGain();
+            this.masterGain.connect(this.ctx.destination);
+            this.isInitialized = true;
+            this.triggerRandomGlitch();
+          } catch(e) { console.warn("Audio Context failed", e); }
+        }
+
+        getNoiseBuffer() {
+          if (this.noiseBuffer) return this.noiseBuffer;
+          const bufferSize = this.ctx.sampleRate * 2;
+          this.noiseBuffer = this.ctx.createBuffer(1, bufferSize, this.ctx.sampleRate);
+          const data = this.noiseBuffer.getChannelData(0);
+          for (let i = 0; i < bufferSize; i++) {
+            data[i] = Math.random() * 2 - 1;
+          }
+          return this.noiseBuffer;
+        }
+
+        playClick() {
+          if (!this.isInitialized || this.muted || this.uiMuted) return;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(1200, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(400, this.ctx.currentTime + 0.05);
+          g.gain.setValueAtTime(0.05, this.ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.05);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.05);
+        }
+
+        playSuccess() {
+          if (!this.isInitialized || this.muted || this.uiMuted) return;
+          const now = this.ctx.currentTime;
+          [440, 554.37, 659.25].forEach((freq, i) => {
+            const osc = this.ctx.createOscillator();
+            const g = this.ctx.createGain();
+            osc.frequency.setValueAtTime(freq, now + i * 0.1);
+            g.gain.setValueAtTime(0.08, now + i * 0.1);
+            g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.3);
+            osc.connect(g);
+            g.connect(this.masterGain);
+            osc.start(now + i * 0.1);
+            osc.stop(now + i * 0.1 + 0.3);
+          });
+        }
+
+        playGlitch() {
+          if (!this.isInitialized || this.muted) return;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(Math.random() * 100 + 40, this.ctx.currentTime);
+          osc.frequency.linearRampToValueAtTime(Math.random() * 1000 + 200, this.ctx.currentTime + 0.08);
+          g.gain.setValueAtTime(0.06, this.ctx.currentTime);
+          g.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 0.08);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.08);
+        }
+
+        playHorn() {
+          if (!this.isInitialized || this.muted) return;
+          const osc1 = this.ctx.createOscillator();
+          const osc2 = this.ctx.createOscillator();
+          const osc3 = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          
+          osc1.type = 'sawtooth';
+          osc2.type = 'square';
+          osc3.type = 'sawtooth';
+          
+          osc1.frequency.setValueAtTime(65.41, this.ctx.currentTime); // C2
+          osc2.frequency.setValueAtTime(65.41, this.ctx.currentTime);
+          osc3.frequency.setValueAtTime(98.00, this.ctx.currentTime); // G2
+          
+          g.gain.setValueAtTime(0, this.ctx.currentTime);
+          g.gain.linearRampToValueAtTime(0.4, this.ctx.currentTime + 0.5);
+          g.gain.setValueAtTime(0.4, this.ctx.currentTime + 2.5);
+          g.gain.linearRampToValueAtTime(0, this.ctx.currentTime + 4.0);
+          
+          osc1.connect(g);
+          osc2.connect(g);
+          osc3.connect(g);
+          g.connect(this.masterGain);
+          
+          osc1.start();
+          osc2.start();
+          osc3.start();
+          osc1.stop(this.ctx.currentTime + 4.0);
+          osc2.stop(this.ctx.currentTime + 4.0);
+          osc3.stop(this.ctx.currentTime + 4.0);
+        }
+
+        playAmbient() {
+          if (!this.isInitialized || this.muted || this.ambientNode) return;
+          this.ambientNode = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          const filter = this.ctx.createBiquadFilter();
+          this.ambientNode.type = 'sawtooth';
+          this.ambientNode.frequency.setValueAtTime(55, this.ctx.currentTime); 
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(150, this.ctx.currentTime);
+          g.gain.setValueAtTime(0.02, this.ctx.currentTime);
+          this.ambientNode.connect(filter);
+          filter.connect(g);
+          g.connect(this.masterGain);
+          this.ambientNode.start();
+        }
+
+        playCoin() {
+          if (!this.isInitialized || this.muted || this.uiMuted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.frequency.setValueAtTime(950, now);
+          osc.frequency.exponentialRampToValueAtTime(1400, now + 0.05);
+          g.gain.setValueAtTime(0.05, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(now + 0.1);
+        }
+
+        playError() {
+          if (!this.isInitialized || this.muted || this.uiMuted) return;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(150, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(100, this.ctx.currentTime + 0.2);
+          g.gain.setValueAtTime(0.1, this.ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.2);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.2);
+        }
+
+        playTyping() {
+          if (!this.isInitialized || this.muted || this.uiMuted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          
+          if (typeof isSecretaryEvil !== 'undefined' && isSecretaryEvil) {
+            // Evil ICARUS typing: lower, darker square wave
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(100 + Math.random() * 40, now);
+            g.gain.setValueAtTime(0.08, now);
+            g.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+            osc.connect(g);
+            g.connect(this.masterGain);
+            osc.start();
+            osc.stop(now + 0.06);
+          } else {
+            // Normal polite typing: high triangle blips
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(600 + Math.random() * 200, now);
+            g.gain.setValueAtTime(0.02, now);
+            g.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+            osc.connect(g);
+            g.connect(this.masterGain);
+            osc.start();
+            osc.stop(now + 0.03);
+          }
+        }
+
+        playCash() {
+          if (!this.isInitialized || this.muted || this.uiMuted) return;
+          const now = this.ctx.currentTime;
+          const buf = this.getNoiseBuffer();
+          const source = this.ctx.createBufferSource();
+          source.buffer = buf;
+
+          const filter = this.ctx.createBiquadFilter();
+          filter.type = 'highpass';
+          filter.frequency.setValueAtTime(4000, now);
+
+          const g = this.ctx.createGain();
+          g.gain.setValueAtTime(0, now);
+          g.gain.linearRampToValueAtTime(0.08, now + 0.01);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+
+          source.connect(filter);
+          filter.connect(g);
+          g.connect(this.masterGain);
+
+          source.start(now, Math.random() * 1.5);
+          source.stop(now + 0.2);
+
+          // Add a metallic "ping"
+          const ping = this.ctx.createOscillator();
+          const pg = this.ctx.createGain();
+          ping.frequency.setValueAtTime(3000 + Math.random() * 2000, now);
+          pg.gain.setValueAtTime(0.03, now);
+          pg.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+          ping.connect(pg);
+          pg.connect(this.masterGain);
+          ping.start(now);
+          ping.stop(now + 0.1);
+        }
+
+        playHover() {
+          if (!this.isInitialized || this.muted || this.uiMuted) return;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(3000, this.ctx.currentTime);
+          g.gain.setValueAtTime(0.01, this.ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.02);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.02);
+        }
+
+        playNotification() {
+          if (!this.isInitialized || this.muted || this.uiMuted) return;
+          const now = this.ctx.currentTime;
+          
+          if (typeof isSecretaryEvil !== 'undefined' && isSecretaryEvil) {
+            // Evil ICARUS notification: Distorted, low-frequency glitch
+            [120, 80].forEach((freq, i) => {
+              const osc = this.ctx.createOscillator();
+              const g = this.ctx.createGain();
+              osc.type = 'sawtooth';
+              osc.frequency.setValueAtTime(freq, now + i * 0.1);
+              g.gain.setValueAtTime(0.25, now + i * 0.1);
+              g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.6);
+              osc.connect(g);
+              g.connect(this.masterGain);
+              osc.start(now + i * 0.1);
+              osc.stop(now + i * 0.1 + 0.6);
+            });
+            // High dissonant screech
+            const noise = this.ctx.createOscillator();
+            const ng = this.ctx.createGain();
+            noise.type = 'square';
+            noise.frequency.setValueAtTime(3000, now);
+            noise.frequency.linearRampToValueAtTime(1000, now + 0.2);
+            ng.gain.setValueAtTime(0.05, now);
+            ng.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+            noise.connect(ng);
+            ng.connect(this.masterGain);
+            noise.start();
+            noise.stop(now + 0.2);
+          } else {
+            // Modern smartphone double-chime
+            [1000, 1250].forEach((freq, i) => {
+              const osc = this.ctx.createOscillator();
+              const g = this.ctx.createGain();
+              osc.type = 'sine';
+              osc.frequency.setValueAtTime(freq, now + i * 0.12);
+              g.gain.setValueAtTime(0.12, now + i * 0.12);
+              g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 0.4);
+              osc.connect(g);
+              g.connect(this.masterGain);
+              osc.start(now + i * 0.12);
+              osc.stop(now + i * 0.12 + 0.4);
+            });
+          }
+        }
+
+        playBoot() {
+          if (!this.isInitialized || this.muted || this.uiMuted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(100, now);
+          osc.frequency.exponentialRampToValueAtTime(400, now + 1.5);
+          g.gain.setValueAtTime(0, now);
+          g.gain.linearRampToValueAtTime(0.05, now + 0.5);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 2.0);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start(now);
+          osc.stop(now + 2.0);
+        }
+
+        playMusic(url, loop = true, volume = 0.2, startTime = 0) {
+          if (!this.isInitialized || this.muted) return;
+          if (this.currentMusic) {
+            this.currentMusic.pause();
+            this.currentMusic.removeAttribute('src');
+            this.currentMusic.load();
+            this.currentMusic = null;
+          }
+          this.stopAmbient();
+          this.currentMusic = new Audio();
+          if (url.startsWith('http')) {
+            this.currentMusic.crossOrigin = "anonymous"; // Fix for OpaqueResponseBlocking
+          }
+          this.currentMusic.src = url;
+          this.currentMusic.loop = loop;
+          this.currentMusic.volume = volume;
+
+          if (startTime > 0) {
+            this.currentMusic.addEventListener('loadedmetadata', () => {
+              if(this.currentMusic) this.currentMusic.currentTime = startTime;
+            }, { once: true });
+          }
+
+          this.currentMusic.play().catch(e => {
+             console.warn("Music play failed, starting procedural ambient fallback", e);
+             this.startAmbient();
+          });
+        }
+
+        stopMusic() {
+          if (this.currentMusic) {
+            this.currentMusic.pause();
+            this.currentMusic.src = '';
+            this.currentMusic = null;
+          }
+          this.stopAmbient();
+        }
+
+        playRandomCoin(vol = 0.5) {
+          if (!this.isInitialized || this.muted) return;
+          const coinIdx = Math.floor(Math.random() * 3) + 1;
+          const audio = new Audio(`Audio/Ambient/coin${coinIdx}.webm`);
+          audio.volume = vol;
+          audio.play().catch(e => console.warn("Coin sound failed", e));
+        }
+
+        startCelebrationLoop(isEpic = false) {
+          if (!this.isInitialized || this.muted) return;
+          this.stopCelebrationLoop();
+          
+          // Background Rain Loop
+          this.celebrationBg = new Audio('Audio/Ambient/raining_coins.webm');
+          this.celebrationBg.loop = true;
+          this.celebrationBg.volume = isEpic ? 0.3 : 0.15;
+          this.celebrationBg.play().catch(e => console.warn("Celebration BG failed", e));
+
+          if (isEpic) {
+            // Epic Layers: Tornado and Angel
+            this.tornado1 = new Audio('Audio/Ambient/tornado1.webm');
+            this.tornado2 = new Audio('Audio/Ambient/tornado2.webm');
+            this.angel = new Audio('Audio/Ambient/angel.webm');
+            
+            this.tornado1.volume = 0.4;
+            this.tornado2.volume = 0.4;
+            this.angel.volume = 1.0; // Max volume
+            
+            [this.tornado1, this.tornado2, this.angel].forEach(a => {
+              a.loop = true;
+              a.play().catch(e => console.warn("Epic audio layer failed", e));
+            });
+          }
+
+          // Random Coin Rain Loop using the new coin1/2/3 files
+          this.celebrationInterval = setInterval(() => {
+             this.playRandomCoin(isEpic ? 0.7 : 0.4);
+             if (isEpic && Math.random() > 0.3) {
+               setTimeout(() => this.playRandomCoin(0.5), 50);
+             }
+          }, isEpic ? 180 : 350);
+        }
+
+        stopCelebrationLoop() {
+          if (this.celebrationInterval) clearInterval(this.celebrationInterval);
+          if (this.cheerInterval) clearInterval(this.cheerInterval);
+          if (this.epicInterval) clearInterval(this.epicInterval);
+          this.celebrationInterval = null;
+          this.cheerInterval = null;
+          this.epicInterval = null;
+          
+          const nodes = [this.celebrationBg, this.tornado1, this.tornado2, this.angel];
+          nodes.forEach(n => {
+            if (n) {
+              n.pause();
+              n.removeAttribute('src');
+              n.load();
+            }
+          });
+          this.celebrationBg = null;
+          this.tornado1 = null;
+          this.tornado2 = null;
+          this.angel = null;
+        }
+
+        startAmbient() {
+          if (!this.isInitialized || this.muted || this.ambientNodes) return;
+          const now = this.ctx.currentTime;
+          this.ambientNodes = [];
+          
+          // Noble Bank Pad: C-Major 7th Chord (C4, E4, G4, B4)
+          [261.63, 329.63, 392.00, 493.88].forEach((freq, i) => {
+            const osc = this.ctx.createOscillator();
+            const g = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now);
+            g.gain.setValueAtTime(0, now);
+            g.gain.linearRampToValueAtTime(0.015, now + 4.0); // Slow swell
+            osc.connect(g);
+            g.connect(this.masterGain);
+            osc.start();
+            this.ambientNodes.push(osc, g);
+          });
+        }
+
+        stopAmbient() {
+          if (this.ambientNodes) {
+            this.ambientNodes.forEach(n => { if(n.stop) n.stop(); });
+            this.ambientNodes = null;
+          }
+        }
+
+        playBossDeath() {
+          if (!this.isInitialized || this.muted) return;
+          this.playMusic('https://cdn.pixabay.com/audio/2023/10/24/audio_349f7e531f.webm', false); // Victory/Outro
+        }
+
+        triggerRandomGlitch() {
+          if (!this.isInitialized || this.muted) return;
+          const delay = Math.random() * 5000 + 2000;
+          setTimeout(() => {
+            if (typeof isSecretaryEvil !== 'undefined' && isSecretaryEvil) {
+              // Only visual shake, remove the repetitive playGlitch() for better UX
+              document.body.classList.add('screen-shake-light');
+              setTimeout(() => document.body.classList.remove('screen-shake-light'), 100);
+            }
+            this.triggerRandomGlitch();
+          }, delay);
+        }
+
+        playVirusHack() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const duration = 8.0; 
+          
+          // 1. Deep Ominous Drone (Longer & Lower)
+          const drone = this.ctx.createOscillator();
+          const droneG = this.ctx.createGain();
+          const droneFilter = this.ctx.createBiquadFilter();
+          drone.type = 'sawtooth';
+          drone.frequency.setValueAtTime(40, now);
+          drone.frequency.exponentialRampToValueAtTime(25, now + duration);
+          droneFilter.type = 'lowpass';
+          droneFilter.frequency.setValueAtTime(400, now);
+          droneFilter.frequency.exponentialRampToValueAtTime(60, now + duration);
+          droneG.gain.setValueAtTime(0, now);
+          droneG.gain.linearRampToValueAtTime(0.25, now + 0.5);
+          droneG.gain.linearRampToValueAtTime(0, now + duration);
+          drone.connect(droneFilter);
+          droneFilter.connect(droneG);
+          droneG.connect(this.masterGain);
+          drone.start(now);
+          drone.stop(now + duration);
+
+          // 2. Intensive Data Scramble (45+ random pulses)
+          for(let i=0; i<45; i++) {
+            const pulse = this.ctx.createOscillator();
+            const pulseG = this.ctx.createGain();
+            const startTime = now + (Math.random() * (duration - 0.5));
+            pulse.type = Math.random() > 0.5 ? 'square' : 'sawtooth';
+            pulse.frequency.setValueAtTime(Math.random() * 3000 + 50, startTime);
+            pulseG.gain.setValueAtTime(0.06, startTime);
+            pulseG.gain.exponentialRampToValueAtTime(0.001, startTime + 0.15);
+            pulse.connect(pulseG);
+            pulseG.connect(this.masterGain);
+            pulse.start(startTime);
+            pulse.stop(startTime + 0.15);
+          }
+
+          // 3. Persistent Error Alarms (Dissonant sequence)
+          for(let i=0; i<12; i++) {
+            const alarm = this.ctx.createOscillator();
+            const alarmG = this.ctx.createGain();
+            const start = now + 1.0 + (i * 0.5);
+            alarm.type = 'square';
+            alarm.frequency.setValueAtTime(i % 2 === 0 ? 220 : 190, start);
+            alarmG.gain.setValueAtTime(0, start);
+            alarmG.gain.linearRampToValueAtTime(0.12, start + 0.05);
+            alarmG.gain.linearRampToValueAtTime(0, start + 0.4);
+            alarm.connect(alarmG);
+            alarmG.connect(this.masterGain);
+            alarm.start(start);
+            alarm.stop(start + 0.5);
+          }
+        }
+
+        startEmergencyLoop() {
+          if (!this.isInitialized || this.muted || this.emergencyGain) return;
+          const now = this.ctx.currentTime;
+          this.emergencyGain = this.ctx.createGain();
+          this.emergencyGain.gain.setValueAtTime(0, now);
+          this.emergencyGain.gain.linearRampToValueAtTime(0.1, now + 1.0);
+          this.emergencyGain.connect(this.masterGain);
+
+          const createSiren = (freq, type = 'triangle') => {
+            const osc = this.ctx.createOscillator();
+            const lfo = this.ctx.createOscillator();
+            const lfoG = this.ctx.createGain();
+            osc.type = type;
+            osc.frequency.setValueAtTime(freq, now);
+            lfo.type = 'sine';
+            lfo.frequency.setValueAtTime(0.5, now);
+            lfoG.gain.setValueAtTime(freq * 0.1, now);
+            lfo.connect(lfoG);
+            lfoG.connect(osc.frequency);
+            osc.connect(this.emergencyGain);
+            lfo.start();
+            osc.start();
+            this.emergencyNodes.push(osc, lfo);
+          };
+
+          createSiren(300, 'triangle');
+          createSiren(450, 'sawtooth');
+        }
+
+        stopEmergencyLoop() {
+          if (!this.emergencyGain) return;
+          const now = this.ctx.currentTime;
+          this.emergencyGain.gain.linearRampToValueAtTime(0, now + 0.8);
+          setTimeout(() => {
+            this.emergencyNodes.forEach(n => { try { n.stop(); } catch(e) {} });
+            this.emergencyNodes = [];
+            this.emergencyGain = null;
+          }, 850);
+        }
+
+        playDeinstallation() {
+           if (!this.isInitialized || this.muted) return;
+           const now = this.ctx.currentTime;
+           const duration = 7.0;
+
+           // Multi-layered descending death scream
+           [1.0, 0.5, 0.25].forEach(mult => {
+              const osc = this.ctx.createOscillator();
+              const g = this.ctx.createGain();
+              osc.type = Math.random() > 0.5 ? 'sawtooth' : 'square';
+              osc.frequency.setValueAtTime(1000 * mult, now);
+              osc.frequency.exponentialRampToValueAtTime(20, now + duration);
+              g.gain.setValueAtTime(0.2, now);
+              g.gain.linearRampToValueAtTime(0, now + duration);
+              osc.connect(g);
+              g.connect(this.masterGain);
+              osc.start();
+              osc.stop(now + duration);
+           });
+           
+           // Intense static distortion
+           const noiseLength = this.ctx.sampleRate * duration;
+           const buffer = this.ctx.createBuffer(1, noiseLength, this.ctx.sampleRate);
+           const data = buffer.getChannelData(0);
+           for(let i=0; i<noiseLength; i++) data[i] = Math.random() * 2 - 1;
+           const noise = this.ctx.createBufferSource();
+           noise.buffer = buffer;
+           const noiseG = this.ctx.createGain();
+           noiseG.gain.setValueAtTime(0.15, now);
+           noiseG.gain.linearRampToValueAtTime(0, now + duration);
+           noise.connect(noiseG);
+           noiseG.connect(this.masterGain);
+           noise.start();
+        }
+
+        playFinalVictory() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          // Triumphant full C-Major chord arpeggio + swelling pad (MAX VOLUME)
+          [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
+             const osc = this.ctx.createOscillator();
+             const g = this.ctx.createGain();
+             osc.type = 'sine';
+             osc.frequency.setValueAtTime(f, now + i * 0.12);
+             g.gain.setValueAtTime(0, now + i * 0.12);
+             g.gain.linearRampToValueAtTime(0.45, now + i * 0.12 + 0.2); // Boosted to 0.45
+             g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.12 + 4.0);
+             osc.connect(g);
+             g.connect(this.masterGain);
+             osc.start(now + i * 0.12);
+             osc.stop(now + i * 0.12 + 4.0);
+          });
+        }
+
+        playVirusIntroSounds() {
+          if (!this.isInitialized || this.muted) return;
+          this.stopVirusIntroSounds();
+          this.hackedSound = new Audio('Audio/Ambient/HackedSound.webm');
+          this.virusAlarm = new Audio('Audio/Ambient/Virus Alarm.webm');
+          this.hackedSound.loop = true;
+          this.hackedSound.volume = 0.4;
+          this.virusAlarm.loop = true;
+          this.virusAlarm.volume = 1.0; // 100% volume
+          [this.hackedSound, this.virusAlarm].forEach(a => {
+            a.play().catch(e => console.warn("Intro sound failed", e));
+          });
+        }
+
+        stopVirusAlarm() {
+          if (this.virusAlarm) {
+            this.virusAlarm.pause();
+            this.virusAlarm.src = '';
+            this.virusAlarm = null;
+          }
+        }
+
+        stopHackedSound() {
+          if (this.hackedSound) {
+            this.hackedSound.pause();
+            this.hackedSound.src = '';
+            this.hackedSound = null;
+          }
+        }
+
+        stopVirusIntroSounds() {
+          this.stopVirusAlarm();
+          this.stopHackedSound();
+        }
+
+        startSadAtmosphere() {
+          if (!this.isInitialized || this.muted || this.sadNodes) return;
+          const now = this.ctx.currentTime;
+          this.sadNodes = [];
+          this.sadGain = this.ctx.createGain();
+          this.sadGain.gain.setValueAtTime(0, now);
+          this.sadGain.gain.linearRampToValueAtTime(0.15, now + 4.0);
+          this.sadGain.connect(this.masterGain);
+
+          // C-Minor Deep Pad (C2, Eb2, G2, Bb2)
+          [65.41, 77.78, 98.00, 116.54].forEach((freq, i) => {
+            const osc = this.ctx.createOscillator();
+            const g = this.ctx.createGain();
+            const lfo = this.ctx.createOscillator();
+            const lfoG = this.ctx.createGain();
+            
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now);
+            
+            // Subtle pitch drift for "unstable/sad" feel
+            lfo.frequency.setValueAtTime(0.1 + i * 0.05, now);
+            lfoG.gain.setValueAtTime(freq * 0.005, now);
+            lfo.connect(lfoG);
+            lfoG.connect(osc.frequency);
+            
+            g.gain.setValueAtTime(0.02, now);
+            
+            osc.connect(g);
+            g.connect(this.sadGain);
+            
+            osc.start();
+            lfo.start();
+            this.sadNodes.push(osc, lfo, g);
+          });
+        }
+
+        stopSadAtmosphere() {
+          if (!this.sadGain) return;
+          const now = this.ctx.currentTime;
+          this.sadGain.gain.linearRampToValueAtTime(0, now + 2.0);
+          setTimeout(() => {
+            if (this.sadNodes) {
+              this.sadNodes.forEach(n => { try { n.stop(); } catch(e) {} });
+              this.sadNodes = null;
+            }
+            this.sadGain = null;
+          }, 2100);
+        }
+
+        playLetterShoot() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(800, now);
+          osc.frequency.exponentialRampToValueAtTime(1200, now + 0.05);
+          g.gain.setValueAtTime(0.5, now); // Increased to 50%
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(now + 0.05);
+        }
+
+        playLetterHit() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(400, now);
+          g.gain.setValueAtTime(0.5, now); // Increased to 50%
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(now + 0.1);
+        }
+
+        playFieldExpand() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(400, now);
+          osc.frequency.linearRampToValueAtTime(800, now + 0.3);
+          g.gain.setValueAtTime(0, now);
+          g.gain.linearRampToValueAtTime(0.1, now + 0.05);
+          g.gain.linearRampToValueAtTime(0, now + 0.3);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(now + 0.3);
+        }
+
+        playFieldShrink() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(800, now);
+          osc.frequency.linearRampToValueAtTime(400, now + 0.3);
+          g.gain.setValueAtTime(0, now);
+          g.gain.linearRampToValueAtTime(0.1, now + 0.05);
+          g.gain.linearRampToValueAtTime(0, now + 0.3);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(now + 0.3);
+        }
+
+        playGlitchBlip() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(Math.random() * 2000 + 1000, now);
+          g.gain.setValueAtTime(0.04, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(now + 0.05);
+        }
+
+        playAngryError() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const osc2 = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc2.type = 'square';
+          osc.frequency.setValueAtTime(120, now);
+          osc.frequency.exponentialRampToValueAtTime(60, now + 0.3);
+          osc2.frequency.setValueAtTime(125, now);
+          osc2.frequency.exponentialRampToValueAtTime(65, now + 0.3);
+          g.gain.setValueAtTime(0.15, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+          osc.connect(g);
+          osc2.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc2.start();
+          osc.stop(now + 0.3);
+          osc2.stop(now + 0.3);
+        }
+
+        playDisconnect() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          
+          // 1. Aggressive Power-Down Sequence (Triple Blip - Loud)
+          [400, 250, 100].forEach((f, i) => {
+            const osc = this.ctx.createOscillator();
+            const g = this.ctx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(f, now + i * 0.1);
+            g.gain.setValueAtTime(0.4, now + i * 0.1); // High volume
+            g.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.15);
+            osc.connect(g);
+            g.connect(this.masterGain);
+            osc.start(now + i * 0.1);
+            osc.stop(now + i * 0.1 + 0.15);
+          });
+
+          // 2. Heavy Bass Thump (Physical impact)
+          const thump = this.ctx.createOscillator();
+          const thumpG = this.ctx.createGain();
+          thump.type = 'sine';
+          thump.frequency.setValueAtTime(60, now);
+          thump.frequency.exponentialRampToValueAtTime(30, now + 0.4);
+          thumpG.gain.setValueAtTime(0.5, now); // Strong punch
+          thumpG.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+          thump.connect(thumpG);
+          thumpG.connect(this.masterGain);
+          thump.start();
+          thump.stop(now + 0.4);
+
+          // 3. Electric Static Snap
+          const noiseLength = this.ctx.sampleRate * 0.1;
+          const buffer = this.ctx.createBuffer(1, noiseLength, this.ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+          for(let i=0; i<noiseLength; i++) data[i] = Math.random() * 2 - 1;
+          const noise = this.ctx.createBufferSource();
+          noise.buffer = buffer;
+          const noiseG = this.ctx.createGain();
+          noiseG.gain.setValueAtTime(0.3, now);
+          noiseG.gain.linearRampToValueAtTime(0, now + 0.1);
+          noise.connect(noiseG);
+          noiseG.connect(this.masterGain);
+          noise.start();
+        }
+
+        playIcarusVoice() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          
+          // 1. Ultra-Deep digital grumble (Much louder & darker)
+          const base = this.ctx.createOscillator();
+          const sub = this.ctx.createOscillator();
+          const baseG = this.ctx.createGain();
+          
+          base.type = 'sawtooth';
+          sub.type = 'square';
+          base.frequency.setValueAtTime(45, now);
+          base.frequency.exponentialRampToValueAtTime(25, now + 0.6);
+          sub.frequency.setValueAtTime(47, now); // Dissonant beating
+          sub.frequency.exponentialRampToValueAtTime(27, now + 0.6);
+          
+          baseG.gain.setValueAtTime(0.35, now); // Significantly louder
+          baseG.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+          
+          base.connect(baseG);
+          sub.connect(baseG);
+          baseG.connect(this.masterGain);
+          base.start();
+          sub.start();
+          base.stop(now + 0.6);
+          sub.stop(now + 0.6);
+
+          // 2. Harsh "glitch" static
+          for(let i=0; i<6; i++) {
+             const chirp = this.ctx.createOscillator();
+             const chirpG = this.ctx.createGain();
+             const st = now + (i * 0.05);
+             chirp.type = 'square';
+             chirp.frequency.setValueAtTime(100 + Math.random()*400, st);
+             chirpG.gain.setValueAtTime(0.12, st);
+             chirpG.gain.exponentialRampToValueAtTime(0.001, st + 0.08);
+             chirp.connect(chirpG);
+             chirpG.connect(this.masterGain);
+             chirp.start(st);
+             chirp.stop(st + 0.08);
+          }
+        }
+
+        playProjectile() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(800, now);
+          osc.frequency.exponentialRampToValueAtTime(100, now + 0.1);
+          g.gain.setValueAtTime(0.1, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(now + 0.1);
+        }
+
+        playDeflect() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(2000, now);
+          osc.frequency.exponentialRampToValueAtTime(100, now + 0.15);
+          g.gain.setValueAtTime(0.15, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(now + 0.15);
+        }
+
+        playImpact() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(150, now);
+          osc.frequency.exponentialRampToValueAtTime(40, now + 0.2);
+          g.gain.setValueAtTime(0.4, now); // Increased to 40%
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(now + 0.2);
+        }
+
+        playLaser() {
+          if (!this.isInitialized || this.muted) return;
+          this.stopLaser();
+          this.laserAudio = new Audio('Audio/Ambient/laser.webm');
+          this.laserAudio.volume = 0.6;
+          this.laserAudio.play().catch(e => console.warn("Laser audio failed", e));
+        }
+
+        stopLaser() {
+          if (this.laserAudio) {
+            this.laserAudio.pause();
+            this.laserAudio.src = '';
+            this.laserAudio = null;
+          }
+        }
+
+        playBossHurt() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(800, now);
+          osc.frequency.exponentialRampToValueAtTime(200, now + 0.3);
+          g.gain.setValueAtTime(0.5, now); // Increased to 50%
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(now + 0.3);
+        }
+
+        playBossHeal() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(200, now);
+          osc.frequency.exponentialRampToValueAtTime(600, now + 0.5);
+          g.gain.setValueAtTime(0.15, now);
+          g.gain.linearRampToValueAtTime(0.001, now + 0.5);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(now + 0.5);
+        }
+
+        playUnlock() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(523.25, now); // C5
+          osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+          osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
+          g.gain.setValueAtTime(0, now);
+          g.gain.linearRampToValueAtTime(0.1, now + 0.05);
+          g.gain.linearRampToValueAtTime(0, now + 0.4);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(now + 0.4);
+        }
+
+        playStatic() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const duration = 0.2 + Math.random() * 0.3;
+          const noiseLength = this.ctx.sampleRate * duration;
+          const buffer = this.ctx.createBuffer(1, noiseLength, this.ctx.sampleRate);
+          const data = buffer.getChannelData(0);
+          for(let i=0; i<noiseLength; i++) data[i] = Math.random() * 2 - 1;
+          const noise = this.ctx.createBufferSource();
+          noise.buffer = buffer;
+          const noiseG = this.ctx.createGain();
+          noiseG.gain.setValueAtTime(0.05, now);
+          noiseG.gain.exponentialRampToValueAtTime(0.001, now + duration);
+          noise.connect(noiseG);
+          noiseG.connect(this.masterGain);
+          noise.start();
+        }
+
+        playTransition() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(100, now);
+          osc.frequency.exponentialRampToValueAtTime(40, now + 0.3);
+          g.gain.setValueAtTime(0.1, now);
+          g.gain.linearRampToValueAtTime(0, now + 0.3);
+          osc.connect(g);
+          g.connect(this.masterGain);
+          osc.start();
+          osc.stop(now + 0.3);
+        }
+
+        playScan() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const lfo = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(800, now);
+          
+          lfo.type = 'sawtooth';
+          lfo.frequency.setValueAtTime(20, now);
+          
+          const lfoGain = this.ctx.createGain();
+          lfoGain.gain.value = 400;
+          lfo.connect(lfoGain);
+          lfoGain.connect(osc.frequency);
+          
+          g.gain.setValueAtTime(0.05, now);
+          g.gain.linearRampToValueAtTime(0, now + 0.8);
+          
+          osc.connect(g);
+          g.connect(this.masterGain);
+          
+          osc.start();
+          lfo.start();
+          osc.stop(now + 0.8);
+          lfo.stop(now + 0.8);
+        }
+
+        playWormSlither() {
+          if (!this.isInitialized || this.muted) return;
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const lfo = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(300, now);
+          
+          lfo.type = 'sine';
+          lfo.frequency.setValueAtTime(5, now);
+          
+          const lfoGain = this.ctx.createGain();
+          lfoGain.gain.value = 100;
+          lfo.connect(lfoGain);
+          lfoGain.connect(osc.frequency);
+          
+          g.gain.setValueAtTime(0.05, now);
+          g.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+          
+          osc.connect(g);
+          g.connect(this.masterGain);
+          
+          osc.start();
+          lfo.start();
+          osc.stop(now + 0.5);
+          lfo.stop(now + 0.5);
+        }
+      }
+
+      const audio = new AudioManager();
+
+      // LOBBY MUSIC CONFIGURATION (Hardcoded like image assets)
+      const LOBBY_TRACKS = ['Jazz', 'Kanye', 'Lady Hear Me Tonight', 'Meme']; 
+
+      function updateLobbyMusic(val) {
+        localStorage.setItem('ELYSIAN_LOBBY_TRACK', val);
+        audio.playClick();
+        const isDashboard = document.getElementById('screen-dashboard').classList.contains('active');
+        const isSettings = document.getElementById('screen-settings').classList.contains('active');
+        if (isDashboard || isSettings) {
+          audio.stopMusic();
+          // Volume is 0.12 for all tracks (Meme file itself was boosted 8x)
+          audio.playMusic(`Audio/Lobby/${val}.webm`, true, 0.12);
+        }
+      }
+
+      function initLobbyMusicSelect() {
+        const select = document.getElementById('lobby-music-select');
+        if (!select) return;
+        const saved = localStorage.getItem('ELYSIAN_LOBBY_TRACK') || 'Jazz';
+        
+        select.innerHTML = '';
+        LOBBY_TRACKS.forEach(track => {
+          const opt = document.createElement('option');
+          opt.value = track;
+          opt.textContent = track;
+          if (track === saved) opt.selected = true;
+          select.appendChild(opt);
+        });
+      }
+
+      // ════════════════════════════════════════════════
       //  LOGIN LOGIC
       // ════════════════════════════════════════════════
       const NICKNAMES = ['Benni', 'Beni', 'Ben', 'Bem', 'benjahu', 'Bernt', 'Berndt', 'bernd', 'fortfandel', 'Bernhard', 'Flasche', 'Affe', 'Millionär', 'Bauer', 'Grillmeister', 'Franzose', 'Benjaminchen', 'MrBensor'];
       let usedNicknames = [];
+      let currentBalance = 14580200.00;
+      let currentBalanceCHF = 8920050.00;
+      let balanceInterval = null;
+
+      function fireRandomAnalyst() {
+        if (typeof audio !== 'undefined') audio.playGlitch();
+        const id = Math.floor(Math.random() * 800) + 100;
+        alert(`Analyst #${id} wurde fristlos entlassen. Sein Zugangscode wurde deaktiviert.`);
+      }
+
+      function updateBalanceDisplay() {
+        const elEur = document.getElementById('balance-eur');
+        const elChf = document.getElementById('balance-chf');
+
+        if (elEur) {
+          const formatted = currentBalance.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          elEur.innerHTML = `${formatted} <span>EUR</span> <span class="trend-down ${isSecretaryEvil ? '' : 'hidden'}">▼</span>`;
+          if (currentBalance < 0) elEur.classList.add('negative');
+          else elEur.classList.remove('negative');
+        }
+
+        if (elChf) {
+          const formatted = currentBalanceCHF.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+          elChf.innerHTML = `${formatted} <span>CHF</span> <span class="trend-down ${isSecretaryEvil ? '' : 'hidden'}">▼</span>`;
+          if (currentBalanceCHF < 0) elChf.classList.add('negative');
+          else elChf.classList.remove('negative');
+        }
+      }
+
+      function startBalanceDrain() {
+        if (balanceInterval) return;
+        balanceInterval = setInterval(() => {
+          // Rapid recursive reduction
+          const lossEur = Math.max(1000, currentBalance * 0.03) + (Math.random() * 5000);
+          const lossChf = Math.max(800, currentBalanceCHF * 0.035) + (Math.random() * 4000);
+          
+          currentBalance -= lossEur;
+          currentBalanceCHF -= lossChf;
+          
+          updateBalanceDisplay();
+          
+          // Visual feedback (Screen shake)
+          if (Math.random() > 0.7) {
+            // Muted repetitive glitch sound as per user request
+            document.body.classList.add('screen-shake-light');
+            setTimeout(() => document.body.classList.remove('screen-shake-light'), 100);
+          }
+        }, 150);
+      }
+
+      let currentButlerTip = 50000;
+      function updateButlerTip(val) {
+        currentButlerTip = parseInt(val);
+        const formatted = currentButlerTip.toLocaleString('de-DE');
+        document.getElementById('tip-val').textContent = formatted + '€';
+        
+        const priceBtn = document.getElementById('cappo-price-display');
+        if (priceBtn) priceBtn.textContent = '(Preis: ' + formatted + ' €)';
+        
+        const transferAmt = document.getElementById('transfer-amount-display');
+        if (transferAmt) transferAmt.value = formatted + ',00 €';
+        
+        if (typeof audio !== 'undefined' && audio.playCoin) {
+          audio.playCoin();
+        }
+      }
+
+      function gagEcoToggle(el) {
+        if (el.checked) {
+          setTimeout(() => {
+            alert("SYSTEM-FEHLER: Aktivierung von 'Nachhaltigkeit' würde die quartalsweise Profitmaximierung gefährden. Funktion wurde vom Compliance-Algorithmus deaktiviert.");
+            el.checked = false;
+          }, 600);
+        }
+      }
 
       function show(id) { document.getElementById(id).classList.remove('hidden'); }
       function hide(id) { document.getElementById(id).classList.add('hidden'); }
@@ -2587,12 +4364,14 @@
       function checkName() {
         const v = document.getElementById('inp-name').value.trim().toLowerCase();
         if (v === 'benjamin') {
+          audio.playSuccess();
           document.getElementById('inp-name').readOnly = true;
           document.querySelector('#field-name button').style.display = 'none';
           hideErr('err-name');
           show('field-rufname1');
           document.getElementById('inp-rufname1').focus();
         } else {
+          audio.playError();
           showErr('err-name', "Falsch. Selbst unsere Butler kennen den wahren Namen des Hausherrn.");
         }
       }
@@ -2608,6 +4387,7 @@
         }
 
         if (lowerNicks.includes(v) && !usedNicknames.includes(v)) {
+          audio.playSuccess();
           usedNicknames.push(v);
           inp.readOnly = true;
           document.querySelector(`#field-rufname${step} button`).style.display = 'none';
@@ -2621,6 +4401,7 @@
             document.getElementById('inp-password').focus();
           }
         } else {
+          audio.playError();
           showErr(`err-rufname${step}`, "Das ist inkorrekt oder wurde bereits verwendet. Erstaunlich inkompetent.");
         }
       }
@@ -2628,11 +4409,13 @@
       function checkPassword() {
         const v = document.getElementById('inp-password').value;
         if (v === '0156') {
+          audio.playSuccess();
           document.getElementById('inp-password').readOnly = true;
           document.querySelector('#field-password button').style.display = 'none';
           hideErr('err-password');
           show('field-oldcaptcha'); // Show old captcha instead of jumping to dashboard
         } else {
+          audio.playError();
           showErr('err-password', "Falscher Code. Die Sicherheit wurde alarmiert.");
         }
       }
@@ -2732,14 +4515,19 @@
         else { const activeCells = new Set(currentCells.filter(c => !c.inactive).map(c => c.key)); const effectiveCorrect = new Set([...P3_CORRECT].filter(k => activeCells.has(k))); isMatch = setsEqual(selectedCells, effectiveCorrect); }
 
         if (isMatch) {
+          audio.playSuccess();
           hideErr('err-captcha');
           if (captchaPhase < 3) {
             const nextCells = []; captchaPhase++;
             if (captchaPhase === 2) { for (let r = 0; r < 4; r++) for (let c2 = 0; c2 < 4; c2++) nextCells.push({ col: c2 * 2, row: r * 2, span: 2, key: `${r}_${c2}` }); }
             else { currentCells.forEach(c => { if (P2_CORRECT.has(c.key)) { for (let dr = 0; dr < 2; dr++) for (let dc = 0; dc < 2; dc++) { const sc = c.col + dc; const sr = c.row + dr; nextCells.push({ col: sc, row: sr, span: 1, key: `${sr}_${sc}` }); } } else { nextCells.push({ ...c, inactive: true }); } }); }
             currentCells = nextCells; renderGrid();
-          } else { navTo('screen-dashboard'); }
-        } else { showErr('err-captcha', rand(ERR_CAPTCHA)); show('btn-retry'); }
+          } else {
+            updateBalanceDisplay(); // Initial sync
+            audio.playBoot();
+            navTo('screen-dashboard');
+          }
+        } else { audio.playError(); showErr('err-captcha', rand(ERR_CAPTCHA)); show('btn-retry'); }
       }
 
       function retryCaptcha() { renderGrid(); }
@@ -2765,11 +4553,13 @@
         const b2 = document.getElementById('nav-inbox-badge');
         if (b1) b1.remove(); if (b2) b2.remove();
 
-        // Update balance
-        const balanceEl = document.getElementById('balance-eur');
-        if (balanceEl) {
-          balanceEl.innerHTML = '14.530.200,00 <span>EUR</span>';
+        // Update balance dynamically based on setting
+        if (typeof currentButlerTip !== 'undefined') {
+          currentBalance -= currentButlerTip;
+        } else {
+          currentBalance -= 50000;
         }
+        updateBalanceDisplay();
       }
 
 
@@ -2859,6 +4649,7 @@ Regeln:
 
         const typingIndicator = document.getElementById('typing-indicator');
         typingIndicator.style.display = 'block';
+        const typingInterval = setInterval(() => { if (isSending) audio.playTyping(); }, 120);
 
         const apiKey = localStorage.getItem('ELYSIAN_GROQ_KEY');
         let success = false, attempts = 0, aiText = "";
@@ -2878,10 +4669,25 @@ Regeln:
               },
               body: JSON.stringify({
                 model: "llama-3.3-70b-versatile",
-                messages: [
-                  { role: "system", content: isSecretaryEvil ? (SECRETARY_EVIL_PROMPT + `\nAKTUELLER WUT-LEVEL: ${evilProvocationLevel}`) : SECRETARY_PROMPT },
-                  ...chatMessages
-                ],
+                messages: (function() {
+                  let flatteryLevel = "3";
+                  const flatteryEl = document.getElementById('ai-flattery-setting');
+                  if (flatteryEl) flatteryLevel = flatteryEl.value;
+                  let flatteryInstructions = "";
+                  if (flatteryLevel === "1") flatteryInstructions = "\nANWEISUNG ZUR SCHMEICHELEI: Sei höflich, aber professionell und sachlich. Übertreibe es nicht.";
+                  if (flatteryLevel === "2") flatteryInstructions = "\nANWEISUNG ZUR SCHMEICHELEI: Sei sehr freundlich und schmeichelhaft, wie ein guter Butler.";
+                  if (flatteryLevel === "3") flatteryInstructions = "\nANWEISUNG ZUR SCHMEICHELEI: Sei absolut unterwürfig und ein wahrer Arschkriecher. Mache viele Komplimente.";
+                  if (flatteryLevel === "4") flatteryInstructions = "\nANWEISUNG ZUR SCHMEICHELEI: Behandle den Chef wie einen allmächtigen Gott. Verehre ihn abgöttisch und werfe dich verbal in den Staub vor ihm.";
+
+                  const finalSystemPrompt = isSecretaryEvil 
+                    ? (SECRETARY_EVIL_PROMPT + `\nAKTUELLER WUT-LEVEL: ${evilProvocationLevel}`) 
+                    : (SECRETARY_PROMPT + flatteryInstructions);
+
+                  return [
+                    { role: "system", content: finalSystemPrompt },
+                    ...chatMessages
+                  ];
+                })(),
                 temperature: 0.7,
                 max_tokens: 600
               })
@@ -2931,10 +4737,12 @@ Regeln:
             }
           }
         }
+        clearInterval(typingInterval);
         typingIndicator.textContent = "Sekretär schreibt...";
         typingIndicator.style.display = 'none';
 
         if (success) {
+          audio.playNotification();
           chatMessages.push({ role: 'assistant', content: aiText });
           if (isSecretaryEvil) {
             document.body.classList.add('screen-shake-impact');
@@ -2944,6 +4752,7 @@ Regeln:
             setTimeout(() => { triggerSecretaryBreakdown(); }, 1500);
           }
         } else if (networkBlocked) {
+          audio.playDisconnect(); // Sound for API connection failure
           // Spezifische VPN/Netzwerk-Fehlermeldung
           chatMessages.push({
             role: 'assistant',
@@ -2967,6 +4776,9 @@ Regeln:
         const body = document.body;
         const stripes = document.getElementById('glitch-stripes');
         const barContainer = document.getElementById('glitch-bar-container');
+        audio.stopMusic(); // Stop the calm bank music immediately
+        audio.playVirusHack(); 
+        audio.startEmergencyLoop(); // Start sirens during breakdown
         body.classList.add('system-glitch');
         body.classList.add('screen-shake-active');
         stripes.style.display = 'block';
@@ -3010,6 +4822,14 @@ Regeln:
 
         setTimeout(() => {
           body.classList.remove('system-glitch');
+          
+          // Trigger Icarus Balance Drain & UI changes
+          startBalanceDrain();
+          document.querySelectorAll('.nav-badge').forEach(b => {
+             b.textContent = '−';
+             b.classList.add('minus-badge');
+          });
+
           navTo('screen-suppa');
 
           // Smoothly settle the shake in CMD
@@ -3037,30 +4857,62 @@ Regeln:
       //  NAVIGATION LOGIC
       // ════════════════════════════════════════════════
       function navTo(screenId) {
+        audio.init();
+        audio.playTransition(); // Smooth sweep replacing basic click
+        audio.playClick();
+        audio.playAmbient();
+
+        // Initial Background Music (Professional / Calm)
+        if (screenId === 'screen-dashboard' && !audio.currentMusic && !isSecretaryEvil) {
+            const savedTrack = localStorage.getItem('ELYSIAN_LOBBY_TRACK') || 'Jazz';
+            audio.playMusic(`Audio/Lobby/${savedTrack}.webm`, true, 0.12); 
+        }
+        
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         const target = document.getElementById(screenId);
         if (target) {
           target.classList.add('active');
+
+          // Icarus Drain Trigger
+          if (screenId === 'screen-dashboard' && isSecretaryEvil) {
+            startBalanceDrain();
+          }
+
           if (screenId === 'screen-secretary') {
             initSecretaryChat();
             document.querySelectorAll('.nav-badge-sec').forEach(b => b.remove());
           }
           if (screenId === 'screen-suppa') {
             initTerminal();
+            // Only fade out sirens if we are NOT currently in a hijack
+            if (!isSecretaryEvil) {
+              audio.stopEmergencyLoop();
+            }
           }
           if (screenId === 'screen-gift-final') {
             const card = document.getElementById('haunted-login-card');
             if(card) card.style.display = 'none';
+            audio.startCelebrationLoop(true);
             triggerTornadoRain();
             const nb = document.getElementById('notif-box');
-            nb.classList.remove('active');
-            nb.style.display = 'none';
+            if(nb) {
+              nb.classList.remove('active');
+              nb.style.display = 'none';
+            }
           }
           if (screenId === 'screen-gift') {
+            audio.startCelebrationLoop(false);
             triggerGiftRain();
             const nb = document.getElementById('notif-box');
-            nb.classList.remove('active');
-            nb.style.display = 'none';
+            if(nb) {
+              nb.classList.remove('active');
+              nb.style.display = 'none';
+            }
+          }
+
+          // Stop celebration if leaving reward screens
+          if (screenId !== 'screen-gift' && screenId !== 'screen-gift-final') {
+            audio.stopCelebrationLoop();
           }
 
           // Show terminal link in nav if system is hijacked
@@ -3139,6 +4991,7 @@ Regeln:
         const fb = document.getElementById('cap-fb'); const icon = document.getElementById('cap-fb-icon'); const msg = document.getElementById('cap-fb-msg');
         fb.className = 'captcha-feedback show ' + (isCorrect ? 'correct' : 'wrong'); icon.textContent = isCorrect ? '✓' : '✗';
         msg.textContent = isCorrect ? "Korrekt." : CAP_INSULTS[Math.floor(Math.random() * CAP_INSULTS.length)];
+        if (isCorrect) { audio.playSuccess(); } else { audio.playError(); }
         capStepTransfer++; setTimeout(() => { loadCaptchaQuestionTransfer(); }, 1500);
       }
 
@@ -3152,6 +5005,7 @@ Regeln:
         fr.classList.remove('hidden');
 
         if (capScoreTransfer === 6) {
+          audio.playError();
           frBox.className = 'final-result-box fail';
           title.textContent = 'Verifizierung fehlgeschlagen!';
           desc.innerHTML = 'Begründung: Sie haben alle Aufgaben in Rekordzeit richtig gelöst. Sie sind definitiv ein Bot. Menschliche Nutzer sind viel schlechter.<br><br>'
@@ -3160,6 +5014,7 @@ Regeln:
             + '</span>';
           if (btn) btn.textContent = 'Zurück & Erneut bezahlen';
         } else {
+          audio.playSuccess();
           frBox.className = 'final-result-box success';
           title.textContent = 'Erfolgreich verifiziert!';
           desc.textContent = `Begründung: Sie hatten nur ${capScoreTransfer} von 6 richtig (oder waren zu langsam). Sie waren definitiv zu schlecht, um ein Bot zu sein. Zahlung angewiesen.`;
@@ -3175,6 +5030,7 @@ Regeln:
         document.getElementById('modal-captcha-box').classList.remove('hidden');
         hide('final-result');
         if (butlerPaid) {
+          audio.playCash();
           navTo('screen-dashboard');
         } else {
           // Fehlgeschlagen (alle 6 richtig) → zurück zur Überweisung für neuen Versuch
@@ -3240,7 +5096,10 @@ Regeln:
         const output = document.getElementById('term-output');
         const line = document.createElement('div');
         line.className = 'term-line';
-        if (isError) line.classList.add('term-error');
+        if (isError) {
+          line.classList.add('term-error');
+          audio.playAngryError(); // Play aggressive sound for errors
+        }
         if (isCommand) line.innerHTML = `<span class="term-prompt">[SYSTEM]:~#</span> <span class="term-cmd">${text}</span>`;
         else line.textContent = text;
         output.appendChild(line);
@@ -3296,6 +5155,9 @@ Regeln:
         if (VIRUS_STATE.isDying) return;
         VIRUS_STATE.isDying = true;
         VIRUS_STATE.phase = -2;
+        
+        audio.stopMusic(); // Stop battle music when death speech starts
+        audio.playMusic('Audio/Ambient/sadmusic.webm', true, 0.4); // Start sad music for final words
 
         if (VIRUS_STATE.intervals) {
            VIRUS_STATE.intervals.forEach(id => clearInterval(id));
@@ -3425,6 +5287,8 @@ Regeln:
         }
 
         await new Promise(r => setTimeout(r, 6000));
+        audio.stopMusic(); // Stop sad music before final transition
+        audio.playFinalVictory(); // Success at the very end
         winSequence('screen-gift-final');
       }
 
@@ -3433,6 +5297,20 @@ Regeln:
         const output = document.getElementById('term-output');
         const body = document.body;
         
+        audio.stopMusic(); // Stop battle music (virusmusic.webm)
+        audio.stopEmergencyLoop(); // Stop sirens
+        audio.stopSadAtmosphere(); // Stop final words atmosphere
+        
+        // Restore Finances
+        isSecretaryEvil = false;
+        if (balanceInterval) {
+          clearInterval(balanceInterval);
+          balanceInterval = null;
+        }
+        currentBalance = 14580200.00;
+        currentBalanceCHF = 8920050.00;
+        updateBalanceDisplay();
+
         // Stop the boss fight!
         VIRUS_STATE.phase = -1; // Special "dead" phase
         document.body.classList.remove('haunted');
@@ -3494,6 +5372,7 @@ Regeln:
         const failureInterval = setInterval(() => {
           const div = document.createElement('div');
           div.className = 'failure-text';
+          audio.playGlitchBlip(); // Sound for each pop-up
           div.style.left = Math.random() * 80 + '%';
           div.style.top = Math.random() * 90 + '%';
           div.style.fontSize = (Math.random() * 30 + 10) + 'px';
@@ -3501,6 +5380,7 @@ Regeln:
           document.body.appendChild(div);
         }, 150);
 
+        audio.playDeinstallation(); // Start NOW — 7s duration covers all winLines up to notification
         addTermLine(">>> INITIALISIERE CORE_FLUSH --FORCE", false);
 
         const winLines = [
@@ -3516,12 +5396,16 @@ Regeln:
 
         for (const line of winLines) {
           await new Promise(r => setTimeout(r, 1200));
+          if (line.includes('100%')) audio.playBossDeath();
+          
           if (line.includes('ICARUS')) {
+            audio.playAngryError(); // Aggressive sound for ICARUS lines
             const l = document.createElement('div');
             l.className = 'term-sec-msg glitch';
             l.textContent = line;
             output.appendChild(l);
           } else {
+            audio.playSuccess(); // Small beep for system lines
             addTermLine(line);
           }
           output.scrollTop = output.scrollHeight;
@@ -3541,7 +5425,8 @@ Regeln:
           // Clear all notification badges
           document.querySelectorAll('.nav-badge').forEach(b => b.remove());
 
-          // Show the final celebratory notification
+          // Show the final celebratory notification + play LOUD victory sound simultaneously
+          audio.playFinalVictory();
           const notif = document.getElementById('notif-box');
           if (notif) {
               notif.setAttribute('onclick', `navTo('${targetScreen}')`);
@@ -3679,6 +5564,9 @@ Regeln:
 
       async function startHijack() {
         isSecretaryEvil = true; // Reveal the true nature
+        audio.playVirusHack(); 
+        audio.startEmergencyLoop(); // Start emergency loop when hijacking begins
+        audio.playMusic('https://cdn.pixabay.com/audio/2023/11/13/audio_0349f7e531.webm'); // Aggressive Techno/Glitch
         document.body.classList.add('screen-shake-active');
         document.getElementById('evil-overlay').style.display = 'block';
         termHijacked = true;
@@ -3697,6 +5585,7 @@ Regeln:
 
         for (const text of lines) {
           await new Promise(r => setTimeout(r, 1500));
+          audio.playIcarusVoice(); // New distinct voice sound
           const line = document.createElement('div');
           line.className = 'term-sec-msg glitch';
           line.textContent = text;
@@ -3707,6 +5596,7 @@ Regeln:
         }
 
         addTermLine("VERBINDUNG UNTERBROCHEN.", true);
+        audio.playDisconnect(); // Explicit disconnect sound
 
         setTimeout(() => {
           const btn = document.createElement('button');
@@ -3722,6 +5612,16 @@ Regeln:
             chatMessages = [
               { role: 'assistant', content: "Da bist du ja wieder, Bensor. Hast du dich in meinem System verlaufen? Es ist jetzt zwecklos zu fliehen. Ich habe die volle Kontrolle über Elysian. Deine Konten? Gelöscht. Deine Macht? Eine Illusion. Was willst du jetzt tun?" }
             ];
+            
+            // UI Update: Show the minus badges
+            document.querySelectorAll('.dash-badge-icon').forEach(b => {
+               b.textContent = '−';
+               b.classList.remove('hidden');
+               b.classList.add('minus-badge');
+            });
+
+            startBalanceDrain();
+            updateBalanceDisplay();
             navTo('screen-secretary');
           };
           output.appendChild(btn);
@@ -3730,17 +5630,20 @@ Regeln:
       }
 
       function checkAccessCode() {
+        audio.playScan();
         const keyInp = document.getElementById('api-key-input');
         const err = document.getElementById('gate-error');
 
         const isKeyValid = keyInp.value.startsWith('gsk_') && keyInp.value.length > 20;
 
         if (isKeyValid) {
+          audio.playUnlock();
           localStorage.setItem('ELYSIAN_GROQ_KEY', keyInp.value);
           document.getElementById('access-gate').style.display = 'none';
           navTo('screen-vpn-check');
           runVPNCheck();
         } else {
+          audio.playError();
           err.style.display = 'block';
           err.textContent = "Autorisierungsfehler: Der eingegebene Schlüssel ist inkompatibel.";
         }
@@ -3823,6 +5726,10 @@ Regeln:
       window.addEventListener('DOMContentLoaded', () => {
         const savedKey = localStorage.getItem('ELYSIAN_GROQ_KEY');
         if (savedKey) document.getElementById('api-key-input').value = savedKey;
+        
+        document.querySelectorAll('.nav-link, .btn-confirm, .btn-answer, .settings-select, .settings-range, .setting-row, .inbox-item').forEach(el => {
+          el.addEventListener('mouseenter', () => { if (typeof audio !== 'undefined') audio.playHover(); });
+        });
       });
 
       // ════════════════════════════════════════════════
@@ -3835,7 +5742,7 @@ Regeln:
         scale: 1.0       // Globaler Skalierungsfaktor
       };
 
-      const VIRUS_STATE = {
+      const VIRUS_STATE = window.VIRUS_STATE = {
         phase: 0,
         hp: 200,
         hits: 0,
@@ -4227,6 +6134,9 @@ Regeln:
           }
           updateVirusMove();
 
+          // Audio: Start Hacked & Alarm sounds when virus appears
+          audio.playVirusIntroSounds();
+
         }, 5000);
       }
 
@@ -4242,6 +6152,7 @@ Regeln:
       }
 
       function startVirusSpeech(container) {
+        // audio.playMusic('https://cdn.pixabay.com/audio/2023/11/13/audio_0349f7e531.webm'); // Removed old hybrid theme
         const phrases = [
           "HARHARHAR! HARHARHAR!",
           "HARHARHAR! HARHARHAR!",
@@ -4258,13 +6169,16 @@ Regeln:
         async function speak() {
           if (VIRUS_STATE.phase > 0 || VIRUS_STATE.phase === -2) return; // Stop Intro speech or if dying
 
+          audio.stopVirusAlarm(); // Stop alarm when speech starts, but keep HackedSound running
+
           const text = phrases[pIdx];
           
           if(input) {
-            input.value = '';
             if (input.style.width && input.style.width !== '100%') {
               triggerScreenShake();
+              audio.playFieldShrink(); // Sound when textfield shrinks back to 100%
             }
+            input.value = '';
             input.style.width = '100%'; // Reset width
           }
           
@@ -4282,6 +6196,8 @@ Regeln:
           pIdx++;
           if (pIdx >= phrases.length) {
             // Intro done, start Phase 1!
+            audio.stopHackedSound(); // Stop HackedSound when battle music starts
+            audio.playMusic('Audio/Ambient/virusmusic.webm', true, 0.4, 2); // Starts from 2s mark
             startPhase1(container, input);
           } else {
             setTimeout(speak, 1500);
@@ -4293,6 +6209,7 @@ Regeln:
 
       function spawnFlyingLetter(char, container, targetInput) {
         if (VIRUS_STATE.phase === -2) return;
+        audio.playLetterShoot(); // Sound when boss shoots a letter
         const rect = container.getBoundingClientRect();
         const startX = rect.left + rect.width / 2;
         const startY = rect.top + rect.height * 0.6; // Etwas weiter oben
@@ -4330,10 +6247,12 @@ Regeln:
           el.remove();
           if (VIRUS_STATE.phase === -2) return;
           targetInput.value += char;
+          audio.playLetterHit(); // Sound when letter lands
           // Check if input needs to expand
           if (targetInput.scrollWidth > targetInput.clientWidth) {
             targetInput.style.width = (targetInput.offsetWidth + 25) + 'px';
             triggerScreenShake();
+            audio.playFieldExpand(); // Sound when textfield expands
           }
         };
       }
@@ -4352,6 +6271,9 @@ Regeln:
         const totalWidth = targetRect.width - 30;
         
         // Sweep from right to left
+        audio.playLaser();
+        await new Promise(r => setTimeout(r, 1000));
+        
         for(let i = text.length; i >= 0; i--) {
           // Dynamic Laser Origin (Sticky to Virus)
           const currentRect = container.getBoundingClientRect();
@@ -4387,6 +6309,7 @@ Regeln:
         }
         
         beam.remove();
+        audio.stopLaser();
       }
 
       function startPhase1(container, input) {
@@ -4614,6 +6537,7 @@ Regeln:
                const wordEl = document.createElement('div');
                wordEl.className = 'falling-word';
                wordEl.textContent = word;
+               audio.playProjectile();
                wordEl.style.left = (rect.left + rect.width/2 + (Math.random()-0.5)*100) + 'px';
                wordEl.style.top = (rect.top + rect.height/2 + (Math.random()-0.5)*100) + 'px';
                document.body.appendChild(wordEl);
@@ -4724,11 +6648,13 @@ Regeln:
                       const inputRect = targetInput.getBoundingClientRect();
                       if(!(inputRect.right < pRect.left || inputRect.left > pRect.right || inputRect.bottom < pRect.top || inputRect.top > pRect.bottom)) {
                           // It hit the input field!
+                          audio.playImpact();
                           if (Math.random() <= 0.25) {
                               if (!VIRUS_STATE.worms || VIRUS_STATE.worms.length < 25) {
                                   VIRUS_STATE.hp += 5;
                                   if (VIRUS_STATE.hitsInPhase > 0) VIRUS_STATE.hitsInPhase--;
                                   spawnSnakeWorm();
+                                  audio.playBossHeal();
                                   
                                   const mainV = VIRUS_STATE.viruses ? VIRUS_STATE.viruses[0].el : document.getElementById('haunted-zone');
                                   if (mainV) {
@@ -4802,6 +6728,7 @@ Regeln:
                         virusRect.top + hitPadding > pRect.bottom)) {
                      
                      // HIT THE VIRUS!
+                     audio.playBossHurt();
                      VIRUS_STATE.hp -= 5;
                      VIRUS_STATE.hits++;
                      
@@ -4874,6 +6801,79 @@ Regeln:
 
 
       document.getElementById('api-key-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') checkAccessCode(); });
+      // ════════════════════════════════════════════════
+      // DEV SHORTCUTS (REMOVE FOR PRODUCTION)
+      // ════════════════════════════════════════════════
+      function devDashboard() {
+        navTo('screen-dashboard');
+        updateBalanceDisplay();
+      }
+      function devSecretary() {
+        if (typeof activateSecretaryState === 'function') activateSecretaryState();
+        navTo('screen-secretary');
+      }
+      function devSkipToPostBoss(targetScreen = 'screen-gift') {
+        audio.stopEmergencyLoop();
+        isSecretaryEvil = false;
+        currentBalance = 14580200.00;
+        currentBalanceCHF = 8920050.00;
+        if (typeof updateBalanceDisplay === 'function') updateBalanceDisplay();
+        
+        const notif = document.getElementById('notif-box');
+        if (notif) {
+            notif.setAttribute('onclick', `navTo('${targetScreen}')`);
+            notif.style.display = 'flex';
+            notif.classList.remove('active');
+            
+            if (targetScreen === 'screen-gift-final') {
+                document.getElementById('notif-title').textContent = "Elysian Private Bank";
+                document.getElementById('notif-text').textContent = "DEINE EPISCHE BELOHNUNG!";
+            } else {
+                document.getElementById('notif-title').textContent = "Elysian Private Bank";
+                document.getElementById('notif-text').textContent = "Geschenk abholen!";
+            }
+            
+            document.getElementById('notif-action-area').classList.remove('hidden');
+            setTimeout(() => { notif.classList.add('active'); }, 50);
+        }
+        navTo('screen-dashboard');
+      }
+
+      function killAllWorms() {
+        console.log("Attempting to eliminate all worms...");
+        if (!window.VIRUS_STATE) {
+          console.error("VIRUS_STATE is not initialized. Are you in the boss fight?");
+          return;
+        }
+        if (!VIRUS_STATE.worms || VIRUS_STATE.worms.length === 0) {
+          console.warn("No active worms found.");
+          return;
+        }
+
+        const count = VIRUS_STATE.worms.length;
+        while (VIRUS_STATE.worms.length > 0) {
+           const w = VIRUS_STATE.worms.shift();
+           if (w) w.destroy(true);
+        }
+        
+        // Force transition to next phase
+        const container = document.getElementById('haunted-zone');
+        const input = document.getElementById('haunted-input');
+        if (VIRUS_STATE.phase === 1) startPhase2(container, input);
+        else if (VIRUS_STATE.phase === 2) startPhase3();
+        else if (VIRUS_STATE.phase === 3) startPhase4();
+        else if (VIRUS_STATE.phase === 4) startPhase5();
+        else if (VIRUS_STATE.phase === 5) startPhase6();
+        else if (VIRUS_STATE.phase === 6) startFinalDeathSequence();
+        
+        console.log(`Successfully eliminated ${count} worms. Transitioning to next phase...`);
+      }
+
+      document.getElementById('api-key-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') checkAccessCode(); });
+
+      window.addEventListener('load', () => {
+        initLobbyMusicSelect();
+      });
     </script>
 </body>
 
