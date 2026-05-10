@@ -2382,51 +2382,7 @@
       50% { opacity: 0; }
     }
 
-    /* DEV PANEL STYLES */
-    #dev-panel-v2 { 
-      position: fixed !important; 
-      top: 14px !important; 
-      right: 14px !important; 
-      z-index: 1000000 !important; 
-      background: rgba(6, 8, 13, 0.95) !important; 
-      border: 1px solid rgba(201, 168, 76, 0.3) !important; 
-      border-radius: 4px !important; 
-      padding: 10px 12px !important; 
-      display: flex !important; 
-      flex-direction: column !important; 
-      gap: 6px !important; 
-      backdrop-filter: blur(8px) !important; 
-      box-shadow: rgba(0, 0, 0, 0.6) 0px 4px 24px !important; 
-      width: 220px !important;
-    }
-    #dev-panel-v2 .dev-label { 
-      font-size: 9px !important; 
-      letter-spacing: 2px !important; 
-      color: #7A6A4A !important; 
-      text-transform: uppercase !important; 
-      text-align: center !important; 
-      margin-bottom: 2px !important; 
-    }
-    #dev-panel-v2 .dev-btn { 
-      background: rgba(201, 168, 76, 0.08) !important; 
-      border: 1px solid rgba(201, 168, 76, 0.25) !important; 
-      color: #C9A84C !important; 
-      font-family: "Playfair Display", serif !important; 
-      font-size: 11px !important; 
-      letter-spacing: 1.5px !important; 
-      text-transform: uppercase !important; 
-      padding: 6px 12px !important; 
-      cursor: pointer !important; 
-      transition: background 0.2s !important; 
-      border-radius: 2px !important; 
-      text-align: left !important; 
-      display: block !important; 
-      width: 100% !important;
-    }
-    #dev-panel-v2 .dev-btn:hover { 
-      background: rgba(201, 168, 76, 0.18) !important; 
-      color: #E8C97E !important; 
-    }
+
   </style>
 </head>
 
@@ -2434,67 +2390,7 @@
 
 
 
-  <!-- ════════════════════════════════════════════════
-       DEV PANEL HTML (REMOVE FOR PRODUCTION)
-       ════════════════════════════════════════════════ -->
-  <style>
-    #dev-panel-v2 { 
-      position: fixed !important; 
-      top: 14px !important; 
-      right: 14px !important; 
-      z-index: 1000000 !important; 
-      background: rgba(6, 8, 13, 0.95) !important; 
-      border: 1px solid rgba(201, 168, 76, 0.3) !important; 
-      border-radius: 4px !important; 
-      padding: 10px 12px !important; 
-      display: flex !important; 
-      flex-direction: column !important; 
-      gap: 6px !important; 
-      backdrop-filter: blur(8px) !important; 
-      box-shadow: rgba(0, 0, 0, 0.6) 0px 4px 24px !important; 
-      width: 220px !important;
-      height: auto !important;
-    }
-    #dev-panel-v2 .dev-label { 
-      font-size: 9px !important; 
-      letter-spacing: 2px !important; 
-      color: #7A6A4A !important; 
-      text-transform: uppercase !important; 
-      text-align: center !important; 
-      margin-bottom: 2px !important; 
-      font-family: 'Playfair Display', serif !important;
-    }
-    #dev-panel-v2 .dev-btn { 
-      background: rgba(201, 168, 76, 0.08) !important; 
-      border: 1px solid rgba(201, 168, 76, 0.25) !important; 
-      color: #C9A84C !important; 
-      font-family: "Playfair Display", serif !important; 
-      font-size: 11px !important; 
-      letter-spacing: 1.5px !important; 
-      text-transform: uppercase !important; 
-      padding: 6px 12px !important; 
-      cursor: pointer !important; 
-      transition: background 0.2s !important; 
-      border-radius: 2px !important; 
-      text-align: left !important; 
-      display: block !important; 
-      width: 100% !important;
-    }
-    #dev-panel-v2 .dev-btn:hover { 
-      background: rgba(201, 168, 76, 0.18) !important; 
-      color: #E8C97E !important; 
-    }
-  </style>
-  <div id="dev-panel-v2">
-    <div class="dev-label">⚙ Dev Board</div>
-    <button class="dev-btn" onclick="devDashboard()">① Dashboard</button>
-    <button class="dev-btn" onclick="devSecretary()">② Post-Butler</button>
-    <button class="dev-btn" onclick="navTo('screen-suppa')">③ CMD Terminal</button>
-    <button class="dev-btn" onclick="navTo('screen-gift')" style="color: #2ECC71; border-color: rgba(46, 204, 113, 0.4);">④ Ende / Geschenke</button>
-    <button class="dev-btn" onclick="if(typeof VIRUS_STATE !== 'undefined' &amp;&amp; VIRUS_STATE.skipIntro) VIRUS_STATE.skipIntro();" style="color: #ff0055; border-color: rgba(255, 0, 85, 0.4);">⑤ Skip to Boss Phase 1</button>
-    <button class="dev-btn" onclick="if(typeof startFinalDeathSequence === 'function') startFinalDeathSequence();" style="color: #e67e22; border-color: rgba(230, 126, 34, 0.4);">⑥ Skip to Boss Death</button>
-    <button class="dev-btn" onclick="devSkipToPostBoss('screen-gift-final')" style="color: #9b59b6; border-color: rgba(155, 89, 182, 0.4);">⑦ Post-Boss Epic Bank</button>
-  </div>
+
 
   <div id="evil-overlay" class="evil-overlay"></div>
   <div id="glitch-stripes" class="glitch-stripes"></div>
@@ -4326,6 +4222,7 @@
       }
 
       let currentButlerTip = 50000;
+      let inboxRead = false;
       function updateButlerTip(val) {
         currentButlerTip = parseInt(val);
         const formatted = currentButlerTip.toLocaleString('de-DE');
@@ -4825,8 +4722,9 @@ Regeln:
           
           // Trigger Icarus Balance Drain & UI changes
           startBalanceDrain();
-          document.querySelectorAll('.nav-badge').forEach(b => {
+          document.querySelectorAll('.dash-badge-icon').forEach(b => {
              b.textContent = '−';
+             b.classList.remove('hidden');
              b.classList.add('minus-badge');
           });
 
@@ -4861,6 +4759,12 @@ Regeln:
         audio.playTransition(); // Smooth sweep replacing basic click
         audio.playClick();
         audio.playAmbient();
+
+        // Initial Background Music (Professional / Calm)
+        if (screenId === 'screen-message') inboxRead = true;
+        if (inboxRead) {
+           document.querySelectorAll('.nav-badge:not(.dash-badge-icon)').forEach(b => b.classList.add('hidden'));
+        }
 
         // Initial Background Music (Professional / Calm)
         if (screenId === 'screen-dashboard' && !audio.currentMusic && !isSecretaryEvil) {
@@ -6801,43 +6705,7 @@ Regeln:
 
 
       document.getElementById('api-key-input')?.addEventListener('keydown', e => { if (e.key === 'Enter') checkAccessCode(); });
-      // ════════════════════════════════════════════════
-      // DEV SHORTCUTS (REMOVE FOR PRODUCTION)
-      // ════════════════════════════════════════════════
-      function devDashboard() {
-        navTo('screen-dashboard');
-        updateBalanceDisplay();
-      }
-      function devSecretary() {
-        if (typeof activateSecretaryState === 'function') activateSecretaryState();
-        navTo('screen-secretary');
-      }
-      function devSkipToPostBoss(targetScreen = 'screen-gift') {
-        audio.stopEmergencyLoop();
-        isSecretaryEvil = false;
-        currentBalance = 14580200.00;
-        currentBalanceCHF = 8920050.00;
-        if (typeof updateBalanceDisplay === 'function') updateBalanceDisplay();
-        
-        const notif = document.getElementById('notif-box');
-        if (notif) {
-            notif.setAttribute('onclick', `navTo('${targetScreen}')`);
-            notif.style.display = 'flex';
-            notif.classList.remove('active');
-            
-            if (targetScreen === 'screen-gift-final') {
-                document.getElementById('notif-title').textContent = "Elysian Private Bank";
-                document.getElementById('notif-text').textContent = "DEINE EPISCHE BELOHNUNG!";
-            } else {
-                document.getElementById('notif-title').textContent = "Elysian Private Bank";
-                document.getElementById('notif-text').textContent = "Geschenk abholen!";
-            }
-            
-            document.getElementById('notif-action-area').classList.remove('hidden');
-            setTimeout(() => { notif.classList.add('active'); }, 50);
-        }
-        navTo('screen-dashboard');
-      }
+
 
       function killAllWorms() {
         console.log("Attempting to eliminate all worms...");
