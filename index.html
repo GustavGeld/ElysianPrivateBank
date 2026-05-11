@@ -2382,6 +2382,21 @@
       50% { opacity: 0; }
     }
 
+    /* ── EVIL SECRETARY BADGE ─────────────────────── */
+    .nav-badge-evil-sec {
+      display: inline-block;
+      background: #E74C3C;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 1px 7px;
+      border-radius: 10px;
+      margin-left: 6px;
+      vertical-align: super;
+      animation: pulse-red 0.5s infinite;
+      pointer-events: none;
+    }
+
 
   </style>
 </head>
@@ -4433,10 +4448,13 @@
       //  SECRETARY / INBOX STATE
       // ════════════════════════════════════════════════
       let butlerPaid = false;
+      let secNotificationActive = false;
 
       function activateSecretaryState() {
         butlerPaid = true;
-        document.querySelectorAll('#nav-dashboard-sec, #nav-inbox-sec, #nav-msg-sec').forEach(el => {
+        secNotificationActive = true;
+        // Unlock ALL secretary nav links including settings
+        document.querySelectorAll('#nav-dashboard-sec, #nav-inbox-sec, #nav-msg-sec, #nav-set-sec').forEach(el => {
           el.classList.remove('locked');
           if (!el.querySelector('.nav-badge-sec')) {
             const b = document.createElement('span');
@@ -4457,6 +4475,24 @@
           currentBalance -= 50000;
         }
         updateBalanceDisplay();
+      }
+
+      // ── EVIL SECRETARY BADGE LOGIC ────────────────
+      let evilSecBadgeActive = false;
+
+      function setEvilSecBadge(show) {
+        evilSecBadgeActive = show;
+        // Remove existing evil badges first
+        document.querySelectorAll('.nav-badge-evil-sec').forEach(b => b.remove());
+        if (show) {
+          // Add pulsing red badge to all visible secretary nav links
+          document.querySelectorAll('#nav-dashboard-sec, #nav-inbox-sec, #nav-set-sec, #nav-msg-sec').forEach(el => {
+            const b = document.createElement('span');
+            b.className = 'nav-badge-evil-sec';
+            b.textContent = '⚠';
+            el.appendChild(b);
+          });
+        }
       }
 
 
@@ -4762,9 +4798,17 @@ Regeln:
 
         // Initial Background Music (Professional / Calm)
         if (screenId === 'screen-message') inboxRead = true;
+        if (screenId === 'screen-secretary' && !isSecretaryEvil) secNotificationActive = false;
+
         if (inboxRead) {
-           document.querySelectorAll('.nav-badge:not(.dash-badge-icon)').forEach(b => b.classList.add('hidden'));
+           document.querySelectorAll('.nav-badge:not(.dash-badge-icon):not(.nav-badge-sec)').forEach(b => b.classList.add('hidden'));
         }
+        
+        // Show/Hide secretary badge based on state
+        document.querySelectorAll('.nav-badge-sec').forEach(b => {
+          if (secNotificationActive) b.classList.remove('hidden');
+          else b.classList.add('hidden');
+        });
 
         // Initial Background Music (Professional / Calm)
         if (screenId === 'screen-dashboard' && !audio.currentMusic && !isSecretaryEvil) {
@@ -4832,6 +4876,10 @@ Regeln:
             }
           }
           window.scrollTo(0, 0);
+          // Refresh evil badge after every navigation if still active
+          if (evilSecBadgeActive) {
+            setTimeout(() => setEvilSecBadge(true), 30);
+          }
         }
       }
       function fakeErledigt() { alert("Erledigt? Was für ein erbärmlicher Lügner Sie doch sind!\n\nCappo steht draußen und wartet immer noch, während er kalt wird. Kümmern Sie sich endlich darum!"); }
@@ -5040,8 +5088,11 @@ Regeln:
             const file = parts[1];
             if (!file) addTermLine('Fehler: Keine Datei angegeben.', true);
             else if (TERM_FILES[file]) {
-              if (TERM_FILES[file] === 'HIJACK_TRIGGER') startHijack();
-              else addTermLine(TERM_FILES[file]);
+              if (TERM_FILES[file] === 'HIJACK_TRIGGER') {
+                // Show persistent evil badge on secretary tab
+                setEvilSecBadge(true);
+                startHijack();
+              } else addTermLine(TERM_FILES[file]);
             } else addTermLine(`Fehler: Datei '${file}' nicht gefunden.`, true);
             break;
           case 'core_flush':
@@ -5207,6 +5258,8 @@ Regeln:
         
         // Restore Finances
         isSecretaryEvil = false;
+        // Remove the evil secretary badge (core_flush completed)
+        setEvilSecBadge(false);
         if (balanceInterval) {
           clearInterval(balanceInterval);
           balanceInterval = null;
@@ -5322,6 +5375,7 @@ Regeln:
           body.classList.remove('screen-shake-active');
           document.getElementById('evil-overlay').style.display = 'none';
           isSecretaryEvil = false;
+          secNotificationActive = false;
           chatMessages = [
             { role: 'assistant', content: "Willkommen zurück, Eure Exzellenz! Ich entschuldige mich zutiefst für den... technischen Zwischenfall. Die Systeme laufen wieder einwandfrei. Wie kann ich Ihnen heute dienen?" }
           ];
@@ -5468,6 +5522,7 @@ Regeln:
 
       async function startHijack() {
         isSecretaryEvil = true; // Reveal the true nature
+        secNotificationActive = true;
         audio.playVirusHack(); 
         audio.startEmergencyLoop(); // Start emergency loop when hijacking begins
         audio.playMusic('https://cdn.pixabay.com/audio/2023/11/13/audio_0349f7e531.webm'); // Aggressive Techno/Glitch
