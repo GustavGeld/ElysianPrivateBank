@@ -2365,9 +2365,9 @@
     }
 
     @keyframes pulse-red {
-      0% { transform: scale(1); box-shadow: 0 0 5px red; }
-      50% { transform: scale(1.3); box-shadow: 0 0 20px red; }
-      100% { transform: scale(1); box-shadow: 0 0 5px red; }
+      0% { transform: scale(1); box-shadow: 0 0 5px #ff0000; opacity: 1; }
+      50% { transform: scale(1.4); box-shadow: 0 0 25px #ff0000; opacity: 0.8; }
+      100% { transform: scale(1); box-shadow: 0 0 5px #ff0000; opacity: 1; }
     }
 
     .trend-down {
@@ -2387,14 +2387,16 @@
       display: inline-block;
       background: #E74C3C;
       color: #fff;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 900;
-      padding: 1px 7px;
-      border-radius: 10px;
-      margin-left: 6px;
-      vertical-align: super;
-      animation: pulse-red 0.5s infinite;
+      padding: 2px 8px;
+      border-radius: 12px;
+      margin-left: 8px;
+      vertical-align: middle;
+      animation: pulse-red 0.8s infinite cubic-bezier(0.455, 0.03, 0.515, 0.955);
       pointer-events: none;
+      box-shadow: 0 0 15px rgba(231, 76, 60, 0.5);
+      border: 1px solid rgba(255,255,255,0.2);
     }
 
 
@@ -2621,6 +2623,31 @@
             </div>
             <div class="account-balance balance-val" id="balance-chf">8.920.050,00 <span>CHF</span> <span class="trend-down hidden">▼</span></div>
           </div>
+        </div>
+
+        <!-- ══ PORTFOLIO CHARTS ══════════════════════════════════ -->
+        <div id="portfolio-charts-section" style="margin-top:64px; display:flex; flex-direction:column; gap:80px; align-items:stretch;">
+
+          <!-- PIE CHART -->
+          <div style="width:100%;">
+            <div style="font-family:'Playfair Display',serif; font-size:16px; color:var(--gold-light); letter-spacing:3px; text-transform:uppercase; margin-bottom:20px; border-bottom:1px solid rgba(201,168,76,0.18); padding-bottom:12px;">
+              Vermögensallokation
+            </div>
+            <div style="display:flex; justify-content:center;">
+              <canvas id="pieChart" width="600" height="300" style="max-width:100%; height:300px;"></canvas>
+              <div id="pieLegend" class="hidden"></div>
+            </div>
+          </div>
+
+          <!-- LINE CHART -->
+          <div style="width:100%;">
+            <div style="font-family:'Playfair Display',serif; font-size:16px; color:var(--gold-light); letter-spacing:3px; text-transform:uppercase; margin-bottom:20px; border-bottom:1px solid rgba(201,168,76,0.18); padding-bottom:12px;">
+              Vermögensentwicklung
+            </div>
+            <canvas id="lineChart" width="800" height="240" style="width:100%; height:240px;"></canvas>
+            <div id="lineChartLegend" style="margin-top:16px; font-size:13px; color:var(--text-dim); letter-spacing:1px; display:flex; gap:24px; flex-wrap:wrap;"></div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -3074,6 +3101,7 @@
           this.emergencyGain = null;
           this.emergencyNodes = [];
           this.noiseBuffer = null;
+          this.terminalAudio = null;
         }
 
         init() {
@@ -3381,6 +3409,23 @@
             this.currentMusic.pause();
             this.currentMusic.src = '';
             this.currentMusic = null;
+          }
+        }
+
+        playTerminal() {
+          if (!this.isInitialized || this.muted) return;
+          this.stopTerminal();
+          this.terminalAudio = new Audio('Audio/Ambient/terminal.webm');
+          this.terminalAudio.loop = true;
+          this.terminalAudio.volume = 0.1;
+          this.terminalAudio.play().catch(e => console.warn("Terminal audio failed", e));
+        }
+
+        stopTerminal() {
+          if (this.terminalAudio) {
+            this.terminalAudio.pause();
+            this.terminalAudio.src = '';
+            this.terminalAudio = null;
           }
         }
 
@@ -4854,6 +4899,10 @@ Die vorherige Ausgabe war unbrauchbar. KEINE Richtlinien- oder Sicherheits-Sätz
           audio.stopVirusIntroSounds();
         }
 
+        if (screenId !== 'screen-suppa') {
+          audio.stopTerminal();
+        }
+
         // Initial Background Music (Professional / Calm)
         if (screenId === 'screen-message') inboxRead = true;
         if (screenId === 'screen-secretary' && !isSecretaryEvil) secNotificationActive = false;
@@ -4889,6 +4938,7 @@ Die vorherige Ausgabe war unbrauchbar. KEINE Richtlinien- oder Sicherheits-Sätz
             document.querySelectorAll('.nav-badge-sec').forEach(b => b.remove());
           }
           if (screenId === 'screen-suppa') {
+            audio.playTerminal();
             initTerminal();
             // Only fade out sirens if we are NOT currently in a hijack
             if (!isSecretaryEvil) {
@@ -6855,6 +6905,373 @@ Die vorherige Ausgabe war unbrauchbar. KEINE Richtlinien- oder Sicherheits-Sätz
       window.addEventListener('load', () => {
         initLobbyMusicSelect();
       });
+
+      // ══ PORTFOLIO CHARTS ══════════════════════════════════════
+      function renderPortfolioCharts() {
+        const evil = (typeof isSecretaryEvil !== 'undefined') && isSecretaryEvil;
+        renderPieChart(evil);
+        renderLineChart(evil);
+      }
+
+      // ── PIE CHART ──────────────────────────────────────────────
+      function renderPieChart(evil) {
+        const canvas = document.getElementById('pieChart');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const W = canvas.width, H = canvas.height;
+        const cx = W / 2, cy = H / 2, R = 85; 
+
+        ctx.clearRect(0, 0, W, H);
+
+        let slices;
+        if (evil) {
+          slices = [
+            { 
+              pct: 1.0, color: '#39FF14', label: 'Memecoins',
+              subs: ['DOGE — "Such investment, wow"', 'SHIB — Dogekiller 🐕', 'PEPE — kein Kommentar', 'WIF — Hat-Hund-Coin']
+            }
+          ];
+        } else {
+          slices = [
+            { 
+              pct: 0.42, color: '#2ECC71', label: 'Aktien',
+              subs: ['NVDA — Nvidia Corp.', 'PLTR — Palantir Tech.', 'MO — Altria (Tabak ⚠)', 'LMT — Lockheed (Rüstung ⚠)'] 
+            },
+            { pct: 0.25, color: '#3498DB', label: 'Geldmarkt', subs: ['Staatsanleihen', 'Festgeld'] },
+            { pct: 0.18, color: '#C9A84C', label: 'Gold', subs: ['Physisches Gold (Barren)'] },
+            { pct: 0.15, color: '#9B59B6', label: 'Alternative', subs: ['Private Equity', 'Kunst'] },
+          ];
+        }
+
+        let currentAngle = -Math.PI / 2;
+        
+        slices.forEach(s => {
+          const sweep = s.pct * 2 * Math.PI;
+          const midAngle = currentAngle + sweep / 2;
+
+          // 1. Draw Slice
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.arc(cx, cy, R, currentAngle, currentAngle + sweep);
+          ctx.closePath();
+          ctx.fillStyle = s.color;
+          ctx.fill();
+          ctx.strokeStyle = '#06080D';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+
+          // 2. Draw Label Line
+          const lineStartX = cx + Math.cos(midAngle) * R;
+          const lineStartY = cy + Math.sin(midAngle) * R;
+          const lineEndX = cx + Math.cos(midAngle) * (R + 40);
+          const lineEndY = cy + Math.sin(midAngle) * (R + 40);
+
+          ctx.beginPath();
+          ctx.moveTo(lineStartX, lineStartY);
+          ctx.lineTo(lineEndX, lineEndY);
+          ctx.strokeStyle = 'rgba(201,168,76,0.4)';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+
+          const isRight = lineEndX > cx;
+          const dashX = lineEndX + (isRight ? 15 : -15);
+          ctx.beginPath();
+          ctx.moveTo(lineEndX, lineEndY);
+          ctx.lineTo(dashX, lineEndY);
+          ctx.stroke();
+
+          // 3. Draw Text
+          ctx.font = 'bold 14px "Playfair Display", serif';
+          ctx.fillStyle = s.color;
+          ctx.textAlign = isRight ? 'left' : 'right';
+          ctx.textBaseline = 'bottom';
+          
+          const textX = dashX + (isRight ? 8 : -8);
+          const percentage = (s.pct * 100).toFixed(0) + '%';
+          ctx.fillText(`${s.label} (${percentage})`, textX, lineEndY);
+
+          // Sub-items
+          if (s.subs) {
+            ctx.font = 'italic 11px "Cormorant Garamond", serif';
+            ctx.fillStyle = 'rgba(207, 192, 160, 0.7)';
+            ctx.textBaseline = 'top';
+            s.subs.forEach((sub, idx) => {
+              ctx.fillText(`↳ ${sub}`, textX + (isRight ? 4 : -4), lineEndY + 4 + (idx * 14));
+            });
+          }
+
+          currentAngle += sweep;
+        });
+
+        // 4. Inner Donut Hole
+        ctx.beginPath();
+        ctx.arc(cx, cy, R * 0.55, 0, Math.PI * 2);
+        ctx.fillStyle = '#06080D';
+        ctx.fill();
+        ctx.strokeStyle = 'rgba(201,168,76,0.15)';
+        ctx.stroke();
+
+        // 5. Center Label
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        if (evil) {
+          ctx.fillStyle = '#39FF14';
+          ctx.font = 'bold 12px monospace';
+          ctx.fillText('ICARUS', cx, cy - 8);
+          ctx.font = '9px monospace';
+          ctx.fillText('ACTIVE', cx, cy + 8);
+        } else {
+          ctx.fillStyle = '#C9A84C';
+          ctx.font = 'bold 11px serif';
+          ctx.fillText('ELYSYIAN', cx, cy - 8);
+          ctx.fillText('ASSETS', cx, cy + 8);
+        }
+      }
+
+      // ── LINE CHART ─────────────────────────────────────────────
+      function renderLineChart(evil) {
+        const canvas = document.getElementById('lineChart');
+        const legendEl = document.getElementById('lineChartLegend');
+        if (!canvas || !legendEl) return;
+
+        // Resize canvas to actual display size
+        canvas.width = canvas.offsetWidth || 800;
+        canvas.height = 240;
+
+        const ctx = canvas.getContext('2d');
+        const W = canvas.width, H = canvas.height;
+        const PAD = { top: 16, right: 20, bottom: 32, left: 50 };
+        const chartW = W - PAD.left - PAD.right;
+        const chartH = H - PAD.top - PAD.bottom;
+
+        ctx.clearRect(0, 0, W, H);
+
+        // Background grid
+        ctx.strokeStyle = 'rgba(201,168,76,0.07)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= 4; i++) {
+          const y = PAD.top + (chartH / 4) * i;
+          ctx.beginPath();
+          ctx.moveTo(PAD.left, y);
+          ctx.lineTo(PAD.left + chartW, y);
+          ctx.stroke();
+        }
+
+        // Labels years
+        const years = ['2020', '2021', '2022', '2023', '2024', '2025', '2026'];
+        ctx.fillStyle = 'rgba(122,106,74,0.7)';
+        ctx.font = '10px serif';
+        ctx.textAlign = 'center';
+        years.forEach((yr, i) => {
+          const x = PAD.left + (i / (years.length - 1)) * chartW;
+          ctx.fillText(yr, x, H - 6);
+        });
+
+        // Y-axis labels
+        const yLabels = evil
+          ? ['€23M', '€18M', '€12M', '€6M', '€0']
+          : ['€23M', '€20M', '€17M', '€14M', '€11M'];
+        ctx.textAlign = 'right';
+        yLabels.forEach((lb, i) => {
+          const y = PAD.top + (chartH / 4) * i;
+          ctx.fillText(lb, PAD.left - 6, y + 4);
+        });
+
+        // ── Data generation ────────────────────────────────────────
+        const N = 70; // data points across chart (increased for longer timeline)
+
+        // Smooth ascending noisy lines using seeded values
+        function makeLine(seed, baseStart, baseEnd, amp) {
+          const pts = [];
+          let rng = seed;
+          function rand() { rng = (rng * 9301 + 49297) % 233280; return rng / 233280; }
+          for (let i = 0; i < N; i++) {
+            const t = i / (N - 1);
+            const base = baseStart + (baseEnd - baseStart) * t;
+            pts.push(base + (rand() - 0.5) * amp);
+          }
+          // Smooth 3-pass
+          for (let pass = 0; pass < 3; pass++) {
+            for (let i = 1; i < N - 1; i++) pts[i] = (pts[i-1] + pts[i] + pts[i+1]) / 3;
+          }
+          return pts;
+        }
+
+        // Normal: 3 rising lines (portfolio, benchmark, treasury)
+        const line1 = makeLine(42, 0.2, 0.82, 0.12); // main portfolio
+        const line2 = makeLine(17, 0.15, 0.62, 0.10); // benchmark
+        const line3 = makeLine(99, 0.30, 0.90, 0.09); // aggressive growth
+
+        // Find global min/max across all lines for scaling
+        const allVals = [...line1, ...line2, ...line3];
+        const minV = Math.min(...allVals) - 0.05;
+        const maxV = Math.max(...allVals) + 0.05;
+
+        function toX(i) { return PAD.left + (i / (N - 1)) * chartW; }
+        function toY(v) { return PAD.top + chartH - ((v - minV) / (maxV - minV)) * chartH; }
+
+        if (!evil) {
+          // ── NORMAL MODE: 3 green lines ────────────────────────
+          const lineSpecs = [
+            { data: line3, color: '#2ECC71', alpha: 0.9, width: 2.5, label: 'Agg. Wachstum' },
+            { data: line1, color: '#27AE60', alpha: 0.8, width: 2, label: 'Premium Portfolio' },
+            { data: line2, color: '#52BE80', alpha: 0.65, width: 1.5, label: 'Benchmark Index' },
+          ];
+
+          // Filled area under main line
+          const grad = ctx.createLinearGradient(0, PAD.top, 0, PAD.top + chartH);
+          grad.addColorStop(0, 'rgba(46,204,113,0.18)');
+          grad.addColorStop(1, 'rgba(46,204,113,0.01)');
+          ctx.beginPath();
+          ctx.moveTo(toX(0), toY(line1[0]));
+          line1.forEach((v, i) => ctx.lineTo(toX(i), toY(v)));
+          ctx.lineTo(toX(N - 1), PAD.top + chartH);
+          ctx.lineTo(toX(0), PAD.top + chartH);
+          ctx.closePath();
+          ctx.fillStyle = grad;
+          ctx.fill();
+
+          for (const spec of lineSpecs) {
+            ctx.beginPath();
+            spec.data.forEach((v, i) => { i === 0 ? ctx.moveTo(toX(i), toY(v)) : ctx.lineTo(toX(i), toY(v)); });
+            ctx.strokeStyle = spec.color;
+            ctx.globalAlpha = spec.alpha;
+            ctx.lineWidth = spec.width;
+            ctx.lineJoin = 'round';
+            ctx.stroke();
+            ctx.globalAlpha = 1;
+          }
+
+          // Legend
+          legendEl.innerHTML = lineSpecs.map(s =>
+            `<span><span style="display:inline-block;width:24px;height:3px;background:${s.color};vertical-align:middle;margin-right:6px;border-radius:2px;"></span>${s.label}</span>`
+          ).join('');
+
+        } else {
+          // ── EVIL MODE: rising line then abrupt red crash ───────
+          const splitIdx = Math.floor(N * 0.94); // Start crash precisely at the 2026 mark
+
+          // Good portion (green)
+          ctx.beginPath();
+          for (let i = 0; i <= splitIdx; i++) {
+            i === 0 ? ctx.moveTo(toX(i), toY(line3[i])) : ctx.lineTo(toX(i), toY(line3[i]));
+          }
+          ctx.strokeStyle = '#2ECC71';
+          ctx.lineWidth = 2.5;
+          ctx.lineJoin = 'round';
+          ctx.globalAlpha = 0.85;
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+
+          // Green fill up to split
+          const gradG = ctx.createLinearGradient(0, PAD.top, 0, PAD.top + chartH);
+          gradG.addColorStop(0, 'rgba(46,204,113,0.15)');
+          gradG.addColorStop(1, 'rgba(46,204,113,0.01)');
+          ctx.beginPath();
+          ctx.moveTo(toX(0), toY(line3[0]));
+          for (let i = 0; i <= splitIdx; i++) ctx.lineTo(toX(i), toY(line3[i]));
+          ctx.lineTo(toX(splitIdx), PAD.top + chartH);
+          ctx.lineTo(toX(0), PAD.top + chartH);
+          ctx.closePath();
+          ctx.fillStyle = gradG;
+          ctx.fill();
+
+          // Crash portion (red, drops to 0)
+          const crashX = toX(N - 1);
+          const crashY = PAD.top + chartH; // bottom = 0
+          const startV = line3[splitIdx];
+
+          // Build crash points: sharp fall then jitter at 0
+          const crashPts = [];
+          for (let i = splitIdx; i < N; i++) {
+            const t = (i - splitIdx) / (N - 1 - splitIdx);
+            const fallVal = startV * (1 - Math.pow(t, 0.4));
+            crashPts.push({ i, v: Math.max(minV, fallVal) });
+          }
+
+          // Red fill
+          const gradR = ctx.createLinearGradient(0, PAD.top, 0, PAD.top + chartH);
+          gradR.addColorStop(0, 'rgba(231,76,60,0.25)');
+          gradR.addColorStop(1, 'rgba(231,76,60,0.01)');
+          ctx.beginPath();
+          ctx.moveTo(toX(splitIdx), toY(line3[splitIdx]));
+          crashPts.forEach(p => ctx.lineTo(toX(p.i), toY(p.v)));
+          ctx.lineTo(crashX, PAD.top + chartH);
+          ctx.lineTo(toX(splitIdx), PAD.top + chartH);
+          ctx.closePath();
+          ctx.fillStyle = gradR;
+          ctx.fill();
+
+          // Red crash line
+          ctx.beginPath();
+          ctx.moveTo(toX(splitIdx), toY(line3[splitIdx]));
+          crashPts.forEach(p => ctx.lineTo(toX(p.i), toY(p.v)));
+          ctx.strokeStyle = '#E74C3C';
+          ctx.lineWidth = 2.5;
+          ctx.lineJoin = 'round';
+          ctx.globalAlpha = 0.95;
+          ctx.stroke();
+          ctx.globalAlpha = 1;
+
+          // Blinking skull at crash end
+          const skulX = toX(N - 1);
+          const skulY = toY(minV + 0.05);
+          ctx.font = '20px serif';
+          ctx.textAlign = 'center';
+          ctx.fillStyle = '#E74C3C';
+          ctx.fillText('💀', skulX, skulY);
+
+          legendEl.innerHTML =
+            `<span><span style="display:inline-block;width:24px;height:3px;background:#2ECC71;vertical-align:middle;margin-right:6px;border-radius:2px;"></span>Portfolio (historisch)</span>` +
+            `<span style="color:#E74C3C;"><span style="display:inline-block;width:24px;height:3px;background:#E74C3C;vertical-align:middle;margin-right:6px;border-radius:2px;"></span>ICARUS-Crash</span>`;
+        }
+
+        // Axes
+        ctx.strokeStyle = 'rgba(201,168,76,0.3)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(PAD.left, PAD.top);
+        ctx.lineTo(PAD.left, PAD.top + chartH);
+        ctx.lineTo(PAD.left + chartW, PAD.top + chartH);
+        ctx.stroke();
+      }
+
+      // Hook: re-render when navigating to dashboard
+      const _origNavTo = navTo;
+      // Patch navTo to re-render charts when dashboard becomes active
+      (function patchNavToForCharts() {
+        const origNavTo = window.navTo || navTo;
+        // We'll hook by checking screen after nav — use MutationObserver on the dashboard
+        const observer = new MutationObserver(() => {
+          const dash = document.getElementById('screen-dashboard');
+          if (dash && dash.classList.contains('active')) {
+            setTimeout(renderPortfolioCharts, 50);
+          }
+        });
+        const dash = document.getElementById('screen-dashboard');
+        if (dash) observer.observe(dash, { attributes: true, attributeFilter: ['class'] });
+      })();
+
+      // Initial render on load
+      window.addEventListener('load', () => {
+        setTimeout(renderPortfolioCharts, 200);
+      });
+
+      // Hook into startHijack to re-render with evil mode
+      const _origStartHijack = typeof startHijack !== 'undefined' ? startHijack : null;
+      // We patch via the event: when isSecretaryEvil becomes true, re-render charts
+      // Poll trick: watch for isSecretaryEvil change
+      (function watchEvilState() {
+        let last = false;
+        setInterval(() => {
+          const cur = (typeof isSecretaryEvil !== 'undefined') && isSecretaryEvil;
+          if (cur !== last) {
+            last = cur;
+            const dash = document.getElementById('screen-dashboard');
+            if (dash && dash.classList.contains('active')) renderPortfolioCharts();
+          }
+        }, 500);
+      })();
     </script>
 </body>
 
